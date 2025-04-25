@@ -1,7 +1,0 @@
-{
-	"extends": "../../tsconfig.json",
-	"compilerOptions": {
-		"strictNullChecks": true
-	},
-	"include": ["./src", "__tests__", "__mocks__"]
-}

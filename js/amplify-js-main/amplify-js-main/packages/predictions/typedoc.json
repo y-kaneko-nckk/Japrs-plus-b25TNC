@@ -1,9 +1,0 @@
-{
-	"name": "@aws-amplify/predictions",
-	"extends": ["../../typedoc.base.json"],
-	"entryPointStrategy": "resolve",
-	"entryPoints": [
-		"src/index.ts"
-	],
-	"readme": "README.md",
-}

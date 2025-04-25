@@ -1,9 +1,0 @@
-{
-	"extends": "../../tsconfig.json",
-	"compilerOptions": {
-		"importHelpers": false,
-		"strict": false,
-		"noImplicitAny": false
-	},
-	"include": ["./src", "__tests__"]
-}
