@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+
+  <script>
+    console.log('Amplify:', window.Amplify);
+    console.log('Auth:', window.Amplify?.Auth);
+  </script>
 </head>
 <body>
   <form id="loginForm">
