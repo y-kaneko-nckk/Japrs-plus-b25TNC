@@ -1,0 +1,11 @@
+{
+	"npmClient": "yarn",
+	"exact": true,
+	"version": "independent",
+	"useNx": false,
+	"command": {
+		"run": {
+			"private": false
+		}
+	}
+}
