@@ -1,28 +1,22 @@
 import { Amplify, Auth } from 'https://develop-srv.d1wmev0i8iycrh.amplifyapp.com';
+import awsconfig from './aws-exports.js';
 
-Amplify.configure({
-  Auth: {
-    region: 'ap-northeast-1',
-    userPoolId: 'ap-northeast-1_Ld53mCmLp',
-    userPoolWebClientId: '75uttfu4ovnj51hnm5qd7b3co0',
+// Amplify設定
+Amplify.configure(awsconfig);
+
+// フォーム送信イベント
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    const user = await Auth.signIn(username, password);
+    alert(`ようこそ、${user.username} さん！`);
+    // 例：ログイン後に遷移
+    window.location.href = "index.html";
+  } catch (error) {
+    alert("ログイン失敗: " + error.message);
+    console.error("ログイン失敗", error);
   }
-});
-
-// jQueryでフォーム送信処理
-$(function () {
-  $('#loginForm').on('submit', async function (e) {
-    e.preventDefault();
-
-    const username = $('#username').val();
-    const password = $('#password').val();
-
-    try {
-      const user = await Auth.signIn(username, password);
-      alert('ログイン成功！ようこそ ' + user.username);
-      window.location.href = 'dashboard.html'; // 成功後に遷移
-    } catch (err) {
-      alert('ログイン失敗: ' + err.message);
-      console.error('ログイン失敗:', err);
-    }
-  });
 });
