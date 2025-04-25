@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  if (!window.Amplify || !window.Amplify.Auth) {
-    console.error("Amplifyがロードされていません。");
+  if (!window.Amplify) {
+    console.error("❌ Amplifyがロードされていません。");
     return;
   }
 
