@@ -2,20 +2,59 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>ログイン | Japrs+</title>
+  <title>ログインテスト | Japrs+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1>Amplify テスト</h1>
   <form id="loginForm">
     <input type="text" id="username" placeholder="ユーザー名" required />
     <input type="password" id="password" placeholder="パスワード" required />
     <button type="submit">ログイン</button>
   </form>
 
-  <!-- 外部JSファイル読み込み -->
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- AWS Amplify（動作確認済みの CDN） -->
   <script src="https://cdn.jsdelivr.net/npm/aws-amplify@4.3.13/dist/aws-amplify.min.js"></script>
-  <script src="login.js"></script>
+
+  <!-- 動作確認用JS -->
+  <script>
+    $(document).ready(function () {
+      console.log("✅ jQuery is ready");
+      console.log("✅ Amplify object:", window.Amplify);
+      if (!window.Amplify) {
+        console.error("❌ Amplify is not loaded");
+        return;
+      }
+
+      const { Amplify, Auth } = window;
+
+      Amplify.configure({
+        Auth: {
+          region: 'ap-northeast-1',
+          userPoolId: 'ap-northeast-1_Ld53mCmLp',
+          userPoolWebClientId: '75uttfu4ovnj51hnm5qd7b3co0',
+        }
+      });
+
+      $('#loginForm').on('submit', async function (e) {
+        e.preventDefault();
+
+        const username = $('#username').val();
+        const password = $('#password').val();
+
+        try {
+          const user = await Auth.signIn(username, password);
+          alert('ログイン成功：' + user.username);
+        } catch (err) {
+          alert('ログイン失敗：' + err.message);
+          console.error(err);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
