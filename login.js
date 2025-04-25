@@ -1,9 +1,9 @@
-// グローバル変数の aws_amplify から Auth を使う
-$(function () {
-  const auth = window.aws_amplify.Auth;
+$(document).ready(function () {
+  // Amplify グローバルオブジェクトを安全に取得
+  const Amplify = window.Amplify;
+  const Auth = Amplify.Auth;
 
-  // Amplify 初期設定
-  window.aws_amplify.Amplify.configure({
+  Amplify.configure({
     Auth: {
       region: 'ap-northeast-1',
       userPoolId: 'ap-northeast-1_Ld53mCmLp',
@@ -18,10 +18,9 @@ $(function () {
     const password = $('#password').val();
 
     try {
-      const user = await auth.signIn(username, password);
+      const user = await Auth.signIn(username, password);
       alert('ログイン成功！ようこそ ' + user.username);
-      // 成功後に 各種情報画面へ
-      window.location.href = 'index.html';
+      window.location.href = 'dashboard.html';
     } catch (err) {
       alert('ログイン失敗: ' + err.message);
       console.error(err);
