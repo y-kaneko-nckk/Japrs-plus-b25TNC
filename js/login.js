@@ -1,8 +1,12 @@
 $(document).ready(function () {
+  if (!window.Amplify || !window.Amplify.Auth) {
+    console.error("Amplifyがロードされていません。");
+    return;
+  }
+
   const Amplify = window.Amplify;
   const Auth = Amplify.Auth;
 
-  // Amplifyの設定
   Amplify.configure({
     Auth: {
       region: 'ap-northeast-1',
@@ -11,7 +15,6 @@ $(document).ready(function () {
     }
   });
 
-  // ログインフォームの送信処理
   $('#loginForm').on('submit', async function (e) {
     e.preventDefault();
 
