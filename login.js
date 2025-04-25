@@ -13,7 +13,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
   try {
     const user = await Auth.signIn(username, password);
     alert(`ようこそ、${user.username} さん！`);
-    // 例：ログイン後に遷移
+    // ログイン後に遷移
     window.location.href = "index.html";
   } catch (error) {
     alert("ログイン失敗: " + error.message);
