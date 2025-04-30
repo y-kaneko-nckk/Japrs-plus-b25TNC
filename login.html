@@ -2,21 +2,19 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>Amplifyテスト</title>
+  <title>ログイン | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-  <h1>Amplify動作確認</h1>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="ユーザー名" required />
+    <input type="password" id="password" placeholder="パスワード" required />
+    <button type="submit">ログイン</button>
+  </form>
 
-  <!-- jQueryは不要：検証用 -->
+  <!-- 外部JSファイル読み込み -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://unpkg.com/aws-amplify@4.3.13/dist/aws-amplify.min.js"></script>
-
-  <script>
-    console.log('Amplify:', window.Amplify);
-    if (!window.Amplify) {
-      document.write('❌ Amplifyがロードされていません');
-    } else {
-      document.write('✅ Amplifyがロードされました');
-    }
-  </script>
+  <script src="js/login.js"></script>
 </body>
 </html>

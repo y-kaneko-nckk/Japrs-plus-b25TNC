@@ -1,11 +1,11 @@
 $(document).ready(function () {
-  if (!window.Amplify) {
-    console.error("❌ Amplifyがロードされていません。");
+  const Amplify = window.aws_amplify;
+  const Auth = Amplify.Auth;
+
+  if (!Amplify || !Auth) {
+    console.error('❌ AmplifyまたはAuthが読み込まれていません');
     return;
   }
-
-  const Amplify = window.Amplify;
-  const Auth = Amplify.Auth;
 
   Amplify.configure({
     Auth: {
@@ -17,7 +17,6 @@ $(document).ready(function () {
 
   $('#loginForm').on('submit', async function (e) {
     e.preventDefault();
-
     const username = $('#username').val();
     const password = $('#password').val();
 
