@@ -2,6 +2,9 @@ $(document).ready(function () {
   const Amplify = window.aws_amplify;
   const Auth = Amplify.Auth;
 
+  console.log('Amplify:', Amplify);
+  console.log('Auth:', Auth);
+
   if (!Amplify || !Auth) {
     console.error('❌ AmplifyまたはAuthが読み込まれていません');
     return;
