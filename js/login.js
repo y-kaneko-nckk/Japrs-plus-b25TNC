@@ -1,9 +1,13 @@
 $(document).ready(function () {
   const Amplify = window.aws_amplify;
-  const Auth = Amplify.Auth;
+  if (!Amplify) {
+    console.error('❌ Amplifyが読み込まれていません');
+    return;
+  }
 
-  if (!Amplify || !Auth) {
-    console.error('❌ AmplifyまたはAuthが読み込まれていません');
+  const Auth = Amplify.Auth;
+  if (!Auth) {
+    console.error('❌ Authが読み込まれていません');
     return;
   }
 
