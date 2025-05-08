@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "aws-amplify": "^6.14.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "^6.0.1"
+  }
+}

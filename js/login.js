@@ -1,22 +1,11 @@
-$(document).ready(function () {
-  // AWS Amplifyの読み込み
-  const Amplify = window.aws_amplify;
-  console.log('window.aws_amplify:', window.aws_amplify);
-  if (!Amplify) {
-    console.error('❌ Amplifyが読み込まれていません');
-    return;
-  }
+import Amplify, { Auth } from 'aws-amplify';
 
-  // Authを取得
-  const Auth = Amplify.Auth || Amplify.default?.Auth;
-  if (!Auth) {
-    console.error('❌ Authが読み込まれていません');
-    return;
-  }
+$(document).ready(function () {
+  console.log('Amplify:', Amplify);
 
   // Amplifyの初期化
   try {
-    Amplify.default.configure({
+    Amplify.configure({
       Auth: {
         region: 'ap-northeast-1',
         userPoolId: 'ap-northeast-1_Ld53mCmLp',

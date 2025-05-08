@@ -2,12 +2,20 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
-  entry: './src/amplify-loader.js',
+  entry: '../js/login.js', // エントリーポイント
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'aws-amplify.bundle.js',
-    library: 'aws_amplify',
-    libraryTarget: 'window',
+    filename: 'bundle.js', // 出力ファイル
+    path: __dirname + '/dist',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
   },
 };
