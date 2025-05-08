@@ -6,11 +6,11 @@ $(document).ready(function () {
     return;
   }
 
-  const Auth = Amplify.Auth;
-  if (!Auth) {
-    console.error('❌ Authが読み込まれていません');
-    return;
-  }
+  // const Auth = Amplify.Auth;
+  // if (!Auth) {
+  //   console.error('❌ Authが読み込まれていません');
+  //   return;
+  // }
 
   Amplify.default.configure({
     Auth: {
