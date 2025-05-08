@@ -1,5 +1,6 @@
 $(document).ready(function () {
   const Amplify = window.aws_amplify;
+  console.log('window.aws_amplify:', window.aws_amplify);
   if (!Amplify) {
     console.error('❌ Amplifyが読み込まれていません');
     return;
