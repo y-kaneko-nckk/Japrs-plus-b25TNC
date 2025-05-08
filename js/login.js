@@ -1,36 +1,23 @@
-import Amplify, { Auth } from 'aws-amplify';
+function OnCognitoSignUp() {
 
-$(document).ready(function () {
-  console.log('Amplify:', Amplify);
+	var poolData = {
+		UserPoolId: 'ap-northeast-1_9bJi4i6lX', // Your user pool id here
+		ClientId: '	3book7lp0qsi5eajs37f236qur', // Your client id here
+	};
+	var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-  // Amplifyの初期化
-  try {
-    Amplify.configure({
-      Auth: {
-        region: 'ap-northeast-1',
-        userPoolId: 'ap-northeast-1_Ld53mCmLp',
-        userPoolWebClientId: '75uttfu4ovnj51hnm5qd7b3co0',
-      }
-    });
-    console.log('✅ Amplifyが初期化されました');
-  } catch (err) {
-    console.error('❌ Amplifyの初期化に失敗しました:', err);
-    return;
-  }
+	var username = document.getElementById("email").value;
+	var password = document.getElementById("password").value;
 
-  // ログインフォームの処理
-  $('#loginForm').on('submit', async function (e) {
-    e.preventDefault();
-    const username = $('#username').val();
-    const password = $('#password').val();
-
-    try {
-      const user = await Auth.signIn(username, password);
-      alert('ログイン成功！ようこそ ' + user.username);
-      window.location.href = 'index.html';
-    } catch (err) {
-      alert('ログイン失敗: ' + err.message);
-      console.error(err);
-    }
-  });
-});
+	userPool.signUp(username, password, null, null, function(
+		err,
+		result
+	) {
+		if (err) {
+			alert(err.message || JSON.stringify(err));
+			return;
+		}
+		var cognitoUser = result.user;
+		console.log('user name is ' + cognitoUser.getUsername());
+	});
+}

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>ログイン | Japrs+</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"></meta>
+  <title>CognitoSignUp</title>
+  <script src="js/aws-cognito-sdk.min.js"></script>
+  <script src="js/amazon-cognito-identity.min.js"></script>
+  <script src="js/login.js"></script>
 </head>
 <body>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="ユーザー名" required />
-    <input type="password" id="password" placeholder="パスワード" required />
-    <button type="submit">ログイン</button>
-  </form>
-
-  <!-- 外部JSファイル読み込み -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="amplify-bundle/dist/aws-amplify.bundle.js"></script>
-  <script type="module" src="js/login.js"></script>
+  <h1>CognitoSignUp</h1>
+  <span style="display: inline-block; width: 100px;">Email</span>
+  <input type="text" id="email" placeholder="Email Address">
+  <br/>
+  <span style="display: inline-block; width: 100px;">Password</span>
+  <input type="password" id="password" placeholder="Password">
+  <br/><br/>
+  <input type="button" value="CognitoSignUp" onclick="OnCognitoSignUp();">
 </body>
 </html>
