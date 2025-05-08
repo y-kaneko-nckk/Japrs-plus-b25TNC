@@ -8,7 +8,7 @@ $(document).ready(function () {
   }
 
   // Authを取得
-  const Auth = Amplify.Auth;
+  const Auth = Amplify.Auth || Amplify.default?.Auth;
   if (!Auth) {
     console.error('❌ Authが読み込まれていません');
     return;
