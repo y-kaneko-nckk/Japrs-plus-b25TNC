@@ -39,7 +39,7 @@ function OnCognitoAuthenticateUser() {
 				IdentityPoolId: 'ap-northeast-1:1185c121-9b44-4e97-9c05-ba2f190c7654', // your identity pool id here
 				Logins: {
 					// Change the key below according to the specific region your user pool is in.
-					'cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1:1185c121-9b44-4e97-9c05-ba2f190c7654': result
+					'cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_MNT0bbnmI': result
 						.getIdToken()
 						.getJwtToken(),
 				},
