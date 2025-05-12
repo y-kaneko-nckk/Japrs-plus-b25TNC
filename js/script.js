@@ -1,20 +1,53 @@
 // データ保持用の変数
 let allDataCache = null;
 
+// トークンの有効期限を確認
+function checkTokenValidity() {
+    var expirationTime = localStorage.getItem("expirationTime");
+    if (!expirationTime || Date.now() > expirationTime) {
+        alert("セッションの有効期限が切れました。再度ログインしてください。");
+        window.location.href = "login.html"; // ログイン画面にリダイレクト
+    }
+}
+
+// ページ読み込み時にトークンの有効期限を確認
+$(document).ready(function () {
+    checkTokenValidity();
+});
+
 // データ取得（初回のみ）
 function fetchAllDataOnce(callback) {
-  if (allDataCache) {
-    callback(allDataCache);
-  } else {
-    $.getJSON("https://hy5qo8wko2.execute-api.ap-northeast-1.amazonaws.com/prod/ai/infomgmt/ocrinfo/list")
-      .done(function(data) {
-        allDataCache = data;
-        callback(data);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        console.error("データ取得エラー:", textStatus, errorThrown);
-      });
-  }
+    checkTokenValidity(); // トークンの有効期限を確認
+
+    if (allDataCache) {
+        callback(allDataCache);
+    } else {
+        var idToken = localStorage.getItem("idToken");
+        if (!idToken) {
+            alert("認証情報がありません。ログインしてください。");
+            window.location.href = "login.html";
+            return;
+        }
+
+        $.ajax({
+            url: "https://hy5qo8wko2.execute-api.ap-northeast-1.amazonaws.com/prod/ai/infomgmt/ocrinfo/list",
+            method: "GET",
+            headers: {
+                Authorization: idToken, // トークンをヘッダーに追加
+            },
+            success: function (data) {
+                allDataCache = data;
+                callback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error("データ取得エラー:", textStatus, errorThrown);
+                if (jqXHR.status === 401) {
+                    alert("認証エラーです。再度ログインしてください。");
+                    window.location.href = "login.html";
+                }
+            },
+        });
+    }
 }
 
 // OCR情報テーブル描画
