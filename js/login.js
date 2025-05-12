@@ -74,7 +74,7 @@ $(document).ready(function () {
     }
 
     // ボタンのクリックイベントに認証処理をバインド
-    $("#loginButton").on("click", function () {
+    $("#loginBtn").on("click", function () {
         OnCognitoAuthenticateUser();
     });
 });
