@@ -36,6 +36,7 @@ function fetchAllDataOnce(callback) {
                 Authorization: idToken, // トークンをヘッダーに追加
             },
             success: function (data) {
+                console.log("データ取得成功:", data);
                 allDataCache = data;
                 callback(data);
             },
