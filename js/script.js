@@ -30,7 +30,7 @@ function fetchAllDataOnce(callback) {
         }
 
         $.ajax({
-            url: "https://hy5qo8wko2.execute-api.ap-northeast-1.amazonaws.com/prod/ai/infomgmt/ocrinfo/list",
+            url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/infoMgmt",
             method: "GET",
             headers: {
                 Authorization: idToken, // トークンをヘッダーに追加
