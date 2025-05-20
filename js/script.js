@@ -59,7 +59,11 @@ function renderOcrTable(data) {
     $tbody.append(`
       <tr>
         <td>${item.execdtime}</td>
-        <td>${item.title}</td>
+        <td>
+          <a href="ocrinfoDetail.html?objectKey=${encodeURIComponent(item.objectKey)}&title=${encodeURIComponent(item.title)}&ocrText=${encodeURIComponent(item.execresult)}" target="_blank">
+            ${item.title}
+          </a>
+        </td>
         <td>${item.execresult}</td>
         <td>${item.id}</td>
       </tr>

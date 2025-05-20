@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>OCR情報詳細 | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>OCR情報詳細</h2>
+    <div style="display: flex; height: 90vh;">
+      <!-- 左側：PDF表示 -->
+      <iframe id="pdfViewer" style="width: 50%; height: 100%;" frameborder="0"></iframe>
+      <!-- 右側：OCRテキストやタイトル表示 -->
+      <div style="width: 50%; padding: 20px;">
+        <h3 id="title"></h3>
+        <pre id="ocrText"></pre>
+      </div>
+    </div>
+  </div>
+  <script>
+    // クエリパラメータから値を取得
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    $(function() {
+      const objectKey = getQueryParam("objectKey");
+      const title = getQueryParam("title");
+      const ocrText = getQueryParam("ocrText");
+
+      // S3のPDFをiframeに表示
+      if(objectKey){
+        $("#pdfViewer").attr("src", "https://japrs-s3-pdfupload-tnc-dev.s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(objectKey));
+      }
+      $("#title").text(title || "");
+      $("#ocrText").text(ocrText || "");
+    });
+  </script>
+</body>
+</html>
