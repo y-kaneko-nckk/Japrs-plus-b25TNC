@@ -22,21 +22,28 @@
   </div>
   <script>
     // クエリパラメータから値を取得
-    function getQueryParam(name) {
-      const url = new URL(window.location.href);
-      return url.searchParams.get(name);
-    }
     $(function() {
       const objectKey = getQueryParam("objectKey");
-      const title = getQueryParam("title");
-      const ocrText = getQueryParam("ocrText");
+      const id = getQueryParam("id");
 
-      // S3のPDFをiframeに表示
-      if(objectKey){
-        $("#pdfViewer").attr("src", "https://japrs-s3-pdfupload-tnc-dev.s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(objectKey));
-      }
-      $("#title").text(title || "");
-      $("#ocrText").text(ocrText || "");
+      // API呼び出しで詳細データを取得
+      $.ajax({
+        url: "https://5jd5ld5ax4.execute-api.ap-northeast-1.amazonaws.com/ocrinfo/detail?id=" + encodeURIComponent(id),
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("idToken"),
+        },
+        success: function(data) {
+          $("#title").text(data.title || "");
+          $("#ocrText").text(data.execresult || "");
+          if (data.objectKey) {
+            $("#pdfViewer").attr("src", "https://japrs-s3-pdfupload-tnc-dev.s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(data.objectKey));
+          }
+        },
+        error: function(jqXHR) {
+          alert("データ取得に失敗しました: " + jqXHR.responseJSON.message);
+        }
+      });
     });
   </script>
 </body>

@@ -60,7 +60,7 @@ function renderOcrTable(data) {
       <tr>
         <td>${item.execdtime}</td>
         <td>
-          <a href="ocrinfoDetail.html?objectKey=${encodeURIComponent(item.objectKey)}&title=${encodeURIComponent(item.title)}&ocrText=${encodeURIComponent(item.execresult)}" target="_blank">
+          <a href="ocrinfoDetail.html?objectKey=${encodeURIComponent(item.objectKey)}&id=${encodeURIComponent(item.id)}" target="_blank">
             ${item.title}
           </a>
         </td>
