@@ -23,7 +23,7 @@
   <script>
     // クエリパラメータから値を取得
     $(function() {
-      const objectKey = getQueryParam("objectKey");
+      const filename = getQueryParam("filename");
       const id = getQueryParam("id");
 
       // API呼び出しで詳細データを取得
@@ -36,8 +36,8 @@
         success: function(data) {
           $("#title").text(data.title || "");
           $("#ocrText").text(data.execresult || "");
-          if (data.objectKey) {
-            $("#pdfViewer").attr("src", "https://japrs-s3-pdfupload-tnc-dev.s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(data.objectKey));
+          if (data.filename) {
+            $("#pdfViewer").attr("src", "https://japrs-s3-pdfupload-tnc-dev.s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(data.filename));
           }
         },
         error: function(jqXHR) {
