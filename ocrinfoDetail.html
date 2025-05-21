@@ -21,6 +21,12 @@
     </div>
   </div>
   <script>
+    // クエリパラメータを取得する関数
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
     // クエリパラメータから値を取得
     $(function() {
       const filename = getQueryParam("filename");
