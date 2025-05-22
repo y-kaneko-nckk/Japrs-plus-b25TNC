@@ -4,21 +4,38 @@
   <meta charset="UTF-8">
   <title>OCR情報詳細 | Japrs+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/generategkDetail.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/ocrinfoDetail.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h2>OCR情報詳細</h2>
-    <div style="display: flex; height: 90vh;">
-      <!-- 左側：PDF表示 -->
-      <iframe id="pdfViewer" style="width: 50%; height: 100%;" frameborder="0"></iframe>
-      <!-- 右側：OCRテキストやタイトル表示 -->
-      <div style="width: 50%; padding: 20px;">
-        <h3 id="title"></h3>
-        <pre id="ocrText"></pre>
+  <h2>OCR情報詳細</h2>
+  <div class="flex-container">
+    <!-- 左側：PDF表示と情報 -->
+    <div class="left-panel">
+      <div class="section-title">PDF表示</div>
+      <iframe id="pdfViewer" style="width:100%; height:350px; border:1px solid #ccc; border-radius:4px; background:#fff;"></iframe>
+      <table class="detail-table" style="margin-top:16px;">
+        <tr>
+          <th>タイトル</th>
+          <td id="title"></td>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <td id="id"></td>
+        </tr>
+      </table>
+    </div>
+    <!-- 右側：OCRテキスト -->
+    <div class="right-panel">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div class="section-title">OCRテキスト</div>
+        <div class="id-date" style="text-align: right;">
+          [ID] <span id="id-right"></span><br>
+          [実行日時] <span id="execdtime"></span>
+        </div>
       </div>
+      <div class="exec-result-box" id="ocrText"></div>
     </div>
   </div>
 </body>
