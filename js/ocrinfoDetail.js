@@ -33,7 +33,11 @@ $(function() {
     success: function(data) {
       $("#title").text(data.title || "");
       $("#ocrText").text(data.execresult || "");
-      if (data.filename) {
+      // presignedUrlがあればそれを使う
+      if (data.presignedUrl) {
+        $("#pdfViewer").attr("src", data.presignedUrl);
+      } else if (data.filename) {
+        // 念のため従来の方法も残す
         $("#pdfViewer").attr("src", "https://japrs-s3-pdfupload-tnc-dev.s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(data.filename));
       }
     },
