@@ -1,3 +1,17 @@
+// トークンの有効期限を確認
+function checkTokenValidity() {
+    var expirationTime = localStorage.getItem("expirationTime");
+    if (!expirationTime || Date.now() > expirationTime) {
+        alert("セッションの有効期限が切れました。再度ログインしてください。");
+        window.location.href = "login.html"; // ログイン画面にリダイレクト
+    }
+}
+
+// ページ読み込み時にトークンの有効期限を確認
+$(document).ready(function () {
+    checkTokenValidity();
+});
+
 // クエリパラメータを取得する関数
 function getQueryParam(name) {
   const urlParams = new URLSearchParams(window.location.search);
