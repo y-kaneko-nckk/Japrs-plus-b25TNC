@@ -24,7 +24,13 @@ $(function() {
       }
     },
     error: function(jqXHR) {
-      alert("データ取得に失敗しました: " + jqXHR.responseJSON.message);
+      let msg = "データ取得に失敗しました";
+      if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+        msg += ": " + jqXHR.responseJSON.message;
+      } else if (jqXHR.statusText) {
+        msg += ": " + jqXHR.statusText;
+      }
+      alert(msg);
     }
   });
 });
