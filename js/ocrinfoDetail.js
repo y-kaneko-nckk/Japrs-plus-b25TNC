@@ -25,7 +25,7 @@ $(function() {
 
   // API呼び出しで詳細データを取得
   $.ajax({
-    url: "https://5jd5ld5ax4.execute-api.ap-northeast-1.amazonaws.com/ocrinfo/detail?id=" + encodeURIComponent(id),
+    url: "https://5jd5ld5ax4.execute-api.ap-northeast-1.amazonaws.com/prod/ocrinfo/detail?id=" + encodeURIComponent(id),
     method: "GET",
     headers: {
       Authorization: localStorage.getItem("idToken"),
