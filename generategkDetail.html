@@ -34,14 +34,16 @@
           </td>
         </tr>
       </table>
-      <div class="id-date">
-        [ID] <span id="id"></span>
-        [生成日時] <span id="generatedtime"></span>
-      </div>
     </div>
     <!-- 右側：実行結果 -->
     <div class="right-panel">
-      <div class="section-title">実行結果</div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div class="section-title">実行結果</div>
+        <div class="id-date" style="text-align: right;">
+          [ID] <span id="id"></span><br>
+          [生成日時] <span id="generatedtime"></span>
+        </div>
+      </div>
       <div class="exec-result-box" id="execresult"></div>
     </div>
   </div>
