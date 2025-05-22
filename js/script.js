@@ -79,7 +79,11 @@ function renderGeneratedTable(data) {
     $tbody.append(`
       <tr>
         <td>${item.generatedtime}</td>
-        <td>${item.title}</td>
+        <td>
+          <a href="generategkDetail.html?id=${encodeURIComponent(item.id)}" target="_blank">
+            ${item.title}
+          </a>
+        </td>
         <td>${item.languagemodel}</td>
         <td>${item.workuser}</td>
         <td>${item.id}</td>
