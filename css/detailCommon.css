@@ -1,3 +1,4 @@
+/* 詳細画面 共通レイアウト */
 .flex-container {
   display: flex;
   gap: 20px;
@@ -17,7 +18,10 @@
 .right-panel {
   width: 45%;
   overflow-y: auto;
+  position: relative;
 }
+
+/* セクションタイトル */
 .section-title {
   background: #3b5998;
   color: #fff;
@@ -26,6 +30,8 @@
   border-radius: 4px 4px 0 0;
   margin-bottom: 8px;
 }
+
+/* テーブル */
 table.detail-table {
   width: 100%;
   border-collapse: collapse;
@@ -41,6 +47,8 @@ table.detail-table th {
   width: 90px;
   background: #f0f0f8;
 }
+
+/* テキストエリア */
 textarea {
   width: 100%;
   min-height: 80px;
@@ -52,6 +60,8 @@ textarea {
   border-radius: 4px;
   padding: 6px;
 }
+
+/* 実行結果・OCRテキスト表示枠 */
 .exec-result-box {
   background: #fff;
   border: 1px solid #ccc;
@@ -61,8 +71,26 @@ textarea {
   white-space: pre-wrap;
   font-family: inherit;
 }
+
+/* ID・日時表示（右上固定） */
+.right-panel-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 4px;
+}
 .id-date {
+  text-align: right;
   font-size: 0.95em;
   color: #555;
   margin-bottom: 8px;
+}
+
+/* PDF iframe */
+.pdf-viewer {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
 }
