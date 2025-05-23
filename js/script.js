@@ -15,6 +15,16 @@ $(document).ready(function () {
     checkTokenValidity();
 });
 
+// インジケーター表示・非表示
+function showLoading() {
+  $("#commonDisabledModal").show();
+  $("#commonLoadingSpinner").show();
+}
+function hideLoading() {
+  $("#commonDisabledModal").hide();
+  $("#commonLoadingSpinner").hide();
+}
+
 // データ取得（初回のみ）
 function fetchAllDataOnce(callback) {
     checkTokenValidity(); // トークンの有効期限を確認
@@ -29,6 +39,8 @@ function fetchAllDataOnce(callback) {
             return;
         }
 
+        showLoading(); // インジケーター表示
+
         $.ajax({
             url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/infoMgmt",
             method: "GET",
@@ -38,9 +50,11 @@ function fetchAllDataOnce(callback) {
             success: function (data) {
                 console.log("データ取得成功:", data);
                 allDataCache = data;
+                hideLoading(); // インジケーター非表示
                 callback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                hideLoading(); // インジケーター非表示
                 console.error("データ取得エラー:", textStatus, errorThrown);
                 if (jqXHR.status === 401) {
                     alert("認証エラーです。再度ログインしてください。");
