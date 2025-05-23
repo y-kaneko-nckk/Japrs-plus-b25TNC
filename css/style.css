@@ -90,3 +90,65 @@ div[role=main].list-content-area {
   -ms-flex-pack: start !important;
   justify-content: flex-start !important;
 }
+
+.modal {
+position: fixed;
+top: 0;
+left: 0;
+z-index: 1050;
+display: none;
+width: 100%;
+height: 100%;
+overflow: hidden;
+outline: 0;
+}
+
+.loading-spinner {
+    z-index: 1600;
+    position: fixed;
+    top: 50%;
+    left: 47.5%;
+    /* transform: translate(-50%, -50%); */
+    display: none;
+}
+
+.modal.fade .modal-dialog {
+    transition: -webkit-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    transition: transform .3s ease-out, -webkit-transform .3s ease-out;
+    -webkit-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+}
+
+.modal-dialog {
+    overflow-y: initial !important;
+}
+
+.modal-dialog-centered {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+}
+
+.spinner-small {
+    width: 70px;
+    height: 70px;
+}
+
+.text-secondary {
+    color: #6c757d !important;
+}
+
+.spinner-border {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
+    border: .25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border .75s linear infinite;
+    animation: spinner-border .75s linear infinite;
+}
