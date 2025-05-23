@@ -13,6 +13,24 @@ function checkTokenValidity() {
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
     checkTokenValidity();
+  
+    // 実行日時の初期値を今日にセット
+    const today = new Date().toISOString().slice(0, 10);
+    $("#execdtime").val(today);
+
+    // 検索ボタン押下時
+    $("#searchBtn").on("click", function () {
+        const execdtime = $("#execdtime").val();
+        // 検索条件をクエリパラメータにしてリロード
+        window.location.href = "index.html?execdtime=" + encodeURIComponent(execdtime);
+    });
+
+    // ページ表示時にクエリパラメータがあればフィルタ
+    const urlParams = new URLSearchParams(window.location.search);
+    const execdtimeParam = urlParams.get("execdtime");
+    if (execdtimeParam) {
+        $("#execdtime").val(execdtimeParam);
+    }
 });
 
 // インジケーター表示・非表示
@@ -67,22 +85,29 @@ function fetchAllDataOnce(callback) {
 
 // OCR情報テーブル描画
 function renderOcrTable(data) {
-  const $tbody = $("#ocrTable tbody");
-  $tbody.empty();
-  $.each(data.ocrinfo, function(i, item) {
-    $tbody.append(`
-      <tr>
-        <td>${item.execdtime}</td>
-        <td>
-          <a href="ocrinfoDetail.html?filename=${encodeURIComponent(item.filename)}&id=${encodeURIComponent(item.id)}" target="_blank">
-            ${item.title}
-          </a>
-        </td>
-        <td>${item.execresult}</td>
-        <td>${item.id}</td>
-      </tr>
-    `);
-  });
+    const urlParams = new URLSearchParams(window.location.search);
+    const execdtimeParam = urlParams.get("execdtime");
+
+    const $tbody = $("#ocrTable tbody");
+    $tbody.empty();
+    $.each(data.ocrinfo, function(i, item) {
+        // 実行日時でフィルタ
+        if (execdtimeParam && !item.execdtime.startsWith(execdtimeParam)) {
+            return; // 日付が一致しない場合はスキップ
+        }
+        $tbody.append(`
+          <tr>
+            <td>${item.execdtime}</td>
+            <td>
+              <a href="ocrinfoDetail.html?filename=${encodeURIComponent(item.filename)}&id=${encodeURIComponent(item.id)}" target="_blank">
+                ${item.title}
+              </a>
+            </td>
+            <td>${item.execresult}</td>
+            <td>${item.id}</td>
+          </tr>
+        `);
+    });
 }
 
 // 生成原稿テーブル描画
