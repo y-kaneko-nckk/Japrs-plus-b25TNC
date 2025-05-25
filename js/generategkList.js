@@ -13,6 +13,12 @@ function checkTokenValidity() {
 // ページ読み込み時
 $(document).ready(function () {
     checkTokenValidity();
+
+    // タブの状態を設定
+    $("#ocrTab").removeClass("active");
+    $("#ocrContent").hide();
+    $("#generatedTab").addClass("active");
+    $("#generatedContent").show();
   
     // 生成日時初期値
     const today = new Date();
@@ -29,8 +35,8 @@ $(document).ready(function () {
     // }
 
     // データを取得してフィルタ
-    fetchOcrData(function (data) {
-        fetchGenerategkData(data, $("#generatedtime").val());
+    fetchGenerategkData(function (data) {
+        renderGeneratedTable(data, $("#generatedtime").val());
     });
 });
 
@@ -39,7 +45,7 @@ $("#searchBtn").on("click", function () {
     const generatedtime = $("#generatedtime").val();
 
     // データを再取得してフィルタ
-    fetchOcrData(function (data) {
+    fetchGenerategkData(function (data) {
         fetchGenerategkData(data, generatedtime);
     });
 });
@@ -119,16 +125,8 @@ function fetchGenerategkData(callback) {
 
 // タブ切り替え処理（HTML遷移）
 $("#ocrTab").on("click", function () {
-    $("#ocrContent").show();
-    $("#generatedContent").hide();
-    $("#ocrTab").addClass("active");
-    $("#generatedTab").removeClass("active");
     window.location.href = "ocrinfoList.html";
 });
 $("#generatedTab").on("click", function () {
-    $("#ocrContent").hide();
-    $("#generatedContent").show();
-    $("#generatedTab").addClass("active");
-    $("#ocrTab").removeClass("active");
     window.location.href = "generategkList.html";
 });

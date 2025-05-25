@@ -13,6 +13,12 @@ function checkTokenValidity() {
 // ページ読み込み時
 $(document).ready(function () {
     checkTokenValidity();
+
+    // タブの状態を設定
+    $("#ocrContent").show();
+    $("#generatedContent").hide();
+    $("#ocrTab").addClass("active");
+    $("#generatedTab").removeClass("active");
   
     // 実行日時の初期値を今日にセット
     const today = new Date();
@@ -118,16 +124,8 @@ function fetchOcrData(callback) {
 
 // タブ切り替え処理（HTML遷移）
 $("#ocrTab").on("click", function () {
-    $("#ocrContent").show();
-    $("#generatedContent").hide();
-    $("#ocrTab").addClass("active");
-    $("#generatedTab").removeClass("active");
     window.location.href = "ocrinfoList.html";
 });
 $("#generatedTab").on("click", function () {
-    $("#ocrContent").hide();
-    $("#generatedContent").show();
-    $("#generatedTab").addClass("active");
-    $("#ocrTab").removeClass("active");
     window.location.href = "generategkList.html";
 });
