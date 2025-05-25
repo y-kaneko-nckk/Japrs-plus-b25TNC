@@ -70,7 +70,7 @@ $(document).ready(function () {
                     } else {
                         // 認証情報の更新に成功した場合
                         console.log('ログインに成功しました！');
-                        window.location.href = 'index.html'; // ログイン後のリダイレクト
+                        window.location.href = 'ocrinfoList.html'; // ログイン後のリダイレクト
                     }
                 });
             },
