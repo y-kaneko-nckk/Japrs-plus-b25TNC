@@ -15,18 +15,23 @@ $(document).ready(function () {
     checkTokenValidity();
   
     // 生成日時初期値
-    const today = new Date().toISOString().slice(0, 10);
-    $("#generatedtime").val(today);
+    const today = new Date();
+    const formattedToday = today.getFullYear() + "/" +
+        String(today.getMonth() + 1).padStart(2, "0") + "/" +
+        String(today.getDate()).padStart(2, "0");
+    $("#generatedtime").val(formattedToday);
 
-    // クエリパラメータ反映
-    const urlParams = new URLSearchParams(window.location.search);
-    const generatedtimeParam = urlParams.get("generatedtime");
-    if (generatedtimeParam) {
-        $("#generatedtime").val(generatedtimeParam);
-    }
+    // // クエリパラメータ反映
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const generatedtimeParam = urlParams.get("generatedtime");
+    // if (generatedtimeParam) {
+    //     $("#generatedtime").val(generatedtimeParam);
+    // }
 
-    // データ取得
-    fetchGenerategkData(renderGeneratedTable);
+    // データを取得してフィルタ
+    fetchOcrData(function (data) {
+        fetchGenerategkData(data, $("#generatedtime").val());
+    });
 });
 
 // 検索ボタン押下時
@@ -55,7 +60,7 @@ function renderGeneratedTable(data, generatedtimeFilter = null) {
     $tbody.empty();
 
     // フィルタ条件をYYYY/MM/DD形式に変換
-    const formattedGeneratedtimetimeFilter = execdtimeFilter ? execdtimeFilter.replace(/-/g, "/") : null;
+    const formattedGeneratedtimetimeFilter = generatedtimeFilter ? generatedtimeFilter.replace(/-/g, "/") : null;
 
     $.each(data.generategk, function(i, item) {
         // 生成日時でフィルタ

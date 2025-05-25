@@ -15,23 +15,28 @@ $(document).ready(function () {
     checkTokenValidity();
   
     // 実行日時の初期値を今日にセット
-    const today = new Date().toISOString().slice(0, 10);
-    $("#execdtimeSearch").val(today);
+    const today = new Date();
+    const formattedToday = today.getFullYear() + "/" +
+        String(today.getMonth() + 1).padStart(2, "0") + "/" +
+        String(today.getDate()).padStart(2, "0");
+    $("#execdtimeSearch").val(formattedToday);
 
-    // ページ表示時にクエリパラメータがあればフィルタ
-    const urlParams = new URLSearchParams(window.location.search);
-    const execdtimeParam = urlParams.get("execdtime");
-    if (execdtimeParam) {
-        $("#execdtime").val(execdtimeParam);
-    }
+    // // ページ表示時にクエリパラメータがあればフィルタ
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const execdtimeParam = urlParams.get("execdtime");
+    // if (execdtimeParam) {
+    //     $("#execdtime").val(execdtimeParam);
+    // }
 
-    // データ取得
-    fetchOcrData(renderOcrTable);
+    // データを取得してフィルタ
+    fetchOcrData(function (data) {
+        renderOcrTable(data, $("#execdtimeSearch").val());
+    });
 });
 
 // 検索ボタン押下時
 $("#searchBtn").on("click", function () {
-    const execdtime = $("#execdtime").val();
+    const execdtime = $("#execdtimeSearch").val();
 
     // データを再取得してフィルタ
     fetchOcrData(function (data) {
