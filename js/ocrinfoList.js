@@ -16,13 +16,14 @@ $(document).ready(function () {
   
     // 実行日時の初期値を今日にセット
     const today = new Date().toISOString().slice(0, 10);
-    $("#execdtime").val(today);
+    $("#execdtimeSearch").val(today);
 
-    // 検索ボタン押下時
+    // 初期表示・検索ボタン押下時
+    fetchOcrData(renderOcrTable);
     $("#searchBtn").on("click", function () {
         const execdtime = $("#execdtime").val();
         // 検索条件をクエリパラメータにしてリロード
-        window.location.href = "index.html?execdtime=" + encodeURIComponent(execdtime);
+        window.location.href = "ocrinfoList.html?execdtimeSearch=" + encodeURIComponent(execdtime);
     });
 
     // ページ表示時にクエリパラメータがあればフィルタ
@@ -86,7 +87,7 @@ function fetchAllDataOnce(callback) {
 // OCR情報テーブル描画
 function renderOcrTable(data) {
     const urlParams = new URLSearchParams(window.location.search);
-    const execdtimeParam = urlParams.get("execdtime");
+    const execdtimeParam = urlParams.get("execdtimeSearch");
 
     const $tbody = $("#ocrTable tbody");
     $tbody.empty();
@@ -110,28 +111,6 @@ function renderOcrTable(data) {
     });
 }
 
-// 生成原稿テーブル描画
-function renderGeneratedTable(data) {
-  const $tbody = $("#generatedTable tbody");
-  $tbody.empty();
-  $.each(data.generategk, function(i, item) {
-    $tbody.append(`
-      <tr>
-        <td>${item.generatedtime}</td>
-        <td>
-          <a href="generategkDetail.html?id=${encodeURIComponent(item.id)}" target="_blank">
-            ${item.title}
-          </a>
-        </td>
-        <td>${item.languagemodel}</td>
-        <td>${item.workuser}</td>
-        <td>${item.id}</td>
-        <td>${item.savedtime}</td>
-      </tr>
-    `);
-  });
-}
-
 // データ取得（OCR）
 function fetchOcrData(callback) {
     checkTokenValidity(); // トークン有効期限チェック
@@ -142,9 +121,7 @@ function fetchOcrData(callback) {
         window.location.href = "login.html";
         return;
     }
-
     showLoading(); // インジケーター表示
-
     $.ajax({
         url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/ocrinfo/list",
         method: "GET",
@@ -166,61 +143,11 @@ function fetchOcrData(callback) {
         },
     });
 }
-// データ取得（生成原稿）
-function fetchGenerategkData(callback) {
-    checkTokenValidity(); // トークン有効期限チェック
 
-    var idToken = localStorage.getItem("idToken");
-    if (!idToken) {
-        alert("認証情報がありません。ログインしてください。");
-        window.location.href = "login.html";
-        return;
-    }
-
-    showLoading(); // インジケーター表示
-
-    $.ajax({
-        url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/list",
-        method: "GET",
-        headers: {
-            Authorization: idToken,
-        },
-        success: function (data) {
-            hideLoading(); // インジケーター非表示
-            callback(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            hideLoading(); // インジケーター非表示
-            if (jqXHR.status === 401) {
-                alert("認証エラーです。再度ログインしてください。");
-                window.location.href = "login.html";
-            } else {
-                alert("データ取得に失敗しました。");
-            }
-        },
-    });
-}
-
-// タブ切り替え処理
+// タブ切り替え処理（HTML遷移）
 $("#ocrTab").on("click", function () {
-    fetchOcrData(function(data) {
-        renderOcrTable(data);
-        $("#ocrContent").show();
-        $("#generatedContent").hide();
-        $("#ocrTab").addClass("active");
-        $("#generatedTab").removeClass("active");
-    });
+    window.location.href = "ocrinfoList.html";
 });
-
 $("#generatedTab").on("click", function () {
-    fetchGenerategkData(function(data) {
-        renderGeneratedTable(data);
-        $("#ocrContent").hide();
-        $("#generatedContent").show();
-        $("#generatedTab").addClass("active");
-        $("#ocrTab").removeClass("active");
-    });
+    window.location.href = "generategkList.html";
 });
-
-// 初期表示はOCR情報タブ
-$("#ocrTab").trigger("click");

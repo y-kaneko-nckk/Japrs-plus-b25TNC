@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>各種情報管理 | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>各種情報管理</h2>
+
+    <div class="tab-buttons">
+      <button class="tab active" id="ocrTab">OCR情報</button>
+      <button class="tab" id="generatedTab">生成原稿</button>
+    </div>
+
+    <div class="filter">
+      <label for="generatedtime">生成日時:</label>
+      <input type="date" id="generatedtime" name="generatedtime">
+      <button class="search-btn" id="searchBtn">検索</button>
+    </div>
+
+    <div id="generatedContent" class="tab-content" style="display: none;">
+      <table class="table" id="generatedTable">
+        <thead>
+          <tr>
+            <th>生成日時</th>
+            <th>タイトル</th>
+            <th>言語モデル</th>
+            <th>作業者</th>
+            <th>ID</th>
+            <th>保存日時</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 生成原稿のデータがここに入る -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document"></div>
+  </div>
+  <div id="commonLoadingSpinner" class="loading-spinner" style="display: none;">
+    <div class="spinner-border text-secondary spinner-small" role="status"></div>
+  </div>
+
+  <script src="js/generategkList.js"></script>
+</body>
+</html>

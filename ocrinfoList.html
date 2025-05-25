@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>各種情報管理 | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>各種情報管理</h2>
+
+    <div class="tab-buttons">
+      <button class="tab active" id="ocrTab">OCR情報</button>
+      <button class="tab" id="generatedTab">生成原稿</button>
+    </div>
+
+    <div class="filter">
+      <label for="execdtime">実施日時:</label>
+      <input type="date" id="execdtime" name="execdtime">
+      <button class="search-btn" id="searchBtn">検索</button>
+    </div>
+
+    <div id="ocrContent" class="tab-content">
+      <table class="table" id="ocrTable">
+        <thead>
+          <tr>
+            <th>実行日時</th>
+            <th>タイトル</th>
+            <th>実行結果</th>
+            <th>ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- OCR情報のデータがここに入る -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document"></div>
+  </div>
+  <div id="commonLoadingSpinner" class="loading-spinner" style="display: none;">
+    <div class="spinner-border text-secondary spinner-small" role="status"></div>
+  </div>
+
+  <script src="js/ocrinfoList.js"></script>
+</body>
+</html>
