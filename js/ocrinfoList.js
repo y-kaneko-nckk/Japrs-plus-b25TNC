@@ -10,7 +10,7 @@ function checkTokenValidity() {
     }
 }
 
-// ページ読み込み時にトークンの有効期限を確認
+// ページ読み込み時
 $(document).ready(function () {
     checkTokenValidity();
   
@@ -18,20 +18,25 @@ $(document).ready(function () {
     const today = new Date().toISOString().slice(0, 10);
     $("#execdtimeSearch").val(today);
 
-    // 初期表示・検索ボタン押下時
-    fetchOcrData(renderOcrTable);
-    $("#searchBtn").on("click", function () {
-        const execdtime = $("#execdtime").val();
-        // 検索条件をクエリパラメータにしてリロード
-        window.location.href = "ocrinfoList.html?execdtimeSearch=" + encodeURIComponent(execdtime);
-    });
-
     // ページ表示時にクエリパラメータがあればフィルタ
     const urlParams = new URLSearchParams(window.location.search);
     const execdtimeParam = urlParams.get("execdtime");
     if (execdtimeParam) {
         $("#execdtime").val(execdtimeParam);
     }
+
+    // データ取得
+    fetchOcrData(renderOcrTable);
+});
+
+// 検索ボタン押下時
+$("#searchBtn").on("click", function () {
+    const execdtime = $("#execdtime").val();
+
+    // データを再取得してフィルタ
+    fetchOcrData(function (data) {
+        renderOcrTable(data, execdtime);
+    });
 });
 
 // インジケーター表示・非表示
@@ -44,56 +49,14 @@ function hideLoading() {
   $("#commonLoadingSpinner").hide();
 }
 
-// データ取得（初回のみ）
-function fetchAllDataOnce(callback) {
-    checkTokenValidity(); // トークンの有効期限を確認
-
-    if (allDataCache) {
-        callback(allDataCache);
-    } else {
-        var idToken = localStorage.getItem("idToken");
-        if (!idToken) {
-            alert("認証情報がありません。ログインしてください。");
-            window.location.href = "login.html";
-            return;
-        }
-
-        showLoading(); // インジケーター表示
-
-        $.ajax({
-            url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/infoMgmt",
-            method: "GET",
-            headers: {
-                Authorization: idToken, // トークンをヘッダーに追加
-            },
-            success: function (data) {
-                console.log("データ取得成功:", data);
-                allDataCache = data;
-                hideLoading(); // インジケーター非表示
-                callback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                hideLoading(); // インジケーター非表示
-                console.error("データ取得エラー:", textStatus, errorThrown);
-                if (jqXHR.status === 401) {
-                    alert("認証エラーです。再度ログインしてください。");
-                    window.location.href = "login.html";
-                }
-            },
-        });
-    }
-}
-
 // OCR情報テーブル描画
-function renderOcrTable(data) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const execdtimeParam = urlParams.get("execdtimeSearch");
-
+function renderOcrTable(data, execdtimeFilter = null) {
     const $tbody = $("#ocrTable tbody");
     $tbody.empty();
-    $.each(data.ocrinfo, function(i, item) {
+
+    $.each(data.ocrinfo, function (i, item) {
         // 実行日時でフィルタ
-        if (execdtimeParam && !item.execdtime.startsWith(execdtimeParam)) {
+        if (execdtimeFilter && !item.execdtime.startsWith(execdtimeFilter)) {
             return; // 日付が一致しない場合はスキップ
         }
         $tbody.append(`

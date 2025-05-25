@@ -10,7 +10,7 @@ function checkTokenValidity() {
     }
 }
 
-// ページ読み込み時にトークンの有効期限を確認
+// ページ読み込み時
 $(document).ready(function () {
     checkTokenValidity();
   
@@ -25,11 +25,17 @@ $(document).ready(function () {
         $("#generatedtime").val(generatedtimeParam);
     }
 
-    // 初期表示・検索ボタン押下時
+    // データ取得
     fetchGenerategkData(renderGeneratedTable);
-    $("#searchBtn").on("click", function () {
-        const generatedtime = $("#generatedtime").val();
-        window.location.href = "generategkList.html?generatedtime=" + encodeURIComponent(generatedtime);
+});
+
+// 検索ボタン押下時
+$("#searchBtn").on("click", function () {
+    const generatedtime = $("#generatedtime").val();
+
+    // データを再取得してフィルタ
+    fetchOcrData(function (data) {
+        fetchGenerategkData(data, generatedtime);
     });
 });
 
@@ -44,12 +50,15 @@ function hideLoading() {
 }
 
 // 生成原稿テーブル描画
-function renderGeneratedTable(data) {
-    const generatedtimeParam = new URLSearchParams(window.location.search).get("generatedtime");
+function renderGeneratedTable(data, generatedtimeFilter = null) {
     const $tbody = $("#generatedTable tbody");
     $tbody.empty();
+
     $.each(data.generategk, function(i, item) {
-        if (generatedtimeParam && !item.generatedtime.startsWith(generatedtimeParam)) return;
+        // 生成日時でフィルタ
+        if (generatedtimeFilter && !item.generatedtime.startsWith(generatedtimeFilter)) {
+            return; // 日付が一致しない場合はスキップ
+        }
         $tbody.append(`
           <tr>
             <td>${item.generatedtime}</td>
