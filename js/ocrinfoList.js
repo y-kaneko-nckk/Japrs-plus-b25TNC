@@ -54,9 +54,13 @@ function renderOcrTable(data, execdtimeFilter = null) {
     const $tbody = $("#ocrTable tbody");
     $tbody.empty();
 
+    // フィルタ条件をYYYY/MM/DD形式に変換
+    const formattedExecdtimeFilter = execdtimeFilter ? execdtimeFilter.replace(/-/g, "/") : null;
+
+
     $.each(data.ocrinfo, function (i, item) {
         // 実行日時でフィルタ
-        if (execdtimeFilter && !item.execdtime.startsWith(execdtimeFilter)) {
+        if (formattedExecdtimeFilter && !item.execdtime.startsWith(formattedExecdtimeFilter)) {
             return; // 日付が一致しない場合はスキップ
         }
         $tbody.append(`

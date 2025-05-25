@@ -54,9 +54,12 @@ function renderGeneratedTable(data, generatedtimeFilter = null) {
     const $tbody = $("#generatedTable tbody");
     $tbody.empty();
 
+    // フィルタ条件をYYYY/MM/DD形式に変換
+    const formattedGeneratedtimetimeFilter = execdtimeFilter ? execdtimeFilter.replace(/-/g, "/") : null;
+
     $.each(data.generategk, function(i, item) {
         // 生成日時でフィルタ
-        if (generatedtimeFilter && !item.generatedtime.startsWith(generatedtimeFilter)) {
+        if (formattedGeneratedtimetimeFilter && !item.generatedtime.startsWith(formattedGeneratedtimetimeFilter)) {
             return; // 日付が一致しない場合はスキップ
         }
         $tbody.append(`
