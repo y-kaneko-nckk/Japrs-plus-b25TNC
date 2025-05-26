@@ -11,6 +11,13 @@
 </head>
 <body>
   <h2>OCR情報詳細</h2>
+
+  <!-- ID・実行日時 -->
+  <div class="header-meta">
+    <div>[ID] <span id="id"></span></div>
+    <div style="margin-left: 5px;">[実行日時] <span id="execdtime"></span></div>
+  </div>
+
   <div class="flex-container">
     <!-- 左側：PDF表示と情報 -->
     <div class="left-panel">
@@ -25,13 +32,7 @@
     </div>
     <!-- 右側：OCRテキスト -->
     <div class="right-panel">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div class="section-title">実行結果</div>
-        <div class="id-date" style="text-align: right;">
-          [ID] <span id="id-right"></span><br>
-          [実行日時] <span id="execdtime"></span>
-        </div>
-      </div>
+      <div class="section-title">実行結果</div>
       <div class="exec-result-box" id="ocrText"></div>
     </div>
   </div>

@@ -39,6 +39,8 @@ $(function() {
       hideLoading(); // インジケーター非表示
       $("#title").text(data.title || "");
       $("#ocrText").text(data.execresult || "");
+      $("#id").text(data.id || "");
+      $("#execdtime").text(data.execdtime || "");
       // presignedUrlがあればそれを使う
       if (data.presignedUrl) {
         $("#pdfViewer").attr("src", data.presignedUrl);

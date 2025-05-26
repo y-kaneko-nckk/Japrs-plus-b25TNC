@@ -11,6 +11,13 @@
 </head>
 <body>
   <h2>生成原稿詳細</h2>
+
+  <!-- ID・生成日時 -->
+  <div class="header-meta">
+    <div>[ID] <span id="id"></span></div>
+    <div style="margin-left: 5px;">[生成日時] <span id="generatedtime"></span></div>
+  </div>
+
   <div class="flex-container">
     <!-- 左側：実行情報 -->
     <div class="left-panel">
@@ -40,10 +47,6 @@
     <div class="right-panel">
       <div style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div class="section-title">実行結果</div>
-        <div class="id-date" style="text-align: right;">
-          [ID] <span id="id"></span><br>
-          [生成日時] <span id="generatedtime"></span>
-        </div>
       </div>
       <div class="exec-result-box" id="execresult"></div>
     </div>
