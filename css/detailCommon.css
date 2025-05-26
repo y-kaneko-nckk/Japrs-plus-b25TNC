@@ -133,3 +133,7 @@ textarea {
   height: 34px;
   padding: 0px 10px;
 }
+
+.button-bottom button:not(:first-child) {
+	margin-left: 10px;
+}

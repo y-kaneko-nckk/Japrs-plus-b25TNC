@@ -83,11 +83,11 @@ $(document).ready(function () {
 
     if (isModified) {
         if (confirm(warnMessage)) {
-        window.location.href = "generategkList.html";
+        window.close();
         }
     } else {
         if (confirm(message)) {
-        window.location.href = "generategkList.html";
+        window.close();
         }
     }
     });
