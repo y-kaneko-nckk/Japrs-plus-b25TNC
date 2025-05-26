@@ -1,3 +1,5 @@
+let isModified = false; // フォームが変更されたかを示すフラグ（別途、入力変更イベントなどでtrueに）
+
 // トークンの有効期限を確認
 function checkTokenValidity() {
     var expirationTime = localStorage.getItem("expirationTime");
@@ -27,6 +29,9 @@ function fetchDetailData() {
         return;
     }
 
+    // インジケーター表示
+    showLoading();
+
     $.ajax({
         url: "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/detail?id=" + encodeURIComponent(id),
         method: "GET",
@@ -34,6 +39,7 @@ function fetchDetailData() {
             Authorization: localStorage.getItem("idToken"),
         },
         success: function(data) {
+            hideLoading(); // インジケーター非表示
             $("#title").text(data.title || "");
             $("#languagemodel").text(data.languagemodel || "");
             $("#workuser").text(data.workuser || "");
@@ -43,6 +49,7 @@ function fetchDetailData() {
             $("#execresult").text(data.execresult || "");
         },
         error: function(jqXHR) {
+            hideLoading(); // インジケーター非表示
             let msg = "データ取得に失敗しました";
             if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
                 msg += ": " + jqXHR.responseJSON.message;
@@ -53,3 +60,33 @@ function fetchDetailData() {
         }
     });
 }
+
+// インジケーター表示・非表示
+function showLoading() {
+  $("#commonDisabledModal").show();
+  $("#commonLoadingSpinner").show();
+}
+function hideLoading() {
+  $("#commonDisabledModal").hide();
+  $("#commonLoadingSpinner").hide();
+}
+
+$("input, textarea, select").on("change input", function () {
+  isModified = true;
+});
+
+$("#footerCloseBtn").on("click", function () {
+  const displayName = $(this).data("displayname");
+  const message = $(this).data("message").replace("{0}", displayName);
+  const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
+
+  if (isModified) {
+    if (confirm(warnMessage)) {
+      window.location.href = "generategkList.html";
+    }
+  } else {
+    if (confirm(message)) {
+      window.location.href = "generategkList.html";
+    }
+  }
+});
