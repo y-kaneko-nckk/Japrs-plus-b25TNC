@@ -89,3 +89,39 @@ $(document).ready(function () {
         }
     });
 });
+
+// 削除ボタン
+$("#deleteBtn").on("click", function () {
+    const id = getQueryParam("id");
+    if (!id) {
+        alert("IDが指定されていません。");
+        return;
+    }
+
+    if (confirm("このデータを削除しますか？")) {
+        showLoading(); // インジケーター表示
+
+        $.ajax({
+            url: "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/delete?id=" + encodeURIComponent(id),
+            method: "DELETE",
+            headers: {
+                Authorization: localStorage.getItem("idToken"),
+            },
+            success: function() {
+                hideLoading(); // インジケーター非表示
+                alert("データを削除しました。");
+                window.close();
+            },
+            error: function(jqXHR) {
+                hideLoading(); // インジケーター非表示
+                let msg = "データ削除に失敗しました";
+                if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    msg += ": " + jqXHR.responseJSON.message;
+                } else if (jqXHR.statusText) {
+                    msg += ": " + jqXHR.statusText;
+                }
+                alert(msg);
+            }
+        });
+    }
+});
