@@ -25,7 +25,7 @@ $(document).ready(function () {
     const formattedToday = today.getFullYear() + "/" +
         String(today.getMonth() + 1).padStart(2, "0") + "/" +
         String(today.getDate()).padStart(2, "0");
-    $("#execdtimeSearch").val(formattedToday);
+    $("#execdtime").val(formattedToday);
 
     // // ページ表示時にクエリパラメータがあればフィルタ
     // const urlParams = new URLSearchParams(window.location.search);
@@ -36,13 +36,13 @@ $(document).ready(function () {
 
     // データを取得してフィルタ
     fetchOcrData(function (data) {
-        renderOcrTable(data, $("#execdtimeSearch").val());
+        renderOcrTable(data, $("#execdtime").val());
     });
 });
 
 // 検索ボタン押下時
 $("#searchBtn").on("click", function () {
-    const execdtime = $("#execdtimeSearch").val();
+    const execdtime = $("#execdtime").val();
 
     // データを再取得してフィルタ
     fetchOcrData(function (data) {
