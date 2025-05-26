@@ -63,7 +63,7 @@ function hideLoading() {
 }
 
 // 生成原稿テーブル描画
-function renderGeneratedTable(data, generatedtimeFilter = null) {
+function renderGeneratedTable(data, generatedtimeFilter) {
     const $tbody = $("#generatedTable tbody");
     $tbody.empty();
 

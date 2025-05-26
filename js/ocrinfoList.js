@@ -67,7 +67,7 @@ function hideLoading() {
 }
 
 // OCR情報テーブル描画
-function renderOcrTable(data, execdtimeFilter = null) {
+function renderOcrTable(data, execdtimeFilter) {
     const $tbody = $("#ocrTable tbody");
     $tbody.empty();
 
