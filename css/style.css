@@ -90,3 +90,18 @@ div[role=main].list-content-area {
   -ms-flex-pack: start !important;
   justify-content: flex-start !important;
 }
+
+#ocrTable th:nth-child(2), 
+#ocrTable td:nth-child(2) {
+  min-width: 150px;
+}
+
+#ocrTable th:nth-child(3), 
+#ocrTable td:nth-child(3) {
+  min-width: 300px;
+}
+
+#generatedTable th:nth-child(2), 
+#generatedTable td:nth-child(2) {
+  min-width: 150px;
+}
