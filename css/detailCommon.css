@@ -143,4 +143,5 @@ textarea {
   align-items: center;
   font-size: 14px;
   margin-bottom: 12px;
+  justify-content: flex-end;
 }
