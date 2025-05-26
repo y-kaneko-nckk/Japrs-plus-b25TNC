@@ -27,12 +27,13 @@ $(document).ready(function () {
         String(today.getDate()).padStart(2, "0");
     $("#generatedtime").val(formattedToday);
 
-    // // クエリパラメータ反映
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const generatedtimeParam = urlParams.get("generatedtime");
-    // if (generatedtimeParam) {
-    //     $("#generatedtime").val(generatedtimeParam);
-    // }
+    // ローカルストレージから検索条件を復元
+    const savedGeneratedtime = localStorage.getItem("generatedtime");
+    if (savedGeneratedtime) {
+        $("#generatedtime").val(savedGeneratedtime);
+    } else {
+        $("#generatedtime").val(formattedToday); // 初期値を今日の日付に設定
+    }
 
     // データを取得してフィルタ
     fetchGenerategkData(function (data) {
@@ -44,10 +45,11 @@ $(document).ready(function () {
 $("#searchBtn").on("click", function () {
     const generatedtime = $("#generatedtime").val();
 
-    // データを再取得してフィルタ
-    fetchGenerategkData(function (data) {
-        renderGeneratedTable(data, generatedtime);
-    });
+    // 検索条件をローカルストレージに保存
+    localStorage.setItem("generatedtime", generatedtime);
+
+    // ページをリロードして検索条件を反映
+    window.location.href = "generategkList.html";
 });
 
 // インジケーター表示・非表示

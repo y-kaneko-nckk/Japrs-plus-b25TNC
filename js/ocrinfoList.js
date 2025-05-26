@@ -27,12 +27,17 @@ $(document).ready(function () {
         String(today.getDate()).padStart(2, "0");
     $("#execdtime").val(formattedToday);
 
-    // // ページ表示時にクエリパラメータがあればフィルタ
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const execdtimeParam = urlParams.get("execdtime");
-    // if (execdtimeParam) {
-    //     $("#execdtime").val(execdtimeParam);
-    // }
+    // ローカルストレージから検索条件を復元
+    const savedExecdtime = localStorage.getItem("execdtime");
+    if (savedExecdtime) {
+        $("#execdtime").val(savedExecdtime);
+    } else {
+        const today = new Date();
+        const formattedToday = today.getFullYear() + "/" +
+            String(today.getMonth() + 1).padStart(2, "0") + "/" +
+            String(today.getDate()).padStart(2, "0");
+        $("#execdtime").val(formattedToday); // 初期値を今日の日付に設定
+    }
 
     // データを取得してフィルタ
     fetchOcrData(function (data) {
@@ -44,10 +49,11 @@ $(document).ready(function () {
 $("#searchBtn").on("click", function () {
     const execdtime = $("#execdtime").val();
 
-    // データを再取得してフィルタ
-    fetchOcrData(function (data) {
-        renderOcrTable(data, execdtime);
-    });
+    // 検索条件をローカルストレージに保存
+    localStorage.setItem("execdtime", execdtime);
+
+    // ページをリロードして検索条件を反映
+    window.location.href = "ocrinfoList.html";
 });
 
 // インジケーター表示・非表示
