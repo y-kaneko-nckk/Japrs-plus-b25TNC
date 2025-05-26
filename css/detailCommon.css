@@ -12,11 +12,11 @@
   box-sizing: border-box;
 }
 .left-panel {
-  width: 55%;
+  width: 50%;
   overflow-y: auto;
 }
 .right-panel {
-  width: 45%;
+  width: 50%;
   overflow-y: auto;
   position: relative;
 }
