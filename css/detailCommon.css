@@ -96,12 +96,17 @@ textarea {
 }
 
 .button-bottom {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: rgba(140, 140, 140, 0.5);
   position: fixed;
-  bottom: 20px;
-  right: 30px;
+  bottom: 0px;
   display: flex;
-  gap: 10px;
-  z-index: 100;
+  justify-content: center;
+  z-index: 500;
 }
 
 .btn {
@@ -114,15 +119,17 @@ textarea {
 }
 
 .btn-exec {
-  background-color: #007bff;
-  color: white;
+  background-color: #82b5dd;
+  color: #ffffff;
 }
 
 .btn-normal {
-  background-color: #e0e0e0;
-  color: #333;
+  background-color: #dddddd;
+  color: #333333;
 }
 
 .btnsize-main {
-  min-width: 100px;
+  width: 120px;
+  height: 34px;
+  padding: 0px 10px;
 }

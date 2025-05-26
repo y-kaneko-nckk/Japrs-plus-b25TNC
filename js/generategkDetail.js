@@ -75,18 +75,20 @@ $("input, textarea, select").on("change input", function () {
   isModified = true;
 });
 
-$("#footerCloseBtn").on("click", function () {
-  const displayName = $(this).data("displayname");
-  const message = $(this).data("message").replace("{0}", displayName);
-  const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
+$(document).ready(function () {
+    $("#footerCloseBtn").on("click", function () {
+    const displayName = $(this).data("displayname");
+    const message = $(this).data("message").replace("{0}", displayName);
+    const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
 
-  if (isModified) {
-    if (confirm(warnMessage)) {
-      window.location.href = "generategkList.html";
+    if (isModified) {
+        if (confirm(warnMessage)) {
+        window.location.href = "generategkList.html";
+        }
+    } else {
+        if (confirm(message)) {
+        window.location.href = "generategkList.html";
+        }
     }
-  } else {
-    if (confirm(message)) {
-      window.location.href = "generategkList.html";
-    }
-  }
+    });
 });
