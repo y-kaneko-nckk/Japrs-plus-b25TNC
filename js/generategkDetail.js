@@ -77,18 +77,15 @@ $("input, textarea, select").on("change input", function () {
 
 $(document).ready(function () {
     $("#footerCloseBtn").on("click", function () {
-    const displayName = $(this).data("displayname");
-    const message = $(this).data("message").replace("{0}", displayName);
-    const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
+        const displayName = $(this).data("displayname");
+        const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
 
-    if (isModified) {
-        if (confirm(warnMessage)) {
-        window.close();
+        if (isModified) {
+            if (confirm(warnMessage)) {
+                window.close();
+            }
+        } else {
+            window.close();
         }
-    } else {
-        if (confirm(message)) {
-        window.close();
-        }
-    }
     });
 });
