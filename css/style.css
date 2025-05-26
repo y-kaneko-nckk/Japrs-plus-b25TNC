@@ -11,7 +11,7 @@ table th, table td {
 }
 
 .tab-container {
-  border-bottom: 2px solid #bbbbbb;
+  border-bottom: 2px solid #cccccc;
   margin-bottom: 10px;
 }
 
@@ -26,7 +26,6 @@ table th, table td {
   position: relative;
   gap: 8px;
   padding-left: 10px;
-  background-color: #eeeeee;
 }
 
 .tab {
