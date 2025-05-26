@@ -46,7 +46,7 @@ $("#searchBtn").on("click", function () {
 
     // データを再取得してフィルタ
     fetchGenerategkData(function (data) {
-        fetchGenerategkData(data, generatedtime);
+        renderGeneratedTable(data, generatedtime);
     });
 });
 
