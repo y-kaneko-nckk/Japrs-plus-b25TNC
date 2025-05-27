@@ -73,6 +73,8 @@ function renderGeneratedTable(data, generatedtimeFilter) {
     // フィルタ条件をYYYY/MM/DD形式に変換
     const formattedGeneratedtimetimeFilter = generatedtimeFilter ? generatedtimeFilter.replace(/-/g, "/") : null;
 
+    let recordCount = 0; // 件数をカウント
+
     $.each(data.generategk, function(i, item) {
         // 調査用のログ出力
         console.log("item[" + i + "]:", item);
@@ -81,6 +83,10 @@ function renderGeneratedTable(data, generatedtimeFilter) {
         if (formattedGeneratedtimetimeFilter && !item.generatedtime.startsWith(formattedGeneratedtimetimeFilter)) {
             return; // 日付が一致しない場合はスキップ
         }
+
+        recordCount++; // 件数をカウント
+
+        // テーブルに行を追加
         $tbody.append(`
           <tr>
             <td>${item.generatedtime}</td>
@@ -96,6 +102,8 @@ function renderGeneratedTable(data, generatedtimeFilter) {
           </tr>
         `);
     });
+    // 件数を表示
+    $("#recordCount").text(`対象件数: ${recordCount} 件`);
 }
 
 // データ取得（生成原稿）
@@ -145,4 +153,57 @@ $("#ocrTab").on("click", function () {
 });
 $("#generatedTab").on("click", function () {
     window.location.href = "generategkList.html";
+});
+
+// 日付操作用の関数
+function adjustDate(date, adjustment) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + (adjustment.days || 0));
+    newDate.setMonth(newDate.getMonth() + (adjustment.months || 0));
+    newDate.setFullYear(newDate.getFullYear() + (adjustment.years || 0));
+    return newDate;
+}
+
+// 日付操作用の関数
+function adjustDate(date, adjustment) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + (adjustment.days || 0));
+    newDate.setMonth(newDate.getMonth() + (adjustment.months || 0));
+    newDate.setFullYear(newDate.getFullYear() + (adjustment.years || 0));
+    return newDate.toISOString().split("T")[0]; // yyyy-mm-dd形式に変換
+}
+
+// 各ボタンのクリックイベント
+$("#prevYearBtn").on("click", function () {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    $("#generatedtime").val(adjustDate(date, { years: -1 }));
+});
+
+$("#prevMonthBtn").on("click", function () {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    $("#generatedtime").val(adjustDate(date, { months: -1 }));
+});
+
+$("#prevDayBtn").on("click", function () {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    $("#generatedtime").val(adjustDate(date, { days: -1 }));
+});
+
+$("#todayBtn").on("click", function () {
+    $("#generatedtime").val(new Date().toISOString().split("T")[0]);
+});
+
+$("#nextDayBtn").on("click", function () {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    $("#generatedtime").val(adjustDate(date, { days: 1 }));
+});
+
+$("#nextMonthBtn").on("click", function () {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    $("#generatedtime").val(adjustDate(date, { months: 1 }));
+});
+
+$("#nextYearBtn").on("click", function () {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    $("#generatedtime").val(adjustDate(date, { years: 1 }));
 });

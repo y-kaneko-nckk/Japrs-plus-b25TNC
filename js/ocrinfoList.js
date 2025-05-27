@@ -74,6 +74,7 @@ function renderOcrTable(data, execdtimeFilter) {
     // フィルタ条件をYYYY/MM/DD形式に変換
     const formattedExecdtimeFilter = execdtimeFilter ? execdtimeFilter.replace(/-/g, "/") : null;
 
+    let recordCount = 0; // 件数をカウント
 
     $.each(data.ocrinfo, function (i, item) {
         // 調査用のログ出力
@@ -83,6 +84,10 @@ function renderOcrTable(data, execdtimeFilter) {
         if (formattedExecdtimeFilter && !item.execdtime.startsWith(formattedExecdtimeFilter)) {
             return; // 日付が一致しない場合はスキップ
         }
+
+        recordCount++; // 件数をカウント
+
+        // テーブルに行を追加
         $tbody.append(`
           <tr>
             <td>${item.execdtime}</td>
@@ -96,6 +101,8 @@ function renderOcrTable(data, execdtimeFilter) {
           </tr>
         `);
     });
+    // 件数を表示
+    $("#recordCount").text(`対象件数: ${recordCount} 件`);
 }
 
 // データ取得（OCR）
