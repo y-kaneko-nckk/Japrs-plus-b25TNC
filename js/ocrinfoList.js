@@ -117,6 +117,13 @@ function fetchOcrData(callback) {
         },
         success: function (data) {
             console.log("APIから取得したデータ:", data);
+
+            // IDを文字列として扱う（念のため）
+            data.ocrinfo = data.ocrinfo.map(item => {
+                item.id = String(item.id); // IDを文字列に変換
+                return item;
+            });
+
             hideLoading(); // インジケーター非表示
             callback(data);
         },
