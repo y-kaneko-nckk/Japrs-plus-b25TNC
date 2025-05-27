@@ -173,37 +173,51 @@ function adjustDate(date, adjustment) {
     return newDate.toISOString().split("T")[0]; // yyyy-mm-dd形式に変換
 }
 
+// 日付操作後に検索処理を実行する共通関数
+function updateAndSearch(adjustment) {
+    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    const newDate = adjustDate(date, adjustment);
+    $("#generatedtime").val(newDate).trigger("change"); // 日付を更新してchangeイベントを発火
+}
+
 // 各ボタンのクリックイベント
 $("#prevYearBtn").on("click", function () {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
-    $("#generatedtime").val(adjustDate(date, { years: -1 }));
+    updateAndSearch({ years: -1 });
 });
 
 $("#prevMonthBtn").on("click", function () {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
-    $("#generatedtime").val(adjustDate(date, { months: -1 }));
+    updateAndSearch({ months: -1 });
 });
 
 $("#prevDayBtn").on("click", function () {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
-    $("#generatedtime").val(adjustDate(date, { days: -1 }));
+    updateAndSearch({ days: -1 });
 });
 
 $("#todayBtn").on("click", function () {
-    $("#generatedtime").val(new Date().toISOString().split("T")[0]);
+    updateAndSearch({ days: 0 });
 });
 
 $("#nextDayBtn").on("click", function () {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
-    $("#generatedtime").val(adjustDate(date, { days: 1 }));
+    updateAndSearch({ days: 1 });
 });
 
 $("#nextMonthBtn").on("click", function () {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
-    $("#generatedtime").val(adjustDate(date, { months: 1 }));
+    updateAndSearch({ months: 1 });
 });
 
 $("#nextYearBtn").on("click", function () {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
-    $("#generatedtime").val(adjustDate(date, { years: 1 }));
+    updateAndSearch({ years: 1 });
+});
+
+// 日付変更時に検索処理を実行
+$("#generatedtime").on("change", function () {
+    const generatedtime = $(this).val();
+
+    // 検索条件をローカルストレージに保存
+    localStorage.setItem("generatedtime", generatedtime);
+
+    // データを再取得してテーブルを更新
+    fetchGenerategkData(function (data) {
+        renderGeneratedTable(data, generatedtime);
+    });
 });
