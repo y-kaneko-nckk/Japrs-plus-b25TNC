@@ -64,6 +64,9 @@ function hideLoading() {
 
 // 生成原稿テーブル描画
 function renderGeneratedTable(data, generatedtimeFilter) {
+    console.log("フィルタ条件:", generatedtimeFilter);
+    console.log("描画データ:", data);
+
     const $tbody = $("#generatedTable tbody");
     $tbody.empty();
 
