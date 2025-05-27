@@ -59,14 +59,13 @@ table th, table td {
 }
 
 .regist-btn {
-  padding: 15px 10px;
+  padding: 5px 10px;
   font-size: 16px;
   background: #82b5dd;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 20px;
   width: 120px;
   height: 34px;
 }
