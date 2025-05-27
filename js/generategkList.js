@@ -117,6 +117,11 @@ function fetchGenerategkData(callback) {
         },
         success: function (data) {
             console.log("APIから取得したデータ:", data);
+
+            data.generategk = data.generategk.map(item => {
+                item.id = String(item.id); // IDを文字列に変換
+                return item;
+            });
             hideLoading(); // インジケーター非表示
             callback(data);
         },
