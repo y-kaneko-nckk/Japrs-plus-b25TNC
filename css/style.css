@@ -39,7 +39,7 @@ table th, table td {
 }
 
 .tab.active {
-  background: #3e8ed0;
+  background: #298ecb;
   font-weight: bold;
   color: white;
 }
@@ -47,7 +47,7 @@ table th, table td {
 .search-btn {
   padding: 5px 10px;
   font-size: 16px;
-  background: #3e8ed0;
+  background: #82b5dd;
   color: white;
   border: none;
   border-radius: 4px;
@@ -59,7 +59,7 @@ table th, table td {
 .regist-btn {
   padding: 5px 10px;
   font-size: 16px;
-  background: #3e8ed0;
+  background: #82b5dd;
   color: white;
   border: none;
   border-radius: 4px;
