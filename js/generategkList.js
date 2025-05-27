@@ -71,6 +71,9 @@ function renderGeneratedTable(data, generatedtimeFilter) {
     const formattedGeneratedtimetimeFilter = generatedtimeFilter ? generatedtimeFilter.replace(/-/g, "/") : null;
 
     $.each(data.generategk, function(i, item) {
+        // 調査用のログ出力
+        console.log("item[" + i + "]:", item);
+
         // 生成日時でフィルタ
         if (formattedGeneratedtimetimeFilter && !item.generatedtime.startsWith(formattedGeneratedtimetimeFilter)) {
             return; // 日付が一致しない場合はスキップ

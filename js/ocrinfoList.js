@@ -76,6 +76,9 @@ function renderOcrTable(data, execdtimeFilter) {
 
 
     $.each(data.ocrinfo, function (i, item) {
+        // 調査用のログ出力
+        console.log("item[" + i + "]:", item);
+
         // 実行日時でフィルタ
         if (formattedExecdtimeFilter && !item.execdtime.startsWith(formattedExecdtimeFilter)) {
             return; // 日付が一致しない場合はスキップ
