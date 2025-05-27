@@ -146,3 +146,63 @@ $("#ocrTab").on("click", function () {
 $("#generatedTab").on("click", function () {
     window.location.href = "generategkList.html";
 });
+
+// 日付操作用の関数
+function adjustDate(date, adjustment) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + (adjustment.days || 0));
+    newDate.setMonth(newDate.getMonth() + (adjustment.months || 0));
+    newDate.setFullYear(newDate.getFullYear() + (adjustment.years || 0));
+    return newDate;
+}
+
+// 日付をフォーマットする関数 (yyyy/mm/dd)
+function formatDate(date) {
+    return date.getFullYear() + "/" +
+        String(date.getMonth() + 1).padStart(2, "0") + "/" +
+        String(date.getDate()).padStart(2, "0");
+}
+
+// カレンダーアイコンをクリックしたときの処理
+$("#calendarBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    const newDate = prompt("日付を入力してください (yyyy/mm/dd):", formatDate(date));
+    if (newDate) {
+        $("#execdtime").val(newDate);
+    }
+});
+
+// 各ボタンのクリックイベント
+$("#prevYearBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    $("#execdtime").val(formatDate(adjustDate(date, { years: -1 })));
+});
+
+$("#prevMonthBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    $("#execdtime").val(formatDate(adjustDate(date, { months: -1 })));
+});
+
+$("#prevDayBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    $("#execdtime").val(formatDate(adjustDate(date, { days: -1 })));
+});
+
+$("#todayBtn").on("click", function () {
+    $("#execdtime").val(formatDate(new Date()));
+});
+
+$("#nextDayBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    $("#execdtime").val(formatDate(adjustDate(date, { days: 1 })));
+});
+
+$("#nextMonthBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    $("#execdtime").val(formatDate(adjustDate(date, { months: 1 })));
+});
+
+$("#nextYearBtn").on("click", function () {
+    const date = new Date($("#execdtime").val() || new Date());
+    $("#execdtime").val(formatDate(adjustDate(date, { years: 1 })));
+});
