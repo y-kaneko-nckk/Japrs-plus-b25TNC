@@ -116,6 +116,7 @@ function fetchOcrData(callback) {
             Authorization: idToken,
         },
         success: function (data) {
+            console.log("APIから取得したデータ:", data);
             hideLoading(); // インジケーター非表示
             callback(data);
         },
