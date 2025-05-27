@@ -22,9 +22,7 @@ $(document).ready(function () {
   
     // 生成日時初期値
     const today = new Date();
-    const formattedToday = today.getFullYear() + "/" +
-        String(today.getMonth() + 1).padStart(2, "0") + "/" +
-        String(today.getDate()).padStart(2, "0");
+    const formattedToday = today.toISOString().split("T")[0];
     $("#generatedtime").val(formattedToday);
 
     // ローカルストレージから検索条件を復元
