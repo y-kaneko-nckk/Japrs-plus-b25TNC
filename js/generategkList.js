@@ -224,3 +224,10 @@ $("#generatedtime").on("change", function () {
         renderGeneratedTable(data, generatedtime);
     });
 });
+
+$(document).ready(function () {
+    // 登録ボタンのクリック
+    $("#registBtn").on("click", function () {
+        window.open("generategkRegist.html", "_blank"); // 新しいタブで開く
+    });
+});

@@ -226,6 +226,6 @@ $("#execdtime").on("change", function () {
 $(document).ready(function () {
     // 登録ボタンのクリック
     $("#registBtn").on("click", function () {
-        window.location.href = "ocrinfoRegist.html";
+        window.open("ocrinfoRegist.html", "_blank"); // 新しいタブで開く
     });
 });
