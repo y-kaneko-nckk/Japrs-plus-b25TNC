@@ -45,31 +45,51 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    // クリアボタンのクリックイベント
-    $("#clearFileBtn").on("click", function () {
-        $("#uploadFile").val(""); // ファイル選択をクリア
-        $("#filename").val("");   // ファイル名をクリア
-        $(this).prop("disabled", true); // クリアボタンを無効化
-    });
-
-    // 添付ボタンのクリックイベント
-    $("#attachFileBtn").on("click", function () {
-        $("#uploadFile").click(); // ファイル選択ダイアログを表示
-    });
-
-    // ファイル選択時の処理
-    $("#uploadFile").on("change", function () {
-        const file = this.files[0];
-        if (file) {
-            $("#filename").val(file.name); // ファイル名を表示
-            $("#clearFileBtn").prop("disabled", false); // クリアボタンを有効化
-        }
-    });
 
     // 実行ボタンのクリックイベント
     $("#execBtn").on("click", function () {
-        // OCR実行処理（API呼び出しなど）
-        alert("原稿生成を開始します。");
+        const languageModel = $("#languageModel").val();
+        const document = $("#document").val();
+        const format = $("#format").val();
+
+        // 必須項目のチェック
+        if (!languageModel || !document || !format) {
+            alert("すべての必須項目を入力してください。");
+            return;
+        }
+
+        // インジケーター表示
+        showLoading();
+
+        // Lambda関数を呼び出すためのAPIリクエスト
+        $.ajax({
+            url: "https://your-api-endpoint.amazonaws.com/prod/generategk/prompting", // LambdaのAPI Gatewayエンドポイント
+            method: "GET",
+            headers: {
+                Authorization: localStorage.getItem("idToken"), // トークンをヘッダーに追加
+            },
+            contentType: "application/json",
+            data: JSON.stringify({
+                languageModel: languageModel,
+                document: document,
+                format: format,
+            }),
+            success: function (response) {
+                hideLoading(); // インジケーター非表示
+                $("#execResult").val(response.generatedDocument); // 実行結果を表示
+                alert("原稿生成が完了しました。");
+            },
+            error: function (jqXHR) {
+                hideLoading(); // インジケーター非表示
+                let msg = "原稿生成に失敗しました";
+                if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    msg += ": " + jqXHR.responseJSON.message;
+                } else if (jqXHR.statusText) {
+                    msg += ": " + jqXHR.statusText;
+                }
+                alert(msg);
+            }
+        });
     });
 
     // 登録ボタンのクリックイベント
