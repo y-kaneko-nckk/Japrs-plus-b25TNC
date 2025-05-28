@@ -1,0 +1,159 @@
+/* 詳細画面 共通レイアウト */
+.flex-container {
+  display: flex;
+  gap: 20px;
+  height: 90vh;
+}
+.left-panel, .right-panel {
+  background: #f8f8fc;
+  border: 1px solid #b0b0b0;
+  border-radius: 4px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.left-panel {
+  width: 50%;
+  overflow-y: auto;
+}
+.right-panel {
+  width: 50%;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* セクションタイトル */
+.section-title {
+  background: #3b5998;
+  color: #fff;
+  padding: 6px 12px;
+  font-weight: bold;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 8px;
+}
+
+/* 入力フォーム */
+input[type="text"], textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+/* テーブル */
+table.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+table.detail-table th, table.detail-table td {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+}
+table.detail-table th {
+  width: 90px;
+  background: #f0f0f8;
+}
+
+/* テキストエリア */
+textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1em;
+  background: #f9f9ff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+/* 実行結果・OCRテキスト表示枠 */
+.exec-result-box {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 200px;
+  white-space: pre-wrap;
+  font-family: inherit;
+}
+
+/* ID・日時表示（右上固定） */
+.right-panel-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 4px;
+}
+.id-date {
+  text-align: right;
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* PDF iframe */
+.pdf-viewer {
+  width: 100%;
+  height: 900px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* ボタン */
+.button-bottom {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: rgba(140, 140, 140, 0.5);
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  z-index: 500;
+}
+
+.btn {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-exec {
+  background-color: #82b5dd;
+  color: #ffffff;
+}
+
+.btn-normal {
+  background-color: #dddddd;
+  color: #333333;
+}
+
+.btnsize-main {
+  width: 120px;
+  height: 34px;
+  padding: 0px 10px;
+}
+
+.button-bottom button:not(:first-child) {
+	margin-left: 10px;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 12px;
+  justify-content: flex-end;
+}

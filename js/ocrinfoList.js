@@ -222,3 +222,10 @@ $("#execdtime").on("change", function () {
         renderOcrTable(data, execdtime);
     });
 });
+
+$(document).ready(function () {
+    // 登録ボタンのクリック
+    $("#registBtn").on("click", function () {
+        window.location.href = "ocrinfoRegist.html";
+    });
+});
