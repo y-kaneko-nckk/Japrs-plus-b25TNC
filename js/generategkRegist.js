@@ -76,7 +76,9 @@ $(document).ready(function () {
             }),
             success: function (response) {
                 hideLoading(); // インジケーター非表示
-                $("#execResult").val(response.generatedDocument); // 実行結果を表示
+                // 画面にタイトルと原稿を反映
+                $("#title").val(response.title);
+                $("#execResult").val(response.generatedDocument);
                 alert("原稿生成が完了しました。");
             },
             error: function (jqXHR) {
