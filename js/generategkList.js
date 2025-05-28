@@ -25,8 +25,8 @@ $(document).ready(function () {
     const formattedToday = today.toISOString().split("T")[0];
     $("#generatedtime").val(formattedToday);
 
-    // ローカルストレージから検索条件を復元
-    const savedGeneratedtime = localStorage.getItem("generatedtime");
+    // セッションストレージから検索条件を復元
+    const savedGeneratedtime = sessionStorage.getItem("generatedtime");
     if (savedGeneratedtime) {
         $("#generatedtime").val(savedGeneratedtime);
     } else {
@@ -43,8 +43,8 @@ $(document).ready(function () {
 $("#searchBtn").on("click", function () {
     const generatedtime = $("#generatedtime").val();
 
-    // 検索条件をローカルストレージに保存
-    localStorage.setItem("generatedtime", generatedtime);
+    // 検索条件をセッションストレージに保存
+    sessionStorage.setItem("generatedtime", generatedtime);
 
     // ページをリロードして検索条件を反映
     window.location.href = "generategkList.html";
@@ -211,8 +211,8 @@ $("#nextYearBtn").on("click", function () {
 $("#generatedtime").on("change", function () {
     const generatedtime = $(this).val();
 
-    // 検索条件をローカルストレージに保存
-    localStorage.setItem("generatedtime", generatedtime);
+    // 検索条件をセッションストレージに保存
+    sessionStorage.setItem("generatedtime", generatedtime);
 
     // データを再取得してテーブルを更新
     fetchGenerategkData(function (data) {

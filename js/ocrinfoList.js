@@ -25,8 +25,8 @@ $(document).ready(function () {
     const formattedToday = today.toISOString().split("T")[0];
     $("#execdtime").val(formattedToday);
 
-    // ローカルストレージから検索条件を復元
-    const savedExecdtime = localStorage.getItem("execdtime");
+    // セッションストレージから検索条件を復元
+    const savedExecdtime = sessionStorage.getItem("execdtime");
     if (savedExecdtime) {
         $("#execdtime").val(savedExecdtime);
     } else {
@@ -47,8 +47,8 @@ $(document).ready(function () {
 $("#searchBtn").on("click", function () {
     const execdtime = $("#execdtime").val();
 
-    // 検索条件をローカルストレージに保存
-    localStorage.setItem("execdtime", execdtime);
+    // 検索条件をセッションストレージに保存
+    sessionStorage.setItem("execdtime", execdtime);
 
     // ページをリロードして検索条件を反映
     window.location.href = "ocrinfoList.html";
@@ -210,8 +210,8 @@ $("#nextYearBtn").on("click", function () {
 $("#execdtime").on("change", function () {
     const execdtime = $(this).val();
 
-    // 検索条件をローカルストレージに保存
-    localStorage.setItem("execdtime", execdtime);
+    // 検索条件をセッションストレージに保存
+    sessionStorage.setItem("execdtime", execdtime);
 
     // データを再取得してテーブルを更新
     fetchOcrData(function (data) {
