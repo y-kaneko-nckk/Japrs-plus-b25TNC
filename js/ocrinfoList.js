@@ -30,11 +30,10 @@ $(document).ready(function () {
     if (savedExecdtime) {
         $("#execdtime").val(savedExecdtime);
     } else {
+        // 実行日時の初期値を今日にセット
         const today = new Date();
-        const formattedToday = today.getFullYear() + "/" +
-            String(today.getMonth() + 1).padStart(2, "0") + "/" +
-            String(today.getDate()).padStart(2, "0");
-        $("#execdtime").val(formattedToday); // 初期値を今日の日付に設定
+        const formattedToday = today.toISOString().split("T")[0]; // yyyy-MM-dd形式
+        $("#execdtime").val(formattedToday);
     }
 
     // データを取得してフィルタ
