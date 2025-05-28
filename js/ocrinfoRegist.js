@@ -70,24 +70,25 @@ $("#saveBtn").on("click", function () {
     alert("登録処理を開始します。");
 });
 
-// クリアボタンのクリックイベント
-$("#clearFileBtn").on("click", function () {
-    $("#uploadFile").val("");
-    $("#filename").val("");
-    $(this).prop("disabled", true);
-});
+$(document).ready(function () {
+    // クリアボタンのクリックイベント
+    $("#clearFileBtn").on("click", function () {
+        $("#uploadFile").val(""); // ファイル選択をクリア
+        $("#filename").val("");   // ファイル名をクリア
+        $(this).prop("disabled", true); // クリアボタンを無効化
+    });
 
-// attachFileBtnのクリックイベント
-$("#attachFileBtn").on("click", function () {
-    // ファイル選択ダイアログを表示
-    $("#uploadFile").click();
-});
+    // 添付ボタンのクリックイベント
+    $("#attachFileBtn").on("click", function () {
+        $("#uploadFile").click(); // ファイル選択ダイアログを表示
+    });
 
-// ファイル選択時の処理
-$("#uploadFile").on("change", function () {
-    const file = this.files[0];
-    if (file) {
-        $("#filename").val(file.name);
-        $("#clearFileBtn").prop("disabled", false);
-    }
+    // ファイル選択時の処理
+    $("#uploadFile").on("change", function () {
+        const file = this.files[0];
+        if (file) {
+            $("#filename").val(file.name); // ファイル名を表示
+            $("#clearFileBtn").prop("disabled", false); // クリアボタンを有効化
+        }
+    });
 });
