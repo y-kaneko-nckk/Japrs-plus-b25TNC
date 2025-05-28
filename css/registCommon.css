@@ -63,11 +63,10 @@ table.detail-table th {
 /* テキストエリア */
 textarea {
   width: 100%;
-  min-height: 80px;
+  min-height: 250px;
   resize: vertical;
   font-family: inherit;
   font-size: 1em;
-  background: #f9f9ff;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 6px;

@@ -32,21 +32,20 @@
         <label for="prompt">プロンプト</label>
         <select id="prompt" name="prompt">
           <option value=""></option>
-          <option value="us.anthropic.claude-3-7-sonnet-20250219-v1:0">Claude 3.7 Sonnet</option>
           <option value="1">火事</option>
           <option value="2">事故[速報]</option>
           <option value="3">裁判</option>
         </select>
 
         <label for="format">フォーマット</label>
-        <input type="text" id="format" name="format">
+        <textarea id="format" name="format" required></textarea>
       </form>
     </div>
     <!-- 右側：OCRテキスト -->
     <div class="right-panel">
         <div class="section-title">実行情報</div>
         <label for="title">タイトル</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" name="title" readonly required>
 
         <label for="execResult">実行結果</label>
         <textarea id="execResult" name="execResult" readonly></textarea>
