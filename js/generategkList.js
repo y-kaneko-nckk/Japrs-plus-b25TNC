@@ -192,7 +192,12 @@ $("#prevDayBtn").on("click", function () {
 });
 
 $("#todayBtn").on("click", function () {
-    updateAndSearch({ days: 0 });
+    // 今日の日付を取得
+    const today = new Date();
+    const formattedToday = today.toISOString().split("T")[0]; // yyyy-MM-dd形式に変換
+
+    // 実行日時を今日の日付に設定し、検索処理を実行
+    $("#generatedtime").val(formattedToday).trigger("change");
 });
 
 $("#nextDayBtn").on("click", function () {
