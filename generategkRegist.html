@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>生成原稿登録 | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">  
+  <link rel="stylesheet" href="css/registCommon.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/ocrinfoRegist.js"></script>
+</head>
+<body>
+  <h2>OCR情報登録</h2>
+
+  <div class="flex-container">
+    <!-- 左側：入力フォーム -->
+    <div class="left-panel">
+      <div class="section-title">実行情報</div>
+      <form id="registForm">
+        <label for="languageModel">言語モデル</label>
+        <select id="languageModel" name="languageModel">
+          <option value=""></option>
+          <option value="model1">モデル1</option>
+          <option value="model2">モデル2</option>
+        </select>
+
+        <label for="worker">作業者</label>
+        <input type="text" id="worker" name="worker">
+
+        <label for="document">ドキュメント</label>
+        <textarea id="document" name="document"></textarea>
+
+        <label for="prompt">プロンプト</label>
+        <textarea id="prompt" name="prompt"></textarea>
+
+        <label for="format">フォーマット</label>
+        <input type="text" id="format" name="format">
+      </form>
+    </div>
+    <!-- 右側：OCRテキスト -->
+    <div class="right-panel">
+        <label for="title">タイトル</label>
+        <input type="text" id="title" name="title" placeholder="タイトルを入力してください" required>
+
+        <label for="execResult">実行結果</label>
+        <textarea id="execResult" name="execResult" readonly placeholder="実行結果がここに表示されます"></textarea>
+    </div>
+  </div>
+
+  <div class="button-bottom">
+    <button type="button" id="execBtn" class="btn btn-exec btnsize-main">実行</button>
+    <button type="button" id="registBtn" class="btn btn-exec btnsize-main">登録</button>
+    <button type="button" id="footerCloseBtn" class="btn btn-normal btnsize-main"
+      data-displayname="生成原稿登録"
+      data-warn-message="{0}を終了します。内容が変更されていますが、破棄して画面を終了します。">
+      キャンセル
+    </button>
+  </div>
+  <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document"></div>
+  </div>
+  <div id="commonLoadingSpinner" class="loading-spinner" style="display: none;">
+    <div class="spinner-border text-secondary spinner-small" role="status"></div>
+  </div>
+</body>
+</html>

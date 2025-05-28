@@ -66,24 +66,18 @@ $(document).ready(function () {
         }
     });
 
-    // OCR実行ボタンのクリックイベント
-    $("#execOcrBtn").on("click", function () {
-        const file = $("#uploadFile")[0].files[0];
-        if (!file) {
-            alert("ファイルを選択してください。");
-            return;
-        }
-
+    // 実行ボタンのクリックイベント
+    $("#execBtn").on("click", function () {
         // OCR実行処理（API呼び出しなど）
-        alert("OCR実行処理を開始します。");
+        alert("原稿生成を開始します。");
     });
 
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
         const title = $("#title").val();
-        const execResult = $("#ocrText").text();
+        const execResult = $("#execResult").text();
 
-        if (!title || !execResult) {
+        if (!title) {
             alert("必須項目を入力してください。");
             return;
         }
