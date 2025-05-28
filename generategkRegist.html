@@ -19,6 +19,7 @@
       <form id="registForm">
         <label for="languageModel">言語モデル</label>
         <select id="languageModel" name="languageModel" required>
+          <option value=""></option>
           <option value="us.anthropic.claude-3-7-sonnet-20250219-v1:0">Claude 3.7 Sonnet</option>
         </select>
 
@@ -29,7 +30,13 @@
         <textarea id="document" name="document" required></textarea>
 
         <label for="prompt">プロンプト</label>
-        <textarea id="prompt" name="prompt"></textarea>
+        <select id="prompt" name="prompt">
+          <option value=""></option>
+          <option value="us.anthropic.claude-3-7-sonnet-20250219-v1:0">Claude 3.7 Sonnet</option>
+          <option value="1">火事</option>
+          <option value="2">事故[速報]</option>
+          <option value="3">裁判</option>
+        </select>
 
         <label for="format">フォーマット</label>
         <input type="text" id="format" name="format">

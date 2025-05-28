@@ -32,7 +32,7 @@
 }
 
 /* 入力フォーム */
-input[type="text"], textarea {
+input[type="text"], textarea, select {
   width: 100%;
   padding: 8px;
   margin-bottom: 12px;
@@ -40,6 +40,7 @@ input[type="text"], textarea {
   border-radius: 4px;
   font-size: 1em;
   box-sizing: border-box;
+  background: white; /* 背景色を統一 */
 }
 
 /* テーブル */
@@ -156,4 +157,10 @@ textarea {
   font-size: 14px;
   margin-bottom: 12px;
   justify-content: flex-end;
+}
+
+/* セレクトボックス */
+select {
+  height: auto; /* 高さを自動調整 */
+  font-family: inherit;
 }
