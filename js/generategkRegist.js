@@ -193,6 +193,7 @@ $(document).ready(function () {
             }
         });
     });
+});
 
 //     $(document).ready(function () {
 //         // フォーマット切り替え時
