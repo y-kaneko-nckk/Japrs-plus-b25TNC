@@ -71,10 +71,10 @@ $(document).ready(function () {
 
         // Lambda関数を呼び出すためのAPIリクエスト
         const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
-        console.log("APIリクエストを開始します。");
-        console.log("リクエストURL:", apiUrl);
-        console.log("リクエストヘッダー:", { Authorization: idToken });
-        console.log("リクエストデータ:", { languageModel, document, format });
+        // console.log("APIリクエストを開始します。");
+        // console.log("リクエストURL:", apiUrl);
+        // console.log("リクエストヘッダー:", { Authorization: idToken });
+        // console.log("リクエストデータ:", { languageModel, document, format });
 
         // Lambda関数を呼び出すためのAPIリクエスト
         $.ajax({
@@ -86,10 +86,10 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify({ languageModel, document, format }),
             success: function (response) {
-                console.log("APIリクエストが成功しました。レスポンス:", response);
+                //console.log("APIリクエストが成功しました。レスポンス:", response);
                 $("#title").val(response.title);
                 $("#execResult").val(response.generatedDocument);
-                alert("原稿生成が完了しました。");
+                hideLoading(); // インジケーター非表示
             },
             error: function (jqXHR) {
                 console.error("APIリクエストが失敗しました。");
