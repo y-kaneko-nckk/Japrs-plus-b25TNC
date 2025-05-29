@@ -116,13 +116,12 @@ $(document).ready(function () {
         const languageModel = $("#languageModel").val();
         const worker = $("#worker").val();
         const document = $("#document").val();
-        const prompt = $("#prompt").val();
         const format = $("#format").val();
+        const prompt = `${document}\n${format}`;
         const title = $("#title").val();
         const execResult = $("#execResult").val();
         const today = new Date();
         const formattedToday = today.toISOString().split("T")[0];
-        $("#generatedtime").val(formattedToday); // 日付を今日の日付に設定
         const generatedtime = formattedToday;
 
         // 必須項目のチェック
@@ -147,7 +146,7 @@ $(document).ready(function () {
         console.log("登録APIリクエストを開始します。");
         console.log("リクエストURL:", apiUrl);
         console.log("リクエストヘッダー:", { Authorization: idToken });
-        console.log("リクエストデータ:", { languageModel, worker, document, prompt, format, title, execResult, generatedtime });
+        console.log("リクエストデータ:", { languageModel, worker, prompt, title, execResult, generatedtime });
 
         $.ajax({
             url: apiUrl,
@@ -156,7 +155,7 @@ $(document).ready(function () {
                 Authorization: idToken,
             },
             contentType: "application/json",
-            data: JSON.stringify({ languageModel, worker, document, prompt, format, title, execResult, generatedtime }),
+            data: JSON.stringify({ languageModel, worker, prompt, title, execResult, generatedtime }),
             success: function (response) {
                 console.log("登録APIリクエストが成功しました。レスポンス:", response);
                 hideLoading(); // インジケーター非表示
