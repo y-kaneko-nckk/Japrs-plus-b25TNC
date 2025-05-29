@@ -53,8 +53,16 @@ $(document).ready(function () {
         const format = $("#format").val();
 
         // 必須項目のチェック
-        if (!languageModel || !document || !format) {
+        if (!languageModel || !document || !format || languageModel.trim() === "" || document.trim() === "" || format.trim() === "") {
             alert("すべての必須項目を入力してください。");
+            return;
+        }
+
+        // トークンの有効性チェック
+        const idToken = localStorage.getItem("idToken");
+        if (!idToken) {
+            alert("認証トークンがありません。再度ログインしてください。");
+            window.location.href = "login.html";
             return;
         }
 
@@ -62,33 +70,23 @@ $(document).ready(function () {
         showLoading();
 
         // Lambda関数を呼び出すためのAPIリクエスト
+        const apiUrl = "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
         console.log("APIリクエストを開始します。");
-        console.log("リクエストURL:", "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting");
-        console.log("リクエストヘッダー:", {
-            Authorization: localStorage.getItem("idToken"),
-        });
-        console.log("リクエストデータ:", {
-            languageModel: languageModel,
-            document: document,
-            format: format,
-        });
+        console.log("リクエストURL:", apiUrl);
+        console.log("リクエストヘッダー:", { Authorization: idToken });
+        console.log("リクエストデータ:", { languageModel, document, format });
 
         // Lambda関数を呼び出すためのAPIリクエスト
         $.ajax({
-            url: "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting", // LambdaのAPI Gatewayエンドポイント
+            url: apiUrl,
             method: "POST",
             headers: {
-                Authorization: localStorage.getItem("idToken"), // トークンをヘッダーに追加
+                Authorization: idToken,
             },
-            data: JSON.stringify({
-                languageModel: languageModel,
-                document: document,
-                format: format,
-            }),
+            contentType: "application/json",
+            data: JSON.stringify({ languageModel, document, format }),
             success: function (response) {
                 console.log("APIリクエストが成功しました。レスポンス:", response);
-                hideLoading(); // インジケーター非表示
-                // 画面にタイトルと原稿を反映
                 $("#title").val(response.title);
                 $("#execResult").val(response.generatedDocument);
                 alert("原稿生成が完了しました。");
@@ -96,13 +94,15 @@ $(document).ready(function () {
             error: function (jqXHR) {
                 console.error("APIリクエストが失敗しました。");
                 console.error("ステータスコード:", jqXHR.status);
-                console.error("レスポンス:", jqXHR.responseText);
-                console.error("エラーメッセージ:", jqXHR.statusText);
+                console.error("レスポンス:", jqXHR.responseText || "レスポンスなし");
+                console.error("エラーメッセージ:", jqXHR.statusText || "エラーメッセージなし");
 
                 hideLoading(); // インジケーター非表示
                 let msg = "原稿生成に失敗しました";
                 if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
                     msg += ": " + jqXHR.responseJSON.message;
+                } else if (jqXHR.responseText) {
+                    msg += ": " + jqXHR.responseText;
                 } else if (jqXHR.statusText) {
                     msg += ": " + jqXHR.statusText;
                 }
