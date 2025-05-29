@@ -17,19 +17,19 @@
     <div class="left-panel">
       <div class="section-title">実行情報</div>
       <form id="registForm">
-        <label for="languageModel">言語モデル</label>
+        <label for="languageModel" style="display: none;">言語モデル</label>
         <select id="languageModel" name="languageModel" style="display: none;">
           <option value=""></option>
           <option value="us.anthropic.claude-3-7-sonnet-20250219-v1:0">Claude 3.7 Sonnet</option>
         </select>
 
-        <label for="worker">作業者</label>
+        <label for="worker" style="display: none;">作業者</label>
         <input type="text" id="worker" name="worker" style="display: none;">
 
         <label for="document">ドキュメント</label>
         <textarea id="document" name="document" required></textarea>
 
-        <label for="prompt">プロンプト</label>
+        <label for="prompt" style="display: none;">プロンプト</label>
         <select id="prompt" name="prompt" style="display: none;">
           <option value=""></option>
           <option value="1">火事</option>
@@ -37,8 +37,17 @@
           <option value="3">裁判</option>
         </select>
 
-        <label for="format">フォーマット</label>
-        <textarea id="format" name="format" style="display: none;"></textarea>
+        <label for="format" style="display: none;">フォーマット</label>
+        <textarea id="format" name="format" value="あなたは放送局のニュースを担当する記者です。ドキュメントを基にニュース原稿を完成させてください。その際、下記のルールに従ってください。
+・原稿はリード文（50字程度）と本文（300字程度）に分けてください。
+・リード文は読みたくなるような見出しとなりうる要約にしてください。
+・内容は「イベント」や「催し」の紹介です。イベント開催当日に、実際に行ったものとして原稿を作ってください。オンラインの場合はオンラインで参加したものとして原稿を作ってください。
+・記載していない事実以外の事実を加えないでください。
+・住所は町名のみを使用し、○丁目以下の番地は使用しないでください。
+・構成のタイトル名は含めず、自然な文章として出力してください。
+・文体は敬体（です・ます調）を使用してください。
+・感情や主観を排除するように心がけてください。
+・本文の読み上げ時間が60秒以内（約250～300語）になるよう調整してください。出力後に自らカウントして、過不足があれば調整してください。" style="display: none;"></textarea>
       </form>
     </div>
     <!-- 右側：OCRテキスト -->

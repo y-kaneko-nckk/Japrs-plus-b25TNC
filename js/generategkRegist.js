@@ -30,31 +30,37 @@ $("input, textarea, select").on("change input", function () {
 });
 
 $(document).ready(function () {
-  $("#footerCloseBtn").on("click", function () {
-    const displayName = $(this).data("displayname");
-    const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
-
-    if (isModified) {
-      if (confirm(warnMessage)) {
-        window.close();
-      }
-    } else {
-      window.close();
+    // Cognitoユーザー情報を取得してworkerに設定
+    const cognitoUserInfo = localStorage.getItem("cognitoUserInfo"); // ローカルストレージから取得
+    if (cognitoUserInfo) {
+        $("#worker").val(cognitoUserInfo); // workerのvalueに設定
     }
-  });
+
+    $("#footerCloseBtn").on("click", function () {
+        const displayName = $(this).data("displayname");
+        const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
+
+        if (isModified) {
+        if (confirm(warnMessage)) {
+            window.close();
+        }
+        } else {
+        window.close();
+        }
+    });
 });
 
 $(document).ready(function () {
 
     // 実行ボタンのクリックイベント
     $("#execBtn").on("click", function () {
-        const languageModel = $("#languageModel").val();
+        const languageModel = "us.anthropic.claude-3-7-sonnet-20250219-v1:0";
         const document = $("#document").val();
         const format = $("#format").val();
 
         // 必須項目のチェック
-        if (!languageModel || !document || !format || languageModel.trim() === "" || document.trim() === "" || format.trim() === "") {
-            alert("すべての必須項目を入力してください。");
+        if (!document || document.trim() === "" ||) {
+            alert("ドキュメントを入力してください。");
             return;
         }
 
@@ -113,11 +119,9 @@ $(document).ready(function () {
 
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
-        const languageModel = $("#languageModel").val();
+        const languageModel = "us.anthropic.claude-3-7-sonnet-20250219-v1:0";
         const worker = $("#worker").val();
-        const document = $("#document").val();
-        const format = $("#format").val();
-        const prompt = `${document}\n${format}`;
+        const prompt = "####ドキュメント\n${document}\n\n####フォーマット\n${format}";
         const title = $("#title").val();
         const execResult = $("#execResult").val();
         const today = new Date();
