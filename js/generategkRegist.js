@@ -113,12 +113,17 @@ $(document).ready(function () {
 
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
+        const languageModel = $("#languageModel").val();
+        const worker = $("#worker").val();
+        const document = $("#document").val();
+        const prompt = $("#prompt").val();
+        const format = $("#format").val();
         const title = $("#title").val();
-        const execResult = $("#execResult").val(); // テキストエリアの値を取得
+        const execResult = $("#execResult").val();
 
         // 必須項目のチェック
         if (!title || title.trim() === "" || !execResult || execResult.trim() === "") {
-            alert("すべての必須項目を入力してください。");
+            alert("実行結果に値が存在しません。");
             return;
         }
 
@@ -138,7 +143,7 @@ $(document).ready(function () {
         console.log("登録APIリクエストを開始します。");
         console.log("リクエストURL:", apiUrl);
         console.log("リクエストヘッダー:", { Authorization: idToken });
-        console.log("リクエストデータ:", { title, execResult });
+        console.log("リクエストデータ:", { languageModel, worker, document, prompt, format, title, execResult });
 
         $.ajax({
             url: apiUrl,
@@ -147,7 +152,7 @@ $(document).ready(function () {
                 Authorization: idToken,
             },
             contentType: "application/json",
-            data: JSON.stringify({ title, execResult }),
+            data: JSON.stringify({ languageModel, worker, document, prompt, format, title, execResult }),
             success: function (response) {
                 console.log("登録APIリクエストが成功しました。レスポンス:", response);
                 hideLoading(); // インジケーター非表示
