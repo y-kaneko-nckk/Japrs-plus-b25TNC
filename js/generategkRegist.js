@@ -129,8 +129,10 @@ $(document).ready(function () {
 
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
+        const languageModelName = "Claude 3.7 Sonnet";
         const worker = $("#worker").val();
-        const prompt = "####ドキュメント\n${document}\n\n####フォーマット\n${format}";
+        const document = $("#document").val();
+        const prompt = "####ドキュメント\n" + document + "\n\n####フォーマット\n" + format;
         const title = $("#title").val();
         const execResult = $("#execResult").val();
         const today = new Date();
@@ -159,7 +161,7 @@ $(document).ready(function () {
         console.log("登録APIリクエストを開始します。");
         console.log("リクエストURL:", apiUrl);
         console.log("リクエストヘッダー:", { Authorization: idToken });
-        console.log("リクエストデータ:", { languageModel, worker, prompt, title, execResult, generatedtime });
+        console.log("リクエストデータ:", { languageModelName, worker, prompt, title, execResult, generatedtime });
 
         $.ajax({
             url: apiUrl,
@@ -168,7 +170,7 @@ $(document).ready(function () {
                 Authorization: idToken,
             },
             contentType: "application/json",
-            data: JSON.stringify({ languageModel, worker, prompt, title, execResult, generatedtime }),
+            data: JSON.stringify({ languageModelName, worker, prompt, title, execResult, generatedtime }),
             success: function (response) {
                 console.log("登録APIリクエストが成功しました。レスポンス:", response);
                 hideLoading(); // インジケーター非表示
