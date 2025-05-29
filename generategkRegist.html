@@ -18,19 +18,19 @@
       <div class="section-title">実行情報</div>
       <form id="registForm">
         <label for="languageModel">言語モデル</label>
-        <select id="languageModel" name="languageModel" display-none>
+        <select id="languageModel" name="languageModel" style="display: none;">
           <option value=""></option>
           <option value="us.anthropic.claude-3-7-sonnet-20250219-v1:0">Claude 3.7 Sonnet</option>
         </select>
 
         <label for="worker">作業者</label>
-        <input type="text" id="worker" name="worker" display-none>
+        <input type="text" id="worker" name="worker" style="display: none;">
 
         <label for="document">ドキュメント</label>
         <textarea id="document" name="document" required></textarea>
 
         <label for="prompt">プロンプト</label>
-        <select id="prompt" name="prompt" display-none>
+        <select id="prompt" name="prompt" style="display: none;">
           <option value=""></option>
           <option value="1">火事</option>
           <option value="2">事故[速報]</option>
@@ -38,7 +38,7 @@
         </select>
 
         <label for="format">フォーマット</label>
-        <textarea id="format" name="format" display-none></textarea>
+        <textarea id="format" name="format" style="display: none;"></textarea>
       </form>
     </div>
     <!-- 右側：OCRテキスト -->
