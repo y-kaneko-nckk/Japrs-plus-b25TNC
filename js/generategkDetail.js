@@ -1,3 +1,5 @@
+import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
+
 let isModified = false; // フォームが変更されたかを示すフラグ（別途、入力変更イベントなどでtrueに）
 
 // トークンの有効期限を確認
@@ -11,7 +13,7 @@ function checkTokenValidity() {
 
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
-    checkTokenValidity();
+	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) {console.log("123");return;}; // トークン有効期限チェック、ログイン画面にリダイレクト
     fetchDetailData();
 });
 

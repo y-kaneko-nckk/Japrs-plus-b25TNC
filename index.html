@@ -2,70 +2,21 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>各種情報管理 | Japrs+</title>
+  <title>ログイン処理中... | Japrs+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/login-utils.js" type="module"></script>
 </head>
 <body>
+  <div id="cognitoUserInfo" style="float:right">未ログイン</div>
+
   <div class="container">
-    <h2>各種情報管理</h2>
+    <h2>ログイン処理中です。</h2>
+    自動的に遷移しない場合は<a href="./ocrinfoList.html">こちら</a>をクリックしてください。
 
-    <div class="tab-buttons">
-      <button class="tab active" id="ocrTab">OCR情報</button>
-      <button class="tab" id="generatedTab">生成原稿</button>
-    </div>
-
-    <div class="filter">
-      <label for="execdtime">実行日時:</label>
-      <input type="date" id="execdtime" name="execdtime">
-      <button class="search-btn" id="searchBtn">検索</button>
-    </div>
-
-    <div id="ocrContent" class="tab-content">
-      <h3>OCR情報</h3>
-      <table class="table" id="ocrTable">
-        <thead>
-          <tr>
-            <th>実行日時</th>
-            <th>タイトル</th>
-            <th>実行結果</th>
-            <th>ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- OCR情報のデータがここに入る -->
-        </tbody>
-      </table>
-    </div>
-
-    <div id="generatedContent" class="tab-content" style="display: none;">
-      <h3>生成原稿</h3>
-      <table class="table" id="generatedTable">
-        <thead>
-          <tr>
-            <th>生成日時</th>
-            <th>タイトル</th>
-            <th>言語モデル</th>
-            <th>作業者</th>
-            <th>ID</th>
-            <th>保存日時</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- 生成原稿のデータがここに入る -->
-        </tbody>
-      </table>
-    </div>
   </div>
-  <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered" role="document"></div>
-  </div>
-  <div id="commonLoadingSpinner" class="loading-spinner" style="display: none;">
-    <div class="spinner-border text-secondary spinner-small" role="status"></div>
-  </div>
-
-  <script src="js/script.js"></script>
+  <script src="js/script.js" type="module"></script>
 </body>
 </html>

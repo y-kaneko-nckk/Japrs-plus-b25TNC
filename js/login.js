@@ -1,3 +1,5 @@
+import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
+
 $(document).ready(function () {
     // Cognito認証処理
     function OnCognitoAuthenticateUser() {
@@ -42,13 +44,8 @@ $(document).ready(function () {
                 console.log("accessToken : " + accessToken);
                 console.log("refreshToken : " + refreshToken);
 
-                // トークンの有効期限を取得（秒単位）
-                var idTokenPayload = JSON.parse(atob(idToken.split('.')[1])); // JWTのペイロードをデコード
-                var expirationTime = idTokenPayload.exp * 1000; // ミリ秒に変換
-
                 // トークンと有効期限を保存
-                localStorage.setItem("idToken", idToken);
-                localStorage.setItem("expirationTime", expirationTime);
+                CgntSignInfo.updateLocal(idToken, accessToken, refreshToken, 3600);
 
                 // AWSのリージョンを設定
                 AWS.config.region = 'ap-northeast-1';

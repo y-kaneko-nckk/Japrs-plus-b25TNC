@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/detailCommon.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="js/generategkDetail.js"></script>
+  <script src="js/login-utils.js" type="module"></script>
+  <script src="js/generategkDetail.js" type="module"></script>
 </head>
 <body>
+  <div id="cognitoUserInfo" style="float:right">未ログイン</div>
   <h2>生成原稿詳細</h2>
 
   <!-- ID・生成日時 -->
@@ -52,7 +54,7 @@
   <div class="button-bottom">
     <button type="button" id="deleteBtn" class="btn btn-exec btnsize-main">削除</button>
     <button type="button" id="footerCloseBtn" class="btn btn-normal btnsize-main"
-      data-displayname="生成原稿詳細" 
+      data-displayname="生成原稿詳細"
       data-warn-message="{0}を終了します。内容が変更されていますが、破棄して画面を終了します。">
       閉じる
     </button>

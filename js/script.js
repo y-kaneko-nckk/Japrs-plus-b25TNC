@@ -1,226 +1,97 @@
-// データ保持用の変数
-let allDataCache = null;
+import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
 
-// トークンの有効期限を確認
-function checkTokenValidity() {
-    var expirationTime = localStorage.getItem("expirationTime");
-    if (!expirationTime || Date.now() > expirationTime) {
-        alert("セッションの有効期限が切れました。再度ログインしてください。");
-        window.location.href = "login.html"; // ログイン画面にリダイレクト
-    }
-}
+// 認証の２重動作の防止
+let flgCogniteRequest = false;
 
 // ページ読み込み時にトークンの有効期限を確認
-$(document).ready(function () {
-    checkTokenValidity();
-  
-    // 実行日時の初期値を今日にセット
-    const today = new Date().toISOString().slice(0, 10);
-    $("#execdtime").val(today);
-
-    // 検索ボタン押下時
-    $("#searchBtn").on("click", function () {
-        const execdtime = $("#execdtime").val();
-        // 検索条件をクエリパラメータにしてリロード
-        window.location.href = "index.html?execdtime=" + encodeURIComponent(execdtime);
-    });
-
-    // ページ表示時にクエリパラメータがあればフィルタ
-    const urlParams = new URLSearchParams(window.location.search);
-    const execdtimeParam = urlParams.get("execdtime");
-    if (execdtimeParam) {
-        $("#execdtime").val(execdtimeParam);
-    }
+$(document).ready(()=>{
+    initPage();
 });
 
-// インジケーター表示・非表示
-function showLoading() {
-  $("#commonDisabledModal").show();
-  $("#commonLoadingSpinner").show();
-}
-function hideLoading() {
-  $("#commonDisabledModal").hide();
-  $("#commonLoadingSpinner").hide();
-}
 
-// データ取得（初回のみ）
-function fetchAllDataOnce(callback) {
-    checkTokenValidity(); // トークンの有効期限を確認
+async function initPage() {
+    const result1 = await awsCognitoAuth(searchParams().get('code')).then(
+		(data)=>{
+			console.debug("＊＊＊　　cognito_done:", data);
+			if (!data) {}
+			else if ("errorText" in data) {
+				console.debug(data.msg + "[" +data.errorText + "]");
+			}
+			else { // トークンと有効期限を保存
+				CgntSignInfo.updateLocal(data.id_token, data.access_token, data.refresh_token, data.expires_in);
+			}
+			CgntSignInfo.checkValidity(
+				()=>{window.location.href = "./ocrinfoList.html";},
+				()=>{window.location.href = "./login.html";},
+			);
+		},
+		(jqXHR)=>{
+			if (jqXHR.status === 0) { return; };
+			let errorText = JSON.parse((jqXHR.responseText)??'{}').error;
+			console.log("jqXHR          : " + jqXHR.status); // HTTPステータスを表示
+			console.log("jqXHR.Error    : " + errorText);
+			if (['invalid_request','invalid_client'].includes(errorText)) {
+			    console.log("☆★★リクエストが不正です。");
+			    return;
+			}
+			if ('invalid_grant' == errorText) {
+			    console.log("☆★★更新トークンが失効しています。");
+			    return;
+			}
+			alert('Ajax通信に失敗しました[' + errorText + ']。再度ログインしてください。');
+			CgntSignInfo.clearSignInfo();
+			$('#cognitoUserInfo').empty().append(`未ログイン`);
+			window.location.href = "login.html";
+		}
+	);
+};
 
-    if (allDataCache) {
-        callback(allDataCache);
-    } else {
-        var idToken = localStorage.getItem("idToken");
-        if (!idToken) {
-            alert("認証情報がありません。ログインしてください。");
-            window.location.href = "login.html";
-            return;
-        }
-
-        showLoading(); // インジケーター表示
-
-        $.ajax({
-            url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/infoMgmt",
-            method: "GET",
-            headers: {
-                Authorization: idToken, // トークンをヘッダーに追加
-            },
-            success: function (data) {
-                console.log("データ取得成功:", data);
-                allDataCache = data;
-                hideLoading(); // インジケーター非表示
-                callback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                hideLoading(); // インジケーター非表示
-                console.error("データ取得エラー:", textStatus, errorThrown);
-                if (jqXHR.status === 401) {
-                    alert("認証エラーです。再度ログインしてください。");
-                    window.location.href = "login.html";
-                }
-            },
-        });
-    }
+function searchParams() { // URLSearchParamsオブジェクトを作成してクエリ文字列を解析
+    return new URLSearchParams(window.location.search);
 }
 
-// OCR情報テーブル描画
-function renderOcrTable(data) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const execdtimeParam = urlParams.get("execdtime");
 
-    const $tbody = $("#ocrTable tbody");
-    $tbody.empty();
-    $.each(data.ocrinfo, function(i, item) {
-        // 実行日時でフィルタ
-        if (execdtimeParam && !item.execdtime.startsWith(execdtimeParam)) {
-            return; // 日付が一致しない場合はスキップ
-        }
-        $tbody.append(`
-          <tr>
-            <td>${item.execdtime}</td>
-            <td>
-              <a href="ocrinfoDetail.html?filename=${encodeURIComponent(item.filename)}&id=${encodeURIComponent(item.id)}" target="_blank">
-                ${item.title}
-              </a>
-            </td>
-            <td>${item.execresult}</td>
-            <td>${item.id}</td>
-          </tr>
-        `);
-    });
-}
+function awsCognitoAuth(aCode) {
 
-// 生成原稿テーブル描画
-function renderGeneratedTable(data) {
-  const $tbody = $("#generatedTable tbody");
-  $tbody.empty();
-  $.each(data.generategk, function(i, item) {
-    $tbody.append(`
-      <tr>
-        <td>${item.generatedtime}</td>
-        <td>
-          <a href="generategkDetail.html?id=${encodeURIComponent(item.id)}" target="_blank">
-            ${item.title}
-          </a>
-        </td>
-        <td>${item.languagemodel}</td>
-        <td>${item.workuser}</td>
-        <td>${item.id}</td>
-        <td>${item.savedtime}</td>
-      </tr>
-    `);
-  });
-}
-
-// データ取得（OCR）
-function fetchOcrData(callback) {
-    checkTokenValidity(); // トークン有効期限チェック
-
-    var idToken = localStorage.getItem("idToken");
-    if (!idToken) {
-        alert("認証情報がありません。ログインしてください。");
-        window.location.href = "login.html";
-        return;
-    }
-
-    showLoading(); // インジケーター表示
+return new Promise((resolve, reject) => {
 
     $.ajax({
-        url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/ocrinfo/list",
-        method: "GET",
-        headers: {
-            Authorization: idToken,
+        url:CgntPoolSettings.getOauthEndpoint(),
+        method:'POST',
+        contentType:CgntPoolSettings.ContentType,
+        data:{
+            grant_type: "authorization_code",
+            code: aCode,
+            client_id: CgntPoolSettings.ClientId,
+            redirect_uri: "https://develop-srv.d1wmev0i8iycrh.amplifyapp.com/"
         },
-        success: function (data) {
-            hideLoading(); // インジケーター非表示
-            callback(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            hideLoading(); // インジケーター非表示
-            if (jqXHR.status === 401) {
-                alert("認証エラーです。再度ログインしてください。");
-                window.location.href = "login.html";
-            } else {
-                alert("データ取得に失敗しました。");
+        beforeSend: function(xhr){
+            console.log('▼▼▼Cognito確認開始');
+            $('#cognitoUserInfo').empty().append(`ログイン処理中`)
+            if (flgCogniteRequest || !aCode) {
+                console.log('▽▼▼キャンセル');
+                return false;
             }
+            flgCogniteRequest = true;
         },
-    });
-}
-// データ取得（生成原稿）
-function fetchGenerategkData(callback) {
-    checkTokenValidity(); // トークン有効期限チェック
-
-    var idToken = localStorage.getItem("idToken");
-    if (!idToken) {
-        alert("認証情報がありません。ログインしてください。");
-        window.location.href = "login.html";
-        return;
-    }
-
-    showLoading(); // インジケーター表示
-
-    $.ajax({
-        url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/list",
-        method: "GET",
-        headers: {
-            Authorization: idToken,
-        },
-        success: function (data) {
-            hideLoading(); // インジケーター非表示
-            callback(data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            hideLoading(); // インジケーター非表示
-            if (jqXHR.status === 401) {
-                alert("認証エラーです。再度ログインしてください。");
-                window.location.href = "login.html";
-            } else {
-                alert("データ取得に失敗しました。");
+    })
+    .done( (data) => { resolve(data); } )
+    .fail(
+        (jqXHR, textStatus, errorThrown) => {
+            if (jqXHR.status === 0) resolve({errorText:"",msg:"☆★★codeが渡されませんでした。"});
+            let errorText = JSON.parse((jqXHR.responseText)??'{}').error;
+            console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラーなどのエラー情報を表示
+            if (['invalid_request','invalid_client'].includes(errorText)) {
+                resolve({errorText:errorText,msg:"☆★★リクエストが不正です。"});
             }
-        },
-    });
+            else if ('invalid_grant' == errorText) {
+                resolve({errorText:errorText,msg:"☆★★更新トークンが失効しています。"});
+            }
+			else {
+	            reject(jqXHR);
+			}
+        }
+    )
+    .always( () => { console.log('▲▲▲Cognito確認終了'); });
+});
 }
-
-// タブ切り替え処理
-$("#ocrTab").on("click", function () {
-    fetchOcrData(function(data) {
-        renderOcrTable(data);
-        $("#ocrContent").show();
-        $("#generatedContent").hide();
-        $("#ocrTab").addClass("active");
-        $("#generatedTab").removeClass("active");
-    });
-});
-
-$("#generatedTab").on("click", function () {
-    fetchGenerategkData(function(data) {
-        renderGeneratedTable(data);
-        $("#ocrContent").hide();
-        $("#generatedContent").show();
-        $("#generatedTab").addClass("active");
-        $("#ocrTab").removeClass("active");
-    });
-});
-
-// 初期表示はOCR情報タブ
-$("#ocrTab").trigger("click");

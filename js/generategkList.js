@@ -1,25 +1,18 @@
+import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
+
 // データ保持用の変数
 let allDataCache = null;
 
-// トークンの有効期限を確認
-function checkTokenValidity() {
-    var expirationTime = localStorage.getItem("expirationTime");
-    if (!expirationTime || Date.now() > expirationTime) {
-        alert("セッションの有効期限が切れました。再度ログインしてください。");
-        window.location.href = "login.html"; // ログイン画面にリダイレクト
-    }
-}
-
 // ページ読み込み時
 $(document).ready(function () {
-    checkTokenValidity();
+	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
 
     // タブの状態を設定
     $("#ocrTab").removeClass("active");
     $("#ocrContent").hide();
     $("#generatedTab").addClass("active");
     $("#generatedContent").show();
-  
+
     // 生成日時初期値
     const today = new Date();
     const formattedToday = today.toISOString().split("T")[0];
@@ -106,14 +99,10 @@ function renderGeneratedTable(data, generatedtimeFilter) {
 
 // データ取得（生成原稿）
 function fetchGenerategkData(callback) {
-    checkTokenValidity(); // トークン有効期限チェック
+	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
 
     var idToken = localStorage.getItem("idToken");
-    if (!idToken) {
-        alert("認証情報がありません。ログインしてください。");
-        window.location.href = "login.html";
-        return;
-    }
+
     showLoading(); // インジケーター表示
     $.ajax({
         url: "https://8ej2lsmdn2.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/list",
@@ -154,13 +143,13 @@ $("#generatedTab").on("click", function () {
 });
 
 // 日付操作用の関数
-function adjustDate(date, adjustment) {
+/*function adjustDate(date, adjustment) {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + (adjustment.days || 0));
     newDate.setMonth(newDate.getMonth() + (adjustment.months || 0));
     newDate.setFullYear(newDate.getFullYear() + (adjustment.years || 0));
     return newDate;
-}
+}*/
 
 // 日付操作用の関数
 function adjustDate(date, adjustment) {
