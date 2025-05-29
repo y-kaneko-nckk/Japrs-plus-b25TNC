@@ -114,15 +114,63 @@ $(document).ready(function () {
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
         const title = $("#title").val();
-        const execResult = $("#execResult").text();
+        const execResult = $("#execResult").val(); // テキストエリアの値を取得
 
-        if (!title) {
-            alert("必須項目を入力してください。");
+        // 必須項目のチェック
+        if (!title || title.trim() === "" || !execResult || execResult.trim() === "") {
+            alert("すべての必須項目を入力してください。");
             return;
         }
 
-        // 登録処理（API呼び出し）
-        alert("登録処理を開始します。");
+        // トークンの有効性チェック
+        const idToken = localStorage.getItem("idToken");
+        if (!idToken) {
+            alert("認証トークンがありません。再度ログインしてください。");
+            window.location.href = "login.html";
+            return;
+        }
+
+        // インジケーター表示
+        showLoading();
+
+        // Lambda関数を呼び出すためのAPIリクエスト
+        const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/regist";
+        console.log("登録APIリクエストを開始します。");
+        console.log("リクエストURL:", apiUrl);
+        console.log("リクエストヘッダー:", { Authorization: idToken });
+        console.log("リクエストデータ:", { title, execResult });
+
+        $.ajax({
+            url: apiUrl,
+            method: "POST",
+            headers: {
+                Authorization: idToken,
+            },
+            contentType: "application/json",
+            data: JSON.stringify({ title, execResult }),
+            success: function (response) {
+                console.log("登録APIリクエストが成功しました。レスポンス:", response);
+                hideLoading(); // インジケーター非表示
+                alert("登録が完了しました。");
+            },
+            error: function (jqXHR) {
+                console.error("登録APIリクエストが失敗しました。");
+                console.error("ステータスコード:", jqXHR.status);
+                console.error("レスポンス:", jqXHR.responseText || "レスポンスなし");
+                console.error("エラーメッセージ:", jqXHR.statusText || "エラーメッセージなし");
+
+                hideLoading(); // インジケーター非表示
+                let msg = "登録に失敗しました";
+                if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    msg += ": " + jqXHR.responseJSON.message;
+                } else if (jqXHR.responseText) {
+                    msg += ": " + jqXHR.responseText;
+                } else if (jqXHR.statusText) {
+                    msg += ": " + jqXHR.statusText;
+                }
+                alert(msg);
+            }
+        });
     });
 
     $(document).ready(function () {
