@@ -80,7 +80,6 @@ $(document).ready(function () {
             headers: {
                 Authorization: localStorage.getItem("idToken"), // トークンをヘッダーに追加
             },
-            contentType: "application/json",
             data: JSON.stringify({
                 languageModel: languageModel,
                 document: document,
