@@ -64,7 +64,7 @@ $(document).ready(function () {
         // Lambda関数を呼び出すためのAPIリクエスト
         $.ajax({
             url: "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting", // LambdaのAPI Gatewayエンドポイント
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: localStorage.getItem("idToken"), // トークンをヘッダーに追加
             },
