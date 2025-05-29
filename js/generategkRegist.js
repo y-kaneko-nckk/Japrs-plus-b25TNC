@@ -59,7 +59,7 @@ $(document).ready(function () {
         const format = $("#format").val();
 
         // 必須項目のチェック
-        if (!document || document.trim() === "" ||) {
+        if (!document || document.trim() === "") {
             alert("ドキュメントを入力してください。");
             return;
         }
