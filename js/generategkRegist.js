@@ -121,7 +121,7 @@ $(document).ready(function () {
         const title = $("#title").val();
         const execResult = $("#execResult").val();
         const today = new Date();
-        const formattedToday = today.toISOString().split("T")[0];
+        const formattedToday = today.toISOString().split("T")[0].replace(/-/g, "/");
         const generatedtime = formattedToday;
 
         // 必須項目のチェック
