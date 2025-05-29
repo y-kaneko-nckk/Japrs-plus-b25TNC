@@ -70,7 +70,7 @@ $(document).ready(function () {
         showLoading();
 
         // Lambda関数を呼び出すためのAPIリクエスト
-        const apiUrl = "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
+        const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
         console.log("APIリクエストを開始します。");
         console.log("リクエストURL:", apiUrl);
         console.log("リクエストヘッダー:", { Authorization: idToken });
