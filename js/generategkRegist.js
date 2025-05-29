@@ -62,6 +62,18 @@ $(document).ready(function () {
         showLoading();
 
         // Lambda関数を呼び出すためのAPIリクエスト
+        console.log("APIリクエストを開始します。");
+        console.log("リクエストURL:", "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting");
+        console.log("リクエストヘッダー:", {
+            Authorization: localStorage.getItem("idToken"),
+        });
+        console.log("リクエストデータ:", {
+            languageModel: languageModel,
+            document: document,
+            format: format,
+        });
+
+        // Lambda関数を呼び出すためのAPIリクエスト
         $.ajax({
             url: "https://saqse2lbd9.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting", // LambdaのAPI Gatewayエンドポイント
             method: "POST",
@@ -75,6 +87,7 @@ $(document).ready(function () {
                 format: format,
             }),
             success: function (response) {
+                console.log("APIリクエストが成功しました。レスポンス:", response);
                 hideLoading(); // インジケーター非表示
                 // 画面にタイトルと原稿を反映
                 $("#title").val(response.title);
@@ -82,6 +95,11 @@ $(document).ready(function () {
                 alert("原稿生成が完了しました。");
             },
             error: function (jqXHR) {
+                console.error("APIリクエストが失敗しました。");
+                console.error("ステータスコード:", jqXHR.status);
+                console.error("レスポンス:", jqXHR.responseText);
+                console.error("エラーメッセージ:", jqXHR.statusText);
+
                 hideLoading(); // インジケーター非表示
                 let msg = "原稿生成に失敗しました";
                 if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
