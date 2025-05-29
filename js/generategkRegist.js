@@ -173,6 +173,7 @@ $(document).ready(function () {
                 console.log("登録APIリクエストが成功しました。レスポンス:", response);
                 hideLoading(); // インジケーター非表示
                 alert("登録が完了しました。");
+                window.close();
             },
             error: function (jqXHR) {
                 console.error("登録APIリクエストが失敗しました。");
