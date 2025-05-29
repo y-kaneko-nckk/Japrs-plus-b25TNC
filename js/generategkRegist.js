@@ -42,12 +42,6 @@ $("input, textarea, select").on("change input", function () {
 });
 
 $(document).ready(function () {
-    // Cognitoユーザー情報を取得してworkerに設定
-    const cognitoUserInfo = localStorage.getItem("cognitoUserInfo"); // ローカルストレージから取得
-    if (cognitoUserInfo) {
-        $("#worker").val(cognitoUserInfo); // workerのvalueに設定
-    }
-
     $("#footerCloseBtn").on("click", function () {
         const displayName = $(this).data("displayname");
         const warnMessage = $(this).data("warn-message").replace("{0}", displayName);
@@ -130,7 +124,6 @@ $(document).ready(function () {
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
         const languageModelName = "Claude 3.7 Sonnet";
-        const worker = $("#worker").val();
         const document = $("#document").val();
         const prompt = "####ドキュメント\n" + document + "\n\n####フォーマット\n" + format;
         const title = $("#title").val();
@@ -138,6 +131,11 @@ $(document).ready(function () {
         const today = new Date();
         const formattedToday = today.toISOString().split("T")[0].replace(/-/g, "/");
         const generatedtime = formattedToday;
+        // Cognitoユーザー情報を取得してworkerに設定
+        const cognitoUserInfo = $('#cognitoUserInfo').text(); // 表示されている名前を取得
+        if (cognitoUserInfo) {
+            $('#worker').val(cognitoUserInfo); // workerのvalueに設定
+        }
 
         // 必須項目のチェック
         if (!title || title.trim() === "" || !execResult || execResult.trim() === "") {
