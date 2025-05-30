@@ -80,3 +80,47 @@ outline: 0;
     -webkit-animation: spinner-border .75s linear infinite;
     animation: spinner-border .75s linear infinite;
 }
+
+
+div.menu {
+  position: relative;
+  margin-left: 1px;
+  padding: 0.2rem 0.8rem;
+  color: #fff;
+  background: #298ecb;
+}
+
+div.menu .menuTitle {
+	display:flex;
+}
+
+div.menu .menuTitleIcon {
+	margin: 0 0.5rem 0 0;
+}
+
+div.menu .menuTitleName {
+	margin: 0;
+}
+
+.menu .menuSub {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  display: none;
+  right:0.5rem;
+}
+
+.menu .menuSub li a {
+  padding: 0.5rem;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  margin-bottom: -0.5rem;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background: #82b5dd;
+}
+
+.menu .menuSub li a:hover {
+  background: #FFCA7B;
+}

@@ -7,7 +7,8 @@ export const CgntPoolSettings = {
 	Url: 'https://ap-northeast-1mnt0bbnmi.auth.ap-northeast-1.amazoncognito.com',
 	SignOut: 'login.html',
 	Path: {
-		Token: '/oauth2/token'
+		Token: '/oauth2/token',
+		SignOut: '/logout',
 	},
 	getOauthEndpoint: function() {
 		return this.Url + this.Path.Token;
@@ -77,6 +78,9 @@ export const CgntSignInfo = {
 		console.log(this.getLocal(this._PLAIN_PAYLOAD)??"{}");
 		return JSON.parse(this.getLocal(this._PLAIN_PAYLOAD)??"{}");
 	},
+	getUserId: function() { // TODO 暫定でemailを返却
+		return this.getShowName();
+	},
 	getShowName: function() {
 		let _n = this.getLocalPayload()??{};
 		return _n.name??_n.email??'ログイン済';
@@ -104,9 +108,26 @@ export const CgntSignInfo = {
 		    return false;
 		}
 		console.log(this.getLocalPayload());
-    	$('#cognitoUserInfo').empty().append(this.getShowName());
+		$('#cognitoUserInfo').empty().append(`<div class="menu">
+	<div class="menuTitle"><i class="menuTitleIcon" data-feather="user-check"></i><span class="menuTitleName">` + this.getShowName() + `</span></div>
+	<ul class="menuSub">
+		<li><a id="signout" href="javascript:void(0);">ログアウト</a></li>
+	</ul>
+</div>
+<script>feather.replace();</script>
+`);
 		if($.isFunction(valid)) valid();
 		return true;
+	},
+	demoMenuClick: function() {
+		$("div.menu").click(function() {
+		  $(this).children(".menuSub").slideToggle(200);
+		});
+	},
+	demoLogoutClick: function() {
+		$("a.signout").click(function() {
+		  $(this).children(".menuSub").slideToggle(200);
+		});
 	},
 };
 

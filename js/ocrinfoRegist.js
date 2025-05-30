@@ -1,17 +1,10 @@
-let isModified = false; // フォームが変更されたかを示すフラグ（別途、入力変更イベントなどでtrueに）
+import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
 
-// トークンの有効期限を確認
-function checkTokenValidity() {
-    var expirationTime = localStorage.getItem("expirationTime");
-    if (!expirationTime || Date.now() > expirationTime) {
-        alert("セッションの有効期限が切れました。再度ログインしてください。");
-        window.location.href = "login.html"; // ログイン画面にリダイレクト
-    }
-}
+let isModified = false; // フォームが変更されたかを示すフラグ（別途、入力変更イベントなどでtrueに）
 
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
-    checkTokenValidity();
+	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
 });
 
 // インジケーター表示・非表示

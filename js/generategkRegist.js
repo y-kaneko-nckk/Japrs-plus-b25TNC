@@ -1,3 +1,5 @@
+import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
+
 let isModified = false; // フォームが変更されたかを示すフラグ（別途、入力変更イベントなどでtrueに）
 
 const languageModel = "us.anthropic.claude-3-7-sonnet-20250219-v1:0";
@@ -12,18 +14,9 @@ const format = "あなたは放送局のニュースを担当する記者です�
 "・感情や主観を排除するように心がけてください。\r\n" +
 "・本文の読み上げ時間が60秒以内（約250～300語）になるよう調整してください。出力後に自らカウントして、過不足があれば調整してください。\r\n";
 
-// トークンの有効期限を確認
-function checkTokenValidity() {
-    var expirationTime = localStorage.getItem("expirationTime");
-    if (!expirationTime || Date.now() > expirationTime) {
-        alert("セッションの有効期限が切れました。再度ログインしてください。");
-        window.location.href = "login.html"; // ログイン画面にリダイレクト
-    }
-}
-
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
-    checkTokenValidity();
+    if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
 });
 
 // インジケーター表示・非表示
@@ -125,6 +118,7 @@ $(document).ready(function () {
     $("#registBtn").on("click", function () {
         const languageModelName = "Claude 3.7 Sonnet";
         const document = $("#document").val();
+		const worker = CgntSignInfo.getUserId();
         const prompt = "####ドキュメント\n" + document + "\n\n####フォーマット\n" + format;
         const title = $("#title").val();
         const execResult = $("#execResult").val();
@@ -132,10 +126,7 @@ $(document).ready(function () {
         const formattedToday = today.toISOString().split("T")[0].replace(/-/g, "/");
         const generatedtime = formattedToday;
         // Cognitoユーザー情報を取得してworkerに設定
-        const cognitoUserInfo = $('#cognitoUserInfo').text(); // 表示されている名前を取得
-        if (cognitoUserInfo) {
-            $('#worker').val(cognitoUserInfo); // workerのvalueに設定
-        }
+        $('#worker').val(worker); // workerのvalueに設定
 
         // 必須項目のチェック
         if (!title || title.trim() === "" || !execResult || execResult.trim() === "") {
