@@ -1,18 +1,3 @@
-body {
-  font-family: sans-serif;
-  background: #f7f7f7;
-  margin: 0;
-  padding: 20px;
-}
-
-h1 {
-  font-size: 1.5rem;
-}
-
-h2 {
-  margin-bottom: 20px;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -25,6 +10,11 @@ table th, table td {
   text-align: center;
 }
 
+.tab-container {
+  border-bottom: 2px solid #cccccc;
+  margin-bottom: 10px;
+}
+
 .tab-content {
   padding: 20px;
   border: 1px solid #ddd;
@@ -32,29 +22,53 @@ table th, table td {
 }
 
 .tab-buttons {
-  margin-bottom: 10px;
+  display: flex;
+  position: relative;
+  gap: 8px;
+  padding-left: 10px;
 }
 
 .tab {
-  padding: 6px 12px;
-  margin-right: 5px;
-  border: 1px solid #ccc;
-  background: #eee;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border: 1px solid #cccccc;
+  background: #eeeeee;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   cursor: pointer;
+  position: relative;
+  width: 120px;
+  height: 35px;
 }
 
 .tab.active {
-  background: #3e8ed0;
+  background: #298ecb;
+  font-weight: bold;
   color: white;
 }
 
 .search-btn {
-  padding: 6px 12px;
-  background: #3e8ed0;
+  padding: 5px 10px;
+  font-size: 16px;
+  background: #82b5dd;
   color: white;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+  width: 120px;
+  height: 34px;
+}
+
+.regist-btn {
+  margin-top: 20px;
+  padding: 5px 10px;
+  font-size: 16px;
+  background: #82b5dd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 120px;
+  height: 34px;
 }
 
 .filter {
@@ -89,4 +103,26 @@ div[role=main].list-content-area {
 .justify-content-start {
   -ms-flex-pack: start !important;
   justify-content: flex-start !important;
+}
+
+#ocrTable th:nth-child(2), 
+#ocrTable td:nth-child(2) {
+  min-width: 150px;
+}
+
+#ocrTable th:nth-child(3), 
+#ocrTable td:nth-child(3) {
+  min-width: 300px;
+}
+
+#generatedTable th:nth-child(2), 
+#generatedTable td:nth-child(2) {
+  min-width: 150px;
+}
+
+.search-btn-ex {
+    margin-left: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
 }

@@ -1,0 +1,126 @@
+body {
+  font-family: sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.modal {
+position: fixed;
+top: 0;
+left: 0;
+z-index: 1050;
+display: none;
+width: 100%;
+height: 100%;
+overflow: hidden;
+background: #808080;
+opacity:0.5;
+outline: 0;
+}
+
+.loading-spinner {
+    z-index: 1600;
+    position: fixed;
+    top: 50%;
+    left: 47.5%;
+    /* transform: translate(-50%, -50%); */
+    display: none;
+}
+
+.modal.fade .modal-dialog {
+    transition: -webkit-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    transition: transform .3s ease-out, -webkit-transform .3s ease-out;
+    -webkit-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+}
+
+.modal-dialog {
+    overflow-y: initial !important;
+}
+
+.modal-dialog-centered {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+}
+
+.spinner-small {
+    width: 70px;
+    height: 70px;
+}
+
+.text-secondary {
+    color: #6c757d !important;
+}
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-border {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
+    border: .25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border .75s linear infinite;
+    animation: spinner-border .75s linear infinite;
+}
+
+
+div.menu {
+  position: relative;
+  margin-left: 1px;
+  padding: 0.2rem 0.8rem;
+  color: #fff;
+  background: #298ecb;
+}
+
+div.menu .menuTitle {
+	display:flex;
+}
+
+div.menu .menuTitleIcon {
+	margin: 0 0.5rem 0 0;
+}
+
+div.menu .menuTitleName {
+	margin: 0;
+}
+
+.menu .menuSub {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  display: none;
+  right:0.5rem;
+}
+
+.menu .menuSub li a {
+  padding: 0.5rem;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+  margin-bottom: -0.5rem;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background: #82b5dd;
+}
+
+.menu .menuSub li a:hover {
+  background: #FFCA7B;
+}

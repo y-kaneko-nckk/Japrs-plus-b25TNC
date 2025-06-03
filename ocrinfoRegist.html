@@ -2,49 +2,48 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>OCR情報詳細 | Japrs+</title>
+  <title>OCR情報登録 | Japrs+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/detailCommon.css">
+  <link rel="stylesheet" href="css/registCommon.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="js/login-utils.js" type="module"></script>
-  <script src="js/ocrinfoDetail.js" type="module"></script>
+  <script src="js/ocrinfoRegist.js" type="module"></script>
 </head>
 <body>
   <div id="cognitoUserInfo" style="float:right">未ログイン</div>
-  <h2>OCR情報詳細</h2>
-
-  <!-- ID・実行日時 -->
-  <div class="header-meta">
-    <div>[ID] <span id="id"></span></div>
-    <div style="margin-left: 5px;">[実行日時] <span id="execdtime"></span></div>
-  </div>
+  <h2>OCR情報登録</h2>
 
   <div class="flex-container">
-    <!-- 左側：PDF表示と情報 -->
+    <!-- 左側：入力フォーム -->
     <div class="left-panel">
-      <div class="section-title">PDF表示</div>
-      <table class="detail-table" style="margin-top:16px;">
-        <tr>
-          <th>タイトル</th>
-          <td id="title"></td>
-        </tr>
-      </table>
-      <iframe id="pdfViewer" class="pdf-viewer"></iframe>
+      <div class="section-title">入力フォーム</div>
+      <form id="registForm">
+        <label for="title">タイトル</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="filename">ファイル名</label>
+        <input type="text" id="filename" readonly required>
+        <input type="file" id="uploadFile" style="display: none;">
+        <button type="button" id="attachFileBtn">添付</button>
+        <button type="button" id="clearFileBtn" disabled>クリア</button>
+      </form>
     </div>
     <!-- 右側：OCRテキスト -->
     <div class="right-panel">
       <div class="section-title">実行結果</div>
-      <div class="exec-result-box" id="ocrText"></div>
+      <div class="exec-result-box" id="ocrText" required></div>
     </div>
   </div>
+
   <div class="button-bottom">
-    <button type="button" id="deleteBtn" class="btn btn-exec btnsize-main">削除</button>
+    <button type="button" id="execOcrBtn" class="btn btn-exec btnsize-main">OCR実行</button>
+    <button type="button" id="registBtn" class="btn btn-exec btnsize-main">登録</button>
     <button type="button" id="footerCloseBtn" class="btn btn-normal btnsize-main"
-      data-displayname="OCR情報詳細"
+      data-displayname="OCR情報登録"
       data-warn-message="{0}を終了します。内容が変更されていますが、破棄して画面を終了します。">
-      閉じる
+      キャンセル
     </button>
   </div>
   <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">

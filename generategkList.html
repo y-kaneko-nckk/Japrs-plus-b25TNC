@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>各種情報管理 | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="js/login-utils.js" type="module"></script>
+</head>
+<body>
+  <div id="cognitoUserInfo" style="float:right">未ログイン</div>
+  <div class="container">
+    <h2>各種情報管理</h2>
+
+    <div class="tab-container">
+      <div class="tab-buttons">
+        <button class="tab active" id="ocrTab">OCR情報</button>
+        <button class="tab" id="generatedTab">生成原稿</button>
+      </div>
+    </div>
+
+    <button id="registBtn" class="regist-btn">登録</button>
+
+    <div class="filter">
+      <label for="generatedtime">生成日時:</label>
+      <input type="date" id="generatedtime" placeholder="yyyy/mm/dd">
+      <button class="search-btn-ex" id="prevYearBtn">前年</button>
+      <button class="search-btn-ex" id="prevMonthBtn">前月</button>
+      <button class="search-btn-ex" id="prevDayBtn">＜</button>
+      <button class="search-btn-ex" id="todayBtn">・</button>
+      <button class="search-btn-ex" id="nextDayBtn">＞</button>
+      <button class="search-btn-ex" id="nextMonthBtn">翌月</button>
+      <button class="search-btn-ex" id="nextYearBtn">翌年</button>
+    </div>
+
+    <div class="filter">
+      <span id="recordCount">対象件数: 0 件</span>
+    </div>
+
+    <div id="generatedContent" class="tab-content" style="display: none;">
+      <table class="table" id="generatedTable">
+        <thead>
+          <tr>
+            <th>生成日時</th>
+            <th>タイトル</th>
+            <th>言語モデル</th>
+            <th>作業者</th>
+            <th>ID</th>
+            <th>保存日時</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 生成原稿のデータがここに入る -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document"></div>
+  </div>
+  <div id="commonLoadingSpinner" class="loading-spinner" style="display: none;">
+    <div class="spinner-border text-secondary spinner-small" role="status"></div>
+  </div>
+
+  <script src="js/generategkList.js" type="module"></script>
+</body>
+</html>

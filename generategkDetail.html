@@ -2,47 +2,60 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>OCR情報詳細 | Japrs+</title>
+  <title>生成原稿詳細 | Japrs+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/detailCommon.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="js/login-utils.js" type="module"></script>
-  <script src="js/ocrinfoDetail.js" type="module"></script>
+  <script src="js/generategkDetail.js" type="module"></script>
 </head>
 <body>
   <div id="cognitoUserInfo" style="float:right">未ログイン</div>
-  <h2>OCR情報詳細</h2>
+  <h2>生成原稿詳細</h2>
 
-  <!-- ID・実行日時 -->
+  <!-- ID・生成日時 -->
   <div class="header-meta">
     <div>[ID] <span id="id"></span></div>
-    <div style="margin-left: 5px;">[実行日時] <span id="execdtime"></span></div>
+    <div style="margin-left: 5px;">[生成日時] <span id="generatedtime"></span></div>
   </div>
 
   <div class="flex-container">
-    <!-- 左側：PDF表示と情報 -->
+    <!-- 左側：実行情報 -->
     <div class="left-panel">
-      <div class="section-title">PDF表示</div>
-      <table class="detail-table" style="margin-top:16px;">
+      <div class="section-title">実行情報</div>
+      <table class="detail-table">
         <tr>
           <th>タイトル</th>
           <td id="title"></td>
         </tr>
+        <tr>
+          <th>言語モデル</th>
+          <td id="languagemodel"></td>
+        </tr>
+        <tr>
+          <th>作業者</th>
+          <td id="workuser"></td>
+        </tr>
+        <tr>
+          <th>プロンプト</th>
+          <td>
+            <textarea id="prompt" rows="27" readonly></textarea>
+          </td>
+        </tr>
       </table>
-      <iframe id="pdfViewer" class="pdf-viewer"></iframe>
     </div>
-    <!-- 右側：OCRテキスト -->
+    <!-- 右側：実行結果 -->
     <div class="right-panel">
       <div class="section-title">実行結果</div>
-      <div class="exec-result-box" id="ocrText"></div>
+      <div class="exec-result-box" id="execresult"></div>
     </div>
   </div>
   <div class="button-bottom">
     <button type="button" id="deleteBtn" class="btn btn-exec btnsize-main">削除</button>
     <button type="button" id="footerCloseBtn" class="btn btn-normal btnsize-main"
-      data-displayname="OCR情報詳細"
+      data-displayname="生成原稿詳細"
       data-warn-message="{0}を終了します。内容が変更されていますが、破棄して画面を終了します。">
       閉じる
     </button>

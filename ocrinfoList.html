@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>各種情報管理 | Japrs+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="js/login-utils.js" type="module"></script>
+</head>
+<body>
+  <div id="cognitoUserInfo" style="float:right">未ログイン</div>
+  <div class="container">
+    <h2>各種情報管理</h2>
+
+    <div class="tab-container">
+      <div class="tab-buttons">
+        <button class="tab active" id="ocrTab">OCR情報</button>
+        <button class="tab" id="generatedTab">生成原稿</button>
+      </div>
+    </div>
+
+    <button id="registBtn" class="regist-btn">登録</button>
+
+    <div class="filter">
+      <label for="execdtime">実施日時:</label>
+      <input type="date" id="execdtime" placeholder="yyyy/mm/dd">
+      <button class="search-btn-ex" id="prevYearBtn">前年</button>
+      <button class="search-btn-ex" id="prevMonthBtn">前月</button>
+      <button class="search-btn-ex" id="prevDayBtn">＜</button>
+      <button class="search-btn-ex" id="todayBtn">・</button>
+      <button class="search-btn-ex" id="nextDayBtn">＞</button>
+      <button class="search-btn-ex" id="nextMonthBtn">翌月</button>
+      <button class="search-btn-ex" id="nextYearBtn">翌年</button>
+    </div>
+
+    <div class="filter">
+      <span id="recordCount">対象件数: 0 件</span>
+    </div>
+
+    <div id="ocrContent" class="tab-content">
+      <table class="table" id="ocrTable">
+        <thead>
+          <tr>
+            <th>実行日時</th>
+            <th>タイトル</th>
+            <th>実行結果</th>
+            <th>ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- OCR情報のデータがここに入る -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal" id="commonDisabledModal" data-backdrop="static" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document"></div>
+  </div>
+  <div id="commonLoadingSpinner" class="loading-spinner" style="display: none;">
+    <div class="spinner-border text-secondary spinner-small" role="status"></div>
+  </div>
+
+  <script src="js/ocrinfoList.js" type="module"></script>
+</body>
+</html>
