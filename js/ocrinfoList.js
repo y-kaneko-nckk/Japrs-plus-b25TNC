@@ -14,9 +14,7 @@ $(document).ready(function () {
     $("#generatedTab").removeClass("active");
 
     // 実行日時の初期値を今日にセット
-    const today = new Date();
-    const formattedToday = today.toISOString().split("T")[0];
-    $("#execdtime").val(formattedToday);
+    $("#execdtime").val(getTodayJstDate());
 
     // セッションストレージから検索条件を復元
     const savedExecdtime = sessionStorage.getItem("execdtime");
@@ -24,9 +22,7 @@ $(document).ready(function () {
         $("#execdtime").val(savedExecdtime);
     } else {
         // 実行日時の初期値を今日にセット
-        const today = new Date();
-        const formattedToday = today.toISOString().split("T")[0]; // yyyy-MM-dd形式
-        $("#execdtime").val(formattedToday);
+        $("#execdtime").val(getTodayJstDate());
     }
 
     // データを取得してフィルタ
@@ -160,7 +156,7 @@ function adjustDate(date, adjustment) {
 
 // 日付操作後に検索処理を実行する共通関数
 function updateAndSearch(adjustment) {
-    const date = $("#execdtime").val() || new Date().toISOString().split("T")[0];
+    const date = $("#execdtime").val() || getTodayJstDate();
     const newDate = adjustDate(date, adjustment);
     $("#execdtime").val(newDate).trigger("change"); // 日付を更新してchangeイベントを発火
 }
@@ -179,12 +175,8 @@ $("#prevDayBtn").on("click", function () {
 });
 
 $("#todayBtn").on("click", function () {
-    // 今日の日付を取得
-    const today = new Date();
-    const formattedToday = today.toISOString().split("T")[0]; // yyyy-MM-dd形式に変換
-
     // 実行日時を今日の日付に設定し、検索処理を実行
-    $("#execdtime").val(formattedToday).trigger("change");
+    $("#execdtime").val(getTodayJstDate()).trigger("change");
 });
 
 $("#nextDayBtn").on("click", function () {
@@ -218,3 +210,10 @@ $(document).ready(function () {
         window.open("ocrinfoRegist.html", "_blank"); // 新しいタブで開く
     });
 });
+
+// 日本時間で今日の日付（yyyy-MM-dd形式）を取得
+function getTodayJstDate() {
+    const now = new Date();
+    now.setHours(now.getHours() + 9); // UTC → JSTに補正
+    return now.toISOString().split("T")[0];
+}
