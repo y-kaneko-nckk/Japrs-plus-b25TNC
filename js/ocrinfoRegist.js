@@ -4,7 +4,7 @@ let isModified = false; // フォームが変更されたかを示すフラグ�
 
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
-	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
+	if (!CgntSignInfo.checkValidity()) return;
 });
 
 // インジケーター表示・非表示

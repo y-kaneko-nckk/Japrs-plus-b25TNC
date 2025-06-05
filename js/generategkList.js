@@ -5,7 +5,7 @@ let allDataCache = null;
 
 // ページ読み込み時
 $(document).ready(function () {
-	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
+	if (!CgntSignInfo.checkValidity()) return;
 
     // タブの状態を設定
     $("#ocrTab").removeClass("active");
@@ -97,7 +97,7 @@ function renderGeneratedTable(data, generatedtimeFilter) {
 
 // データ取得（生成原稿）
 function fetchGenerategkData(callback) {
-	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
+	if (!CgntSignInfo.checkValidity()) return;
 
     var idToken = localStorage.getItem("idToken");
 
@@ -124,7 +124,7 @@ function fetchGenerategkData(callback) {
             hideLoading(); // インジケーター非表示
             if (jqXHR.status === 401) {
                 alert("認証エラーです。再度ログインしてください。");
-                window.location.href = "login.html";
+                window.location.href = CgntPoolSettingsCgntPoolSettings.getOauthSignOut();
             } else {
                 alert("データ取得に失敗しました。");
             }

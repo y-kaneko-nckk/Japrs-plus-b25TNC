@@ -2,18 +2,9 @@ import { CgntSignInfo, CgntPoolSettings } from "./login-utils.js"
 
 let isModified = false; // フォームが変更されたかを示すフラグ（別途、入力変更イベントなどでtrueに）
 
-// トークンの有効期限を確認
-function checkTokenValidity() {
-    var expirationTime = localStorage.getItem("expirationTime");
-    if (!expirationTime || Date.now() > expirationTime) {
-        alert("セッションの有効期限が切れました。再度ログインしてください。");
-        window.location.href = "login.html";
-    }
-}
-
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
-	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) {console.log("123");return;}; // トークン有効期限チェック、ログイン画面にリダイレクト
+	if (!CgntSignInfo.checkValidity()) return;
     fetchDetailData();
 });
 

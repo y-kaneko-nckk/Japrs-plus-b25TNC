@@ -83,11 +83,12 @@ outline: 0;
 
 
 div.menu {
-  position: relative;
-  margin-left: 1px;
-  padding: 0.2rem 0.8rem;
-  color: #fff;
-  background: #298ecb;
+	position: relative;
+	margin-left: 1px;
+	padding: 0.2rem 0.8rem;
+	color: #fff;
+	background: #298ecb;
+	cursor: pointer;
 }
 
 div.menu .menuTitle {
