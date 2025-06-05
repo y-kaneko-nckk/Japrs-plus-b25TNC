@@ -20,9 +20,9 @@ async function initPage() {
 			else { // トークンと有効期限を保存
 				CgntSignInfo.updateLocal(data.id_token, data.access_token, data.refresh_token, data.expires_in);
 			}
-			CgntSignInfo.checkValidity(
-				()=>{window.location.href = "./ocrinfoList.html";},
-				()=>{window.location.href = "./login.html";},
+			CgntSignInfo.checkValidityNoalert(
+				()=>{window.location.href = CgntPoolSettings.ApplicationTop;},
+				()=>{window.location.href = CgntPoolSettings.getOauthSignIn();},
 			);
 		},
 		(jqXHR)=>{
@@ -41,7 +41,7 @@ async function initPage() {
 			alert('Ajax通信に失敗しました[' + errorText + ']。再度ログインしてください。');
 			CgntSignInfo.clearSignInfo();
 			$('#cognitoUserInfo').empty().append(`未ログイン`);
-			window.location.href = "login.html";
+			window.location.href = CgntPoolSettings.getOauthSignIn();
 		}
 	);
 };

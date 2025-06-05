@@ -16,7 +16,7 @@ const format = "あなたは放送局のニュースを担当する記者です�
 
 // ページ読み込み時にトークンの有効期限を確認
 $(document).ready(function () {
-    if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
+    if (!CgntSignInfo.checkValidity()) return;
 });
 
 // インジケーター表示・非表示
@@ -63,11 +63,7 @@ $(document).ready(function () {
 
         // トークンの有効性チェック
         const idToken = localStorage.getItem("idToken");
-        if (!idToken) {
-            alert("認証トークンがありません。再度ログインしてください。");
-            window.location.href = "login.html";
-            return;
-        }
+        if (!CgntSignInfo.checkValidity()) return;
 
         // インジケーター表示
         showLoading();
@@ -136,11 +132,7 @@ $(document).ready(function () {
 
         // トークンの有効性チェック
         const idToken = localStorage.getItem("idToken");
-        if (!idToken) {
-            alert("認証トークンがありません。再度ログインしてください。");
-            window.location.href = "login.html";
-            return;
-        }
+        if (!CgntSignInfo.checkValidity()) return;
 
         // インジケーター表示
         showLoading();

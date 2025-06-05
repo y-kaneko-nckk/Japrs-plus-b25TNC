@@ -5,7 +5,7 @@ let allDataCache = null;
 
 // ページ読み込み時
 $(document).ready(function () {
-	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
+	if (!CgntSignInfo.checkValidity()) return;
 
     // タブの状態を設定
     $("#ocrTab").removeClass("active");
@@ -14,16 +14,14 @@ $(document).ready(function () {
     $("#generatedContent").show();
 
     // 生成日時初期値
-    const today = new Date();
-    const formattedToday = today.toISOString().split("T")[0];
-    $("#generatedtime").val(formattedToday);
+    $("#generatedtime").val(getTodayJstDate());
 
     // セッションストレージから検索条件を復元
     const savedGeneratedtime = sessionStorage.getItem("generatedtime");
     if (savedGeneratedtime) {
         $("#generatedtime").val(savedGeneratedtime);
     } else {
-        $("#generatedtime").val(formattedToday); // 初期値を今日の日付に設定
+        $("#generatedtime").val(getTodayJstDate());
     }
 
     // データを取得してフィルタ
@@ -99,7 +97,7 @@ function renderGeneratedTable(data, generatedtimeFilter) {
 
 // データ取得（生成原稿）
 function fetchGenerategkData(callback) {
-	if (!CgntSignInfo.checkValidity(0,()=>{window.location.href = CgntPoolSettings.SignOut;})) return; // トークン有効期限チェック、ログイン画面にリダイレクト
+	if (!CgntSignInfo.checkValidity()) return;
 
     var idToken = localStorage.getItem("idToken");
 
@@ -126,7 +124,7 @@ function fetchGenerategkData(callback) {
             hideLoading(); // インジケーター非表示
             if (jqXHR.status === 401) {
                 alert("認証エラーです。再度ログインしてください。");
-                window.location.href = "login.html";
+                window.location.href = CgntPoolSettingsCgntPoolSettings.getOauthSignOut();
             } else {
                 alert("データ取得に失敗しました。");
             }
@@ -162,7 +160,7 @@ function adjustDate(date, adjustment) {
 
 // 日付操作後に検索処理を実行する共通関数
 function updateAndSearch(adjustment) {
-    const date = $("#generatedtime").val() || new Date().toISOString().split("T")[0];
+    const date = $("#generatedtime").val() || getTodayJstDate();
     const newDate = adjustDate(date, adjustment);
     $("#generatedtime").val(newDate).trigger("change"); // 日付を更新してchangeイベントを発火
 }
@@ -181,12 +179,8 @@ $("#prevDayBtn").on("click", function () {
 });
 
 $("#todayBtn").on("click", function () {
-    // 今日の日付を取得
-    const today = new Date();
-    const formattedToday = today.toISOString().split("T")[0]; // yyyy-MM-dd形式に変換
-
     // 実行日時を今日の日付に設定し、検索処理を実行
-    $("#generatedtime").val(formattedToday).trigger("change");
+    $("#generatedtime").val(getTodayJstDate()).trigger("change");
 });
 
 $("#nextDayBtn").on("click", function () {
@@ -220,3 +214,10 @@ $(document).ready(function () {
         window.open("generategkRegist.html", "_blank"); // 新しいタブで開く
     });
 });
+
+// 日本時間で今日の日付（yyyy-MM-dd形式）を取得
+function getTodayJstDate() {
+    const now = new Date();
+    now.setHours(now.getHours() + 9); // UTC → JSTに補正
+    return now.toISOString().split("T")[0];
+}
