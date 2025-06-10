@@ -25,10 +25,23 @@
     <!-- 左側：PDF表示と情報 -->
     <div class="left-panel">
       <div class="section-title">実行情報</div>
-      <iframe id="pdfViewer" class="pdf-viewer"></iframe>
-
-      <label for="document">ドキュメント</label>
-      <input type="text" id="document" readonly>
+      <!-- PDF表示ブロック -->
+      <div class="toggle-block" id="pdfBlock">
+        <div class="block-header">
+          <span>PDF表示</span>
+          <button type="button" class="toggle-btn" id="togglePdfBtn">+</button>
+        </div>
+        <iframe id="pdfViewer" class="pdf-viewer"></iframe>
+      </div>
+      <!-- ドキュメント表示ブロック -->
+      <div class="toggle-block" id="docBlock">
+        <div class="block-header">
+          <span>ドキュメント</span>
+          <button type="button" class="toggle-btn" id="toggleDocBtn">+</button>
+        </div>
+        <label for="document">ドキュメント</label>
+        <input type="text" id="document" readonly>
+      </div>
     </div>
     <!-- 右側：実行結果 -->
     <div class="right-panel">

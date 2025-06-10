@@ -81,6 +81,30 @@ $(document).ready(function () {
             window.close();
         }
     });
+
+  // PDF表示ブロックの表示・非表示切り替え
+  $("#togglePdfBtn").on("click", function () {
+    const pdfBlock = $("#pdfViewer");
+    if (pdfBlock.is(":visible")) {
+      pdfBlock.hide();
+      $(this).text("+"); // ボタンを「+」に変更
+    } else {
+      pdfBlock.show();
+      $(this).text("-"); // ボタンを「-」に変更
+    }
+  });
+
+  // ドキュメント表示ブロックの表示・非表示切り替え
+  $("#toggleDocBtn").on("click", function () {
+    const docBlock = $("#document, label[for='document']");
+    if (docBlock.is(":visible")) {
+      docBlock.hide();
+      $(this).text("+"); // ボタンを「+」に変更
+    } else {
+      docBlock.show();
+      $(this).text("-"); // ボタンを「-」に変更
+    }
+  });
 });
 
 // 削除ボタン
