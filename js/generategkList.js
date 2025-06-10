@@ -84,15 +84,28 @@ function renderGeneratedTable(data, generatedtimeFilter) {
                 ${item.title}
               </a>
             </td>
-            <td>${item.languagemodel}</td>
+            <td>${getSttsLabel(item.stts)}</td>
             <td>${item.workuser}</td>
             <td>${item.id}</td>
-            <td>${item.savedtime}</td>
           </tr>
         `);
     });
     // 件数を表示
     $("#recordCount").text(`対象件数: ${recordCount} 件`);
+}
+
+// ステータスラベルを取得する関数
+function getSttsLabel(stts) {
+    switch (Number(stts)) {
+        case 1:
+            return "縦原稿登録済";
+        case 2:
+            return "配信連携済";
+        case 3:
+            return "縦原稿登録済、配信連携済";
+        default:
+            return "";
+    }
 }
 
 // データ取得（生成原稿）

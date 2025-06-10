@@ -95,11 +95,11 @@ function renderOcrTable(data, execdtimeFilter) {
 function getSttsLabel(stts) {
     switch (Number(stts)) {
         case 1:
-            return "生成原稿反映済";
+            return "生成原稿登録済";
         case 2:
-            return "取材反映済";
+            return "取材登録済";
         case 3:
-            return "生成原稿、取材反映済";
+            return "生成原稿登録済・取材登録済";
         default:
             return "";
     }
