@@ -2,7 +2,6 @@
 .flex-container {
   display: flex;
   gap: 20px;
-  height: 96vh;
 }
 .left-panel, .right-panel {
   background: #f8f8fc;
@@ -13,9 +12,11 @@
 }
 .left-panel {
   width: 50%;
+  height: 100%;
 }
 .right-panel {
   width: 50%;
+  height: 100%;
   position: relative;
 }
 
@@ -60,6 +61,17 @@ textarea {
 
 /* 実行結果・OCRテキスト表示枠 */
 .exec-result-box {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  min-height: 200px;
+  white-space: pre-wrap;
+  font-family: inherit;
+}
+
+/* ドキュメント表示枠 */
+.document-box {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
