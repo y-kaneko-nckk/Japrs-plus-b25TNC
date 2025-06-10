@@ -82,7 +82,7 @@ function renderOcrTable(data, execdtimeFilter) {
                 ${item.title}
               </a>
             </td>
-            <td>${item.execresult}</td>
+            <td>${item.stts}</td>
             <td>${item.id}</td>
           </tr>
         `);
