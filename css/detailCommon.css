@@ -13,11 +13,9 @@
 }
 .left-panel {
   width: 50%;
-  overflow-y: auto;
 }
 .right-panel {
   width: 50%;
-  overflow-y: auto;
   position: relative;
 }
 
@@ -51,7 +49,6 @@ table.detail-table th {
 /* テキストエリア */
 textarea {
   width: 100%;
-  min-height: 80px;
   resize: vertical;
   font-family: inherit;
   font-size: 1em;
