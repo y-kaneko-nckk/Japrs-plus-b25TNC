@@ -93,7 +93,7 @@ function renderOcrTable(data, execdtimeFilter) {
 
 // ステータスラベルを取得する関数
 function getSttsLabel(stts) {
-    switch (stts) {
+    switch (Number(stts)) {
         case 1:
             return "生成原稿反映済";
         case 2:
