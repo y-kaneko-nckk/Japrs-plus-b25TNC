@@ -2,7 +2,7 @@
 .flex-container {
   display: flex;
   gap: 20px;
-  height: 90vh;
+  height: 96vh;
 }
 .left-panel, .right-panel {
   background: #f8f8fc;
@@ -15,7 +15,7 @@
   width: 50%;
 }
 .right-panel {
-  width: 50%;
+  width: 864px;
   position: relative;
 }
 

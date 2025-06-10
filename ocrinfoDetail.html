@@ -25,18 +25,14 @@
     <!-- 左側：PDF表示と情報 -->
     <div class="left-panel">
       <div class="section-title">PDF表示</div>
-      <table class="detail-table" style="margin-top:16px;">
-        <tr>
-          <th>タイトル</th>
-          <td id="title"></td>
-        </tr>
-      </table>
       <iframe id="pdfViewer" class="pdf-viewer"></iframe>
     </div>
     <!-- 右側：OCRテキスト -->
     <div class="right-panel">
       <div class="section-title">実行結果</div>
-      <textarea class="exec-result-box" rows="24" id="ocrText"></textarea>
+      <label for="title">タイトル</label>
+      <input type="text" id="title" name="title" readonly>      
+      <textarea class="exec-result-box" rows="35" id="ocrText" readonly></textarea>
     </div>
   </div>
   <div class="button-bottom">
