@@ -82,13 +82,27 @@ function renderOcrTable(data, execdtimeFilter) {
                 ${item.title}
               </a>
             </td>
-            <td>${item.stts}</td>
+            <td>${getSttsLabel(item.stts)}</td>
             <td>${item.id}</td>
           </tr>
         `);
     });
     // 件数を表示
     $("#recordCount").text(`対象件数: ${recordCount} 件`);
+}
+
+// ステータスラベルを取得する関数
+function getSttsLabel(stts) {
+    switch (stts) {
+        case 1:
+            return "生成原稿反映済";
+        case 2:
+            return "取材反映済";
+        case 3:
+            return "生成原稿、取材反映済";
+        default:
+            return "";
+    }
 }
 
 // データ取得（OCR）
