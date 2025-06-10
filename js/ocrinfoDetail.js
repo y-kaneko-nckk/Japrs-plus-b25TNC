@@ -31,6 +31,7 @@ $(function() {
     success: function(data) {
       hideLoading(); // インジケーター非表示
       $("#title").text(data.title || "");
+      $("#title").val(data.title || "");
       $("#ocrText").text(data.execresult || "");
       $("#id").text(data.id || "");
       $("#execdtime").text(data.execdtime || "");

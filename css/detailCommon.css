@@ -48,7 +48,7 @@ table.detail-table th {
 
 /* テキストエリア */
 textarea {
-  width: 864px;
+  width: 98%;
   resize: vertical;
   font-family: inherit;
   font-size: 1em;
