@@ -22,34 +22,21 @@
   </div>
 
   <div class="flex-container">
-    <!-- 左側：実行情報 -->
+    <!-- 左側：PDF表示と情報 -->
     <div class="left-panel">
       <div class="section-title">実行情報</div>
-      <table class="detail-table">
-        <tr>
-          <th>タイトル</th>
-          <td id="title"></td>
-        </tr>
-        <tr>
-          <th>言語モデル</th>
-          <td id="languagemodel"></td>
-        </tr>
-        <tr>
-          <th>作業者</th>
-          <td id="workuser"></td>
-        </tr>
-        <tr>
-          <th>プロンプト</th>
-          <td>
-            <textarea id="prompt" rows="27" readonly></textarea>
-          </td>
-        </tr>
-      </table>
+      <iframe id="pdfViewer" class="pdf-viewer"></iframe>
+
+      <label for="document">ドキュメント</label>
+      <input type="text" id="document" readonly>
     </div>
     <!-- 右側：実行結果 -->
     <div class="right-panel">
       <div class="section-title">実行結果</div>
-      <div class="exec-result-box" id="execresult"></div>
+        <label for="title">タイトル</label>
+        <input type="text" id="title" readonly>
+        <label for="ocrText">実行結果</label>
+        <textarea class="exec-result-box" id="ocrText" rows="33" readonly></textarea>
     </div>
   </div>
   <div class="button-bottom">
