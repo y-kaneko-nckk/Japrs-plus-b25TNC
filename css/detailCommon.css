@@ -2,6 +2,7 @@
 .flex-container {
   display: flex;
   gap: 20px;
+  padding-bottom: 80px;
 }
 .left-panel, .right-panel {
   background: #f8f8fc;

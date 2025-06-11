@@ -1,8 +1,8 @@
-/* 詳細画面 共通レイアウト */
+/* 登録画面 共通レイアウト */
 .flex-container {
   display: flex;
   gap: 20px;
-  height: 90vh;
+  padding-bottom: 80px;
 }
 .left-panel, .right-panel {
   background: #f8f8fc;
