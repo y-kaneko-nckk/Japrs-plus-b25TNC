@@ -34,12 +34,16 @@ function fetchDetailData() {
         success: function(data) {
             hideLoading(); // インジケーター非表示
             $("#title").text(data.title || "");
-            $("#languagemodel").text(data.languagemodel || "");
-            $("#workuser").text(data.workuser || "");
-            $("#prompt").val(data.prompt || "");
+            $("#title").val(data.title || "");
             $("#id").text(data.id || "");
             $("#generatedtime").text(data.generatedtime || "");
             $("#execresult").text(data.execresult || "");
+            $("#execresult").val(data.execresult || "");
+            $("#document").val(data.document || "");
+            // presignedUrlがあればそれを使う
+            if (data.presignedUrl) {
+                $("#pdfViewer").attr("src", data.presignedUrl);
+            }
         },
         error: function(jqXHR) {
             hideLoading(); // インジケーター非表示
