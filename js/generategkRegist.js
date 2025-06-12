@@ -104,10 +104,10 @@ $(document).ready(function () {
 
         // Lambda関数を呼び出すためのAPIリクエスト
         const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
-        // console.log("APIリクエストを開始します。");
-        // console.log("リクエストURL:", apiUrl);
-        // console.log("リクエストヘッダー:", { Authorization: idToken });
-        // console.log("リクエストデータ:", { languageModel, document, format });
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }                
 
         // Lambda関数を呼び出すためのAPIリクエスト
         $.ajax({
