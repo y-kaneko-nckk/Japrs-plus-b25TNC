@@ -115,7 +115,6 @@ $(document).ready(function () {
             method: "POST",
             headers: {
                 Authorization: idToken,
-                "Content-Type": false, // Content-Typeは自動設定されるのでfalseにする
             },
             processData: false, // FormDataをそのまま送信するためにfalseに設定
             contentType: false, // Content-Typeを自動設定するためにfalseに設定
