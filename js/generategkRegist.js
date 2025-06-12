@@ -53,12 +53,33 @@ $(document).ready(function () {
 
     // 実行ボタンのクリックイベント
     $("#execBtn").on("click", function () {
+        const filename = $("#filename").val();
         const document = $("#document").val();
+        const fileInput = $("#uploadFile")[0];
+        const file = fileInput.files[0];
 
         // 必須項目のチェック
-        if (!document || document.trim() === "") {
-            alert("ドキュメントを入力してください。");
+        if ((!filename || filename.trim() === "") && (!document || document.trim() === "")) {
+            alert("ファイルの添付、もしくはドキュメントを入力してください。");
             return;
+        }
+
+        // PDFファイルチェック
+        if (filename && !filename.toLowerCase().endsWith(".pdf")) {
+            alert("PDFファイル以外では実行できません。");
+            return;
+        }
+
+        if ((!filename || filename.trim() === "") && (document && document.trim() !== "")) {
+            alert("入力されたドキュメントから原稿を生成します。");
+        }
+
+        if ((filename && filename.trim() !== "") && (!document || document.trim() === "")) {
+            alert("添付されたPDFファイルから原稿を生成します。");
+        }
+
+        if ((filename && filename.trim() !== "") && (document && document.trim() !== "")) {
+            alert("添付されたPDFファイルから原稿を生成します。");
         }
 
         // トークンの有効性チェック
@@ -67,6 +88,10 @@ $(document).ready(function () {
 
         // インジケーター表示
         showLoading();
+
+        // FormDataを作成して添付ファイルを追加
+        const formData = new FormData();
+        formData.append("file", file); // 添付ファイル
 
         // Lambda関数を呼び出すためのAPIリクエスト
         const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
@@ -82,11 +107,13 @@ $(document).ready(function () {
             headers: {
                 Authorization: idToken,
             },
-            contentType: "application/json",
-            data: JSON.stringify({ languageModel, document, format }),
+            processData: false, // FormDataを使用する場合はfalse
+            contentType: false, // FormDataを使用する場合はfalse
+            data: formData,
             success: function (response) {
-                //console.log("APIリクエストが成功しました。レスポンス:", response);
+                console.log("APIリクエストが成功しました。レスポンス:", response);
                 $("#title").val(response.title);
+                $("#document").val(response.document);
                 $("#execResult").val(response.generatedDocument);
                 hideLoading(); // インジケーター非表示
             },

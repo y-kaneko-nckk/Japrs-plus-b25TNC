@@ -183,3 +183,11 @@ select {
 label {
   display: block;
 }
+
+/* ボタンが無効化されている場合のスタイル */
+button:disabled {
+  background-color: #b0b0b0; /* 暗い背景色 */
+  color: #666666; /* 暗い文字色 */
+  cursor: not-allowed; /* カーソルを「禁止」アイコンに変更 */
+  box-shadow: none; /* ボックスシャドウを削除 */
+}
