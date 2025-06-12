@@ -20,20 +20,22 @@
     <div class="left-panel">
       <div class="section-title">入力フォーム</div>
       <form id="registForm">
-        <label for="title">タイトル</label>
-        <input type="text" id="title" name="title" required>
-
         <label for="filename">ファイル名</label>
         <input type="text" id="filename" readonly required>
         <input type="file" id="uploadFile" style="display: none;">
-        <button type="button" id="attachFileBtn">添付</button>
-        <button type="button" id="clearFileBtn" disabled>クリア</button>
+        <button type="button" id="attachFileBtn" class="btn btn-normal btnsize-main">添付</button>
+        <button type="button" id="clearFileBtn" class="btn btn-normal btnsize-main" disabled>クリア</button>
       </form>
     </div>
     <!-- 右側：OCRテキスト -->
     <div class="right-panel">
-      <div class="section-title">実行結果</div>
-      <div class="exec-result-box" id="ocrText" required></div>
+        <div class="section-title">実行結果</div>
+        <label for="title">タイトル</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="ocrText">実行結果</label>
+        <textarea id="ocrText" name="ocrText" required></textarea>
+    </div>
     </div>
   </div>
 

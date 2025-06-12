@@ -163,3 +163,8 @@ select {
   height: auto; /* 高さを自動調整 */
   font-family: inherit;
 }
+
+#registForm.drag-over {
+  border: 2px dashed #007bff;
+  background-color: #f0f8ff;
+}
