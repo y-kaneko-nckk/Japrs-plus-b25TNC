@@ -117,8 +117,6 @@ $(document).ready(function () {
                 Authorization: idToken,
                 "Content-Type": "multipart/form-data",
             },
-            processData: false, // FormDataを使用する場合はfalse
-            contentType: false, // FormDataを使用する場合はfalse
             data: formData,
             success: function (response) {
                 console.log("APIリクエストが成功しました。レスポンス:", response);
