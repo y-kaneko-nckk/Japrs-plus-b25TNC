@@ -91,10 +91,10 @@ $(document).ready(function () {
     const pdfBlock = $("#pdfViewer");
     if (pdfBlock.is(":visible")) {
       pdfBlock.hide();
-      $(this).text("+"); // ボタンを「+」に変更
+      $(this).text("＋"); // ボタンを「+」に変更
     } else {
       pdfBlock.show();
-      $(this).text("-"); // ボタンを「-」に変更
+      $(this).text("－"); // ボタンを「-」に変更
     }
   });
 
