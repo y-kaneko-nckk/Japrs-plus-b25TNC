@@ -1,10 +1,10 @@
 // ユーザー設定
 export const CgntPoolSettings = {
 	Region: 'ap-northeast-1',
-	UserPoolId: 'ap-northeast-1_MNT0bbnmI', // ユーザープールID
-	ClientId: 'k5olvrm72340o6alds32p0hem', // クライアントID
+	UserPoolId: 'ap-northeast-1_fuumFW7A6', // ユーザープールID
+	ClientId: '2430d2dk07tt4ul6okob2mdo7f', // クライアントID
 	ContentType: 'application/x-www-form-urlencoded; charset=UTF-8', // リクエスト時のContenType
-	Url: 'https://ap-northeast-1mnt0bbnmi.auth.ap-northeast-1.amazoncognito.com',
+	Url: 'https://ap-northeast-1fuumfw7a6.auth.ap-northeast-1.amazoncognito.com',
 	ApplicationUrl: 'https%3A%2F%2Fdevelop-srv.d1wmev0i8iycrh.amplifyapp.com%2F',
 	ApplicationTop: './ocrinfoList.html',
 	ResponseType: 'code',
@@ -96,7 +96,7 @@ export const CgntSignInfo = {
 	},
 	getShowName: function() {
 		let _n = this.getLocalPayload()??{};
-		return _n.name??_n.email??'ログイン済';
+		return _n.name??_n["cognito:username"]??_n.email??'ログイン済';
 	},
 	decodeIdToken: function(idToken) { // JWTのヘッダをデコード
 		if (!idToken) return {header:null,payload:null,sign:null};

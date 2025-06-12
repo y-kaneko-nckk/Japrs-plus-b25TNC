@@ -89,6 +89,7 @@ div.menu {
 	color: #fff;
 	background: #298ecb;
 	cursor: pointer;
+	min-width: 12rem;
 }
 
 div.menu .menuTitle {
@@ -109,6 +110,11 @@ div.menu .menuTitleName {
   padding: 0;
   display: none;
   right:0.5rem;
+  min-width: 10rem;
+}
+
+.menu .menuSub li {
+	text-align: right;
 }
 
 .menu .menuSub li a {

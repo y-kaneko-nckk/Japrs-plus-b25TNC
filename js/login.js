@@ -18,8 +18,8 @@ $(document).ready(function () {
 
         // ユーザープールの設定
         var poolData = {
-            UserPoolId: 'ap-northeast-1_MNT0bbnmI', // ユーザープールID
-            ClientId: 'k5olvrm72340o6alds32p0hem', // クライアントID
+            UserPoolId: CgntPoolSettings.UserPoolId, // ユーザープールID
+            ClientId: CgntPoolSettings.ClientId, // クライアントID
         };
         var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
@@ -51,13 +51,12 @@ $(document).ready(function () {
                 AWS.config.region = 'ap-northeast-1';
 
                 // AWSの認証情報を設定
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId: 'ap-northeast-1:1185c121-9b44-4e97-9c05-ba2f190c7654', // IDプールID
-                    Logins: {
-                        // ユーザープールのログイン情報を設定
-                        'cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_MNT0bbnmI': idToken,
-                    },
-                });
+				let tmpCred = {}
+	            tmpCred["IdentityPoolId"] = 'ap-northeast-1:1185c121-9b44-4e97-9c05-ba2f190c7654'; // IDプールID
+				tmpCred["Logins"] = {};
+				// ユーザープールのログイン情報を設定
+				tmpCred["Logins"]['cognito-idp.ap-northeast-1.amazonaws.com/' + CgntPoolSettings.UserPoolId] = idToken;
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials(tmpCred);
 
                 // 認証情報を更新
                 AWS.config.credentials.refresh(function (error) {
