@@ -92,6 +92,15 @@ $(document).ready(function () {
         // FormDataを作成して添付ファイルを追加
         const formData = new FormData();
         formData.append("file", file); // 添付ファイル
+        formData.append("document", document); // ドキュメント
+        formData.append("languageModel", languageModel); // 言語モデル
+        formData.append("format", format); // フォーマット
+        // フォームデータの確認
+        console.log("フォームデータ:", formData);
+        console.log("ファイル名:", filename);
+        console.log("ドキュメント:", document);
+        console.log("言語モデル:", languageModel);
+        console.log("フォーマット:", format);
 
         // Lambda関数を呼び出すためのAPIリクエスト
         const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
@@ -106,6 +115,7 @@ $(document).ready(function () {
             method: "POST",
             headers: {
                 Authorization: idToken,
+                "Content-Type": "multipart/form-data",
             },
             processData: false, // FormDataを使用する場合はfalse
             contentType: false, // FormDataを使用する場合はfalse
