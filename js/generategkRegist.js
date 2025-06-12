@@ -97,6 +97,7 @@ $(document).ready(function () {
         formData.append("format", format); // フォーマット
         // フォームデータの確認
         console.log("フォームデータ:", formData);
+        console.log("送信するファイルデータ:", file);
         console.log("ファイル名:", filename);
         console.log("ドキュメント:", document);
         console.log("言語モデル:", languageModel);
