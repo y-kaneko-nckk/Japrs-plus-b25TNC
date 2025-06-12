@@ -168,3 +168,18 @@ select {
   border: 2px dashed #007bff;
   background-color: #f0f8ff;
 }
+/* マージン */
+.ml-5px {
+  margin-left: 5px;
+}
+.ml-10px {
+  margin-left: 10px;
+}
+
+.mb-12px {
+  margin-bottom: 12px;
+}
+
+.label {
+  display: block;
+}
