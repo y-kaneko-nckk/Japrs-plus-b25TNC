@@ -267,6 +267,7 @@ $(document).ready(function () {
             const file = files[0];
             uploadFileInput[0].files = e.originalEvent.dataTransfer.files; // ファイルをinputに設定
             filenameInput.val(file.name); // ファイル名を表示
+            $("#clearFileBtn").prop("disabled", false); // クリアボタンを有効化
         }
     });
 });

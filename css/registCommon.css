@@ -195,9 +195,8 @@ button:disabled {
 .drag-drop-area {
   border: 2px dashed #007bff;
   padding: 10px;
-  text-align: center;
   background-color: #f0f8ff;
-  transition: background-color 0.3s ease;
+  margin-bottom: 12px;
 }
 
 .drag-drop-area.drag-over {
