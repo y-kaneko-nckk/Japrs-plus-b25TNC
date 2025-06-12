@@ -179,6 +179,29 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    // クリアボタンのクリックイベント
+    $("#clearFileBtn").on("click", function () {
+        $("#uploadFile").val(""); // ファイル選択をクリア
+        $("#filename").val("");   // ファイル名をクリア
+        $(this).prop("disabled", true); // クリアボタンを無効化
+    });
+
+    // 添付ボタンのクリックイベント
+    $("#attachFileBtn").on("click", function () {
+        $("#uploadFile").click(); // ファイル選択ダイアログを表示
+    });
+
+    // ファイル選択時の処理
+    $("#uploadFile").on("change", function () {
+        const file = this.files[0];
+        if (file) {
+            $("#filename").val(file.name); // ファイル名を表示
+            $("#clearFileBtn").prop("disabled", false); // クリアボタンを有効化
+        }
+    });
+});
+
 //     $(document).ready(function () {
 //         // フォーマット切り替え時
 //         $('#prompt').on('change', function () {

@@ -20,28 +20,15 @@
     <div class="left-panel">
       <div class="section-title">実行情報</div>
       <form id="registForm">
-        <label for="languageModel" style="display: none;">言語モデル</label>
-        <select id="languageModel" name="languageModel" style="display: none;">
-          <option value=""></option>
-          <option value="us.anthropic.claude-3-7-sonnet-20250219-v1:0">Claude 3.7 Sonnet</option>
-        </select>
-
-        <label for="worker" style="display: none;">作業者</label>
-        <input type="text" id="worker" name="worker" style="display: none;">
+        <label for="filename">ファイル名</label>
+        <input type="text" id="filename" readonly required>
+        <input type="file" id="uploadFile" style="display: none;">
+        <button type="button" id="attachFileBtn" class="btn btn-normal btnsize-main">添付</button>
+        <button type="button" id="clearFileBtn" class="btn btn-normal btnsize-main" disabled>クリア</button>
+        <button type="button" id="execBtn" class="btn btn-exec btnsize-main">原稿生成</button>
 
         <label for="document">ドキュメント</label>
         <textarea id="document" name="document" required></textarea>
-
-        <label for="prompt" style="display: none;">プロンプト</label>
-        <select id="prompt" name="prompt" style="display: none;">
-          <option value=""></option>
-          <option value="1">火事</option>
-          <option value="2">事故[速報]</option>
-          <option value="3">裁判</option>
-        </select>
-
-        <label for="format" style="display: none;">フォーマット</label>
-        <textarea id="format" name="format" style="display: none;"></textarea>
       </form>
     </div>
     <!-- 右側：OCRテキスト -->
@@ -56,7 +43,6 @@
   </div>
 
   <div class="button-bottom">
-    <button type="button" id="execBtn" class="btn btn-exec btnsize-main">実行</button>
     <button type="button" id="registBtn" class="btn btn-exec btnsize-main">登録</button>
     <button type="button" id="footerCloseBtn" class="btn btn-normal btnsize-main"
       data-displayname="生成原稿登録"
