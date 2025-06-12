@@ -239,6 +239,38 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    const fileDropArea = $("#fileDropArea");
+    const uploadFileInput = $("#uploadFile");
+    const filenameInput = $("#filename");
+
+    // ドラッグアンドドロップイベント
+    fileDropArea.on("dragover", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        fileDropArea.addClass("drag-over");
+    });
+
+    fileDropArea.on("dragleave", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        fileDropArea.removeClass("drag-over");
+    });
+
+    fileDropArea.on("drop", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        fileDropArea.removeClass("drag-over");
+
+        const files = e.originalEvent.dataTransfer.files;
+        if (files.length > 0) {
+            const file = files[0];
+            uploadFileInput[0].files = e.originalEvent.dataTransfer.files; // ファイルをinputに設定
+            filenameInput.val(file.name); // ファイル名を表示
+        }
+    });
+});
+
 //     $(document).ready(function () {
 //         // フォーマット切り替え時
 //         $('#prompt').on('change', function () {

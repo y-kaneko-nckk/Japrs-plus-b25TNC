@@ -191,3 +191,15 @@ button:disabled {
   cursor: not-allowed; /* カーソルを「禁止」アイコンに変更 */
   box-shadow: none; /* ボックスシャドウを削除 */
 }
+
+.drag-drop-area {
+  border: 2px dashed #007bff;
+  padding: 10px;
+  text-align: center;
+  background-color: #f0f8ff;
+  transition: background-color 0.3s ease;
+}
+
+.drag-drop-area.drag-over {
+  background-color: #e0f7fa;
+}

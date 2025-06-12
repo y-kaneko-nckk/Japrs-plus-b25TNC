@@ -20,9 +20,11 @@
     <div class="left-panel">
       <div class="section-title">実行情報</div>
       <form id="registForm">
-        <label for="filename">ファイル名</label>
-        <input type="text" id="filename" readonly required>
-        <input type="file" id="uploadFile" style="display: none;">
+        <div id="fileDropArea" class="drag-drop-area">
+          <label for="filename">ファイル名</label>
+          <input type="text" id="filename" readonly required>
+          <input type="file" id="uploadFile" style="display: none;">
+        </div>
         <button type="button" id="attachFileBtn" class="btn btn-normal btnsize-main mb-12px">添付</button>
         <button type="button" id="clearFileBtn" class="btn btn-normal btnsize-main ml-10px mb-12px" disabled>クリア</button>
         <button type="button" id="execBtn" class="btn btn-exec btnsize-main ml-10px mb-12px">原稿生成</button>
