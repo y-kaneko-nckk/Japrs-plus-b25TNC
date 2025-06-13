@@ -53,6 +53,7 @@ function hideLoading() {
 }
 
 // OCR情報テーブル描画
+// OCR情報テーブル描画
 function renderOcrTable(data, execdtimeFilter) {
     const $tbody = $("#ocrTable tbody");
     $tbody.empty();
@@ -61,6 +62,11 @@ function renderOcrTable(data, execdtimeFilter) {
     const formattedExecdtimeFilter = execdtimeFilter ? execdtimeFilter.replace(/-/g, "/") : null;
 
     let recordCount = 0; // 件数をカウント
+
+    // IDの昇順に並び替え
+    data.ocrinfo.sort((a, b) => {
+        return Number(a.id) - Number(b.id); // IDを数値として比較
+    });
 
     $.each(data.ocrinfo, function (i, item) {
         // 調査用のログ出力

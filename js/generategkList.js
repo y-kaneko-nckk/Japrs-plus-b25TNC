@@ -64,6 +64,11 @@ function renderGeneratedTable(data, generatedtimeFilter) {
 
     let recordCount = 0; // 件数をカウント
 
+    // IDの昇順に並び替え
+    data.generategk.sort((a, b) => {
+        return Number(a.id) - Number(b.id); // IDを数値として比較
+    });
+
     $.each(data.generategk, function(i, item) {
         // 調査用のログ出力
         console.log("item[" + i + "]:", item);
