@@ -4,10 +4,15 @@ table {
   background: white;
 }
 
-table th, table td {
+table th {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: center;
+}
+
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
 }
 
 .tab-container {

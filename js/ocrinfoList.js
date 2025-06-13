@@ -76,14 +76,14 @@ function renderOcrTable(data, execdtimeFilter) {
         // テーブルに行を追加
         $tbody.append(`
           <tr>
-            <td>${item.execdtime}</td>
+            <td style="text-align: center;>${item.execdtime}</td>
             <td>
               <a href="ocrinfoDetail.html?filename=${encodeURIComponent(item.filename)}&id=${encodeURIComponent(item.id)}" target="_blank">
                 ${item.title}
               </a>
             </td>
-            <td>${getSttsLabel(item.stts)}</td>
-            <td>${item.id}</td>
+            <td style="text-align: center;>${getSttsLabel(item.stts)}</td>
+            <td style="text-align: center;>${item.id}</td>
           </tr>
         `);
     });
