@@ -70,18 +70,6 @@ $(document).ready(function () {
             return;
         }
 
-        if ((!filename || filename.trim() === "") && (document && document.trim() !== "")) {
-            alert("入力されたドキュメントから原稿を生成します。");
-        }
-
-        if ((filename && filename.trim() !== "") && (!document || document.trim() === "")) {
-            alert("添付されたPDFファイルから原稿を生成します。");
-        }
-
-        if ((filename && filename.trim() !== "") && (document && document.trim() !== "")) {
-            alert("添付されたPDFファイルから原稿を生成します。");
-        }
-
         // トークンの有効性チェック
         const idToken = localStorage.getItem("idToken");
         if (!CgntSignInfo.checkValidity()) return;
@@ -147,16 +135,78 @@ $(document).ready(function () {
         });
     });
 
+$(document).ready(function () {
+
+    // 実行ボタンのクリックイベント
+    $("#docExecBtn").on("click", function () {
+       const document = $("#document").val();
+
+        // 必須項目のチェック
+        if (!document || document.trim() === "") {
+            alert("ドキュメントを入力してください。");
+            return;
+        }
+
+        // トークンの有効性チェック
+        const idToken = localStorage.getItem("idToken");
+        if (!CgntSignInfo.checkValidity()) return;
+
+        // インジケーター表示
+        showLoading();
+
+        // Lambda関数を呼び出すためのAPIリクエスト
+        const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/docPrompting";
+        // console.log("APIリクエストを開始します。");
+        // console.log("リクエストURL:", apiUrl);
+        // console.log("リクエストヘッダー:", { Authorization: idToken });
+        // console.log("リクエストデータ:", { languageModel, document, format });
+
+        // Lambda関数を呼び出すためのAPIリクエスト
+        $.ajax({
+            url: apiUrl,
+            method: "POST",
+            headers: {
+                Authorization: idToken,
+            },
+            contentType: "application/json",
+            data: JSON.stringify({ languageModel, document, format }),
+            success: function (response) {
+                //console.log("APIリクエストが成功しました。レスポンス:", response);
+                $("#title").val(response.title);
+                $("#execResult").val(response.generatedDocument);
+                hideLoading(); // インジケーター非表示
+            },
+            error: function (jqXHR) {
+                console.error("APIリクエストが失敗しました。");
+                console.error("ステータスコード:", jqXHR.status);
+                console.error("レスポンス:", jqXHR.responseText || "レスポンスなし");
+                console.error("エラーメッセージ:", jqXHR.statusText || "エラーメッセージなし");
+
+                hideLoading(); // インジケーター非表示
+                let msg = "原稿生成に失敗しました";
+                if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    msg += ": " + jqXHR.responseJSON.message;
+                } else if (jqXHR.responseText) {
+                    msg += ": " + jqXHR.responseText;
+                } else if (jqXHR.statusText) {
+                    msg += ": " + jqXHR.statusText;
+                }
+                alert(msg);
+            }
+        });
+    });
+
     // 登録ボタンのクリックイベント
     $("#registBtn").on("click", function () {
-        const languageModelName = "Claude 3.7 Sonnet";
+        const languageModelName = "Claude-3.7-Sonnet";
         const document = $("#document").val();
 		const worker = CgntSignInfo.getUserId();
         const prompt = "####ドキュメント\n" + document + "\n\n####フォーマット\n" + format;
         const title = $("#title").val();
         const execResult = $("#execResult").val();
+        const filename = $("#filename").val();
         const today = new Date();
-        const formattedToday = today.toISOString().split("T")[0].replace(/-/g, "/");
+        const formattedToday = today.toISOString().split("T")[0].replace(/-/g, "/") + " " + today.toTimeString().split(" ")[0];
         const generatedtime = formattedToday;
         // Cognitoユーザー情報を取得してworkerに設定
         $('#worker').val(worker); // workerのvalueに設定
@@ -179,7 +229,7 @@ $(document).ready(function () {
         console.log("登録APIリクエストを開始します。");
         console.log("リクエストURL:", apiUrl);
         console.log("リクエストヘッダー:", { Authorization: idToken });
-        console.log("リクエストデータ:", { languageModelName, worker, prompt, title, execResult, generatedtime });
+        console.log("リクエストデータ:", { languageModelName, worker, prompt, title, execResult, generatedtime, filename});
 
         $.ajax({
             url: apiUrl,
