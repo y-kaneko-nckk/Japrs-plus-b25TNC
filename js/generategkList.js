@@ -78,15 +78,15 @@ function renderGeneratedTable(data, generatedtimeFilter) {
         // テーブルに行を追加
         $tbody.append(`
           <tr>
-            <td>${item.generatedtime}</td>
+            <td style="text-align: center;>${item.generatedtime}</td>
             <td>
               <a href="generategkDetail.html?id=${encodeURIComponent(item.id)}" target="_blank">
                 ${item.title}
               </a>
             </td>
-            <td>${getSttsLabel(item.stts)}</td>
-            <td>${item.workuser}</td>
-            <td>${item.id}</td>
+            <td style="text-align: center;>${getSttsLabel(item.stts)}</td>
+            <td style="text-align: center;>${item.workuser}</td>
+            <td style="text-align: center;>${item.id}</td>
           </tr>
         `);
     });
