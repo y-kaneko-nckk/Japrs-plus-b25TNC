@@ -43,6 +43,9 @@ function fetchDetailData() {
             // presignedUrlがあればそれを使う
             if (data.presignedUrl) {
                 $("#pdfViewer").attr("src", data.presignedUrl);
+            } else {
+                pdfBlock.show();
+                $("#togglePdfBtn").text("－"); // ボタンを「-」に変更
             }
         },
         error: function(jqXHR) {
