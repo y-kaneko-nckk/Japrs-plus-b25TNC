@@ -70,6 +70,18 @@ $(document).ready(function () {
             return;
         }
 
+        if ((!filename || filename.trim() === "") && (document && document.trim() !== "")) {
+            alert("入力されたドキュメントから原稿を生成します。");
+        }
+
+        if ((filename && filename.trim() !== "") && (!document || document.trim() === "")) {
+            alert("添付されたPDFファイルから原稿を生成します。");
+        }
+
+        if ((filename && filename.trim() !== "") && (document && document.trim() !== "")) {
+            alert("添付されたPDFファイルから原稿を生成します。");
+        }
+
         // トークンの有効性チェック
         const idToken = localStorage.getItem("idToken");
         if (!CgntSignInfo.checkValidity()) return;
@@ -112,67 +124,6 @@ $(document).ready(function () {
                 console.log("APIリクエストが成功しました。レスポンス:", response);
                 $("#title").val(response.title);
                 $("#document").val(response.document);
-                $("#execResult").val(response.generatedDocument);
-                hideLoading(); // インジケーター非表示
-            },
-            error: function (jqXHR) {
-                console.error("APIリクエストが失敗しました。");
-                console.error("ステータスコード:", jqXHR.status);
-                console.error("レスポンス:", jqXHR.responseText || "レスポンスなし");
-                console.error("エラーメッセージ:", jqXHR.statusText || "エラーメッセージなし");
-
-                hideLoading(); // インジケーター非表示
-                let msg = "原稿生成に失敗しました";
-                if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
-                    msg += ": " + jqXHR.responseJSON.message;
-                } else if (jqXHR.responseText) {
-                    msg += ": " + jqXHR.responseText;
-                } else if (jqXHR.statusText) {
-                    msg += ": " + jqXHR.statusText;
-                }
-                alert(msg);
-            }
-        });
-    });
-
-$(document).ready(function () {
-
-    // 実行ボタンのクリックイベント
-    $("#docExecBtn").on("click", function () {
-       const document = $("#document").val();
-
-        // 必須項目のチェック
-        if (!document || document.trim() === "") {
-            alert("ドキュメントを入力してください。");
-            return;
-        }
-
-        // トークンの有効性チェック
-        const idToken = localStorage.getItem("idToken");
-        if (!CgntSignInfo.checkValidity()) return;
-
-        // インジケーター表示
-        showLoading();
-
-        // Lambda関数を呼び出すためのAPIリクエスト
-        const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/docPrompting";
-        // console.log("APIリクエストを開始します。");
-        // console.log("リクエストURL:", apiUrl);
-        // console.log("リクエストヘッダー:", { Authorization: idToken });
-        // console.log("リクエストデータ:", { languageModel, document, format });
-
-        // Lambda関数を呼び出すためのAPIリクエスト
-        $.ajax({
-            url: apiUrl,
-            method: "POST",
-            headers: {
-                Authorization: idToken,
-            },
-            contentType: "application/json",
-            data: JSON.stringify({ languageModel, document, format }),
-            success: function (response) {
-                //console.log("APIリクエストが成功しました。レスポンス:", response);
-                $("#title").val(response.title);
                 $("#execResult").val(response.generatedDocument);
                 hideLoading(); // インジケーター非表示
             },
@@ -253,6 +204,104 @@ $(document).ready(function () {
 
                 hideLoading(); // インジケーター非表示
                 let msg = "登録に失敗しました";
+                if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                    msg += ": " + jqXHR.responseJSON.message;
+                } else if (jqXHR.responseText) {
+                    msg += ": " + jqXHR.responseText;
+                } else if (jqXHR.statusText) {
+                    msg += ": " + jqXHR.statusText;
+                }
+                alert(msg);
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    // 実行ボタンのクリックイベント
+    $("#execBtn").on("click", function () {
+        const filename = $("#filename").val();
+        const document = $("#document").val();
+        const fileInput = $("#uploadFile")[0];
+        const file = fileInput.files[0];
+
+        // 必須項目のチェック
+        if ((!filename || filename.trim() === "") && (!document || document.trim() === "")) {
+            alert("ファイルの添付、もしくはドキュメントを入力してください。");
+            return;
+        }
+
+        // PDFファイルチェック
+        if (filename && !filename.toLowerCase().endsWith(".pdf")) {
+            alert("PDFファイル以外では実行できません。");
+            return;
+        }
+
+        if ((!filename || filename.trim() === "") && (document && document.trim() !== "")) {
+            alert("入力されたドキュメントから原稿を生成します。");
+        }
+
+        if ((filename && filename.trim() !== "") && (!document || document.trim() === "")) {
+            alert("添付されたPDFファイルから原稿を生成します。");
+        }
+
+        if ((filename && filename.trim() !== "") && (document && document.trim() !== "")) {
+            alert("添付されたPDFファイルから原稿を生成します。");
+        }
+
+        // トークンの有効性チェック
+        const idToken = localStorage.getItem("idToken");
+        if (!CgntSignInfo.checkValidity()) return;
+
+        // インジケーター表示
+        showLoading();
+
+        // FormDataを作成して添付ファイルを追加
+        const formData = new FormData();
+        formData.append("file", file); // 添付ファイル
+        formData.append("document", document); // ドキュメント
+        formData.append("languageModel", languageModel); // 言語モデル
+        formData.append("format", format); // フォーマット
+        // フォームデータの確認
+        console.log("フォームデータ:", formData);
+        console.log("送信するファイルデータ:", file);
+        console.log("ファイル名:", filename);
+        console.log("ドキュメント:", document);
+        console.log("言語モデル:", languageModel);
+        console.log("フォーマット:", format);
+
+        // Lambda関数を呼び出すためのAPIリクエスト
+        const apiUrl = "https://986o8kyzy3.execute-api.ap-northeast-1.amazonaws.com/prod/generategk/prompting";
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }                
+
+        // Lambda関数を呼び出すためのAPIリクエスト
+        $.ajax({
+            url: apiUrl,
+            method: "POST",
+            headers: {
+                Authorization: idToken,
+            },
+            processData: false, // FormDataをそのまま送信するためにfalseに設定
+            contentType: false, // Content-Typeを自動設定するためにfalseに設定
+            data: formData,
+            success: function (response) {
+                console.log("APIリクエストが成功しました。レスポンス:", response);
+                $("#title").val(response.title);
+                $("#document").val(response.document);
+                $("#execResult").val(response.generatedDocument);
+                hideLoading(); // インジケーター非表示
+            },
+            error: function (jqXHR) {
+                console.error("APIリクエストが失敗しました。");
+                console.error("ステータスコード:", jqXHR.status);
+                console.error("レスポンス:", jqXHR.responseText || "レスポンスなし");
+                console.error("エラーメッセージ:", jqXHR.statusText || "エラーメッセージなし");
+
+                hideLoading(); // インジケーター非表示
+                let msg = "原稿生成に失敗しました";
                 if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
                     msg += ": " + jqXHR.responseJSON.message;
                 } else if (jqXHR.responseText) {
