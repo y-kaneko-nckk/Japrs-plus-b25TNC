@@ -202,3 +202,13 @@ button:disabled {
 .drag-drop-area.drag-over {
   background-color: #e0f7fa;
 }
+
+/* タイトル列の <td> を左寄せ */
+#ocrTab td:nth-child(2) {
+  text-align: left !important;
+}
+
+/* タイトル列の <td> を左寄せ */
+#generatedTab td:nth-child(2) {
+  text-align: left !important;
+}
