@@ -44,6 +44,7 @@ function fetchDetailData() {
             if (data.presignedUrl) {
                 $("#pdfViewer").attr("src", data.presignedUrl);
             } else {
+                const pdfBlock = $("#pdfViewer");
                 pdfBlock.hide();
                 $("#togglePdfBtn").text("＋"); // ボタンを「+」に変更
             }
