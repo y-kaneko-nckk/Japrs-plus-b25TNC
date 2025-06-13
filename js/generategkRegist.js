@@ -70,17 +70,17 @@ $(document).ready(function () {
             return;
         }
 
-        if ((!filename || filename.trim() === "") && (document && document.trim() !== "")) {
-            alert("入力されたドキュメントから原稿を生成します。");
-        }
+        // if ((!filename || filename.trim() === "") && (document && document.trim() !== "")) {
+        //     alert("入力されたドキュメントから原稿を生成します。");
+        // }
 
-        if ((filename && filename.trim() !== "") && (!document || document.trim() === "")) {
-            alert("添付されたPDFファイルから原稿を生成します。");
-        }
+        // if ((filename && filename.trim() !== "") && (!document || document.trim() === "")) {
+        //     alert("添付されたPDFファイルから原稿を生成します。");
+        // }
 
-        if ((filename && filename.trim() !== "") && (document && document.trim() !== "")) {
-            alert("添付されたPDFファイルから原稿を生成します。");
-        }
+        // if ((filename && filename.trim() !== "") && (document && document.trim() !== "")) {
+        //     alert("添付されたPDFファイルから原稿を生成します。");
+        // }
 
         // トークンの有効性チェック
         const idToken = localStorage.getItem("idToken");
