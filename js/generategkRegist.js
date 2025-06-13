@@ -180,7 +180,7 @@ $(document).ready(function () {
         console.log("登録APIリクエストを開始します。");
         console.log("リクエストURL:", apiUrl);
         console.log("リクエストヘッダー:", { Authorization: idToken });
-        console.log("リクエストデータ:", { languageModelName, worker, prompt, title, execResult, generatedtime, filename});
+        console.log("リクエストデータ:", { languageModelName, worker, prompt, title, execResult, generatedtime, filename, document});
 
         $.ajax({
             url: apiUrl,
@@ -189,7 +189,7 @@ $(document).ready(function () {
                 Authorization: idToken,
             },
             contentType: "application/json",
-            data: JSON.stringify({ languageModelName, worker, prompt, title, execResult, generatedtime }),
+            data: JSON.stringify({ languageModelName, worker, prompt, title, execResult, generatedtime, document }),
             success: function (response) {
                 console.log("登録APIリクエストが成功しました。レスポンス:", response);
                 hideLoading(); // インジケーター非表示
